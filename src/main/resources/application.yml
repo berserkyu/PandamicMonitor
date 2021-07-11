@@ -1,9 +1,9 @@
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/pandamicmonitor?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
-    username: root
-    password: kzs3178042333
+#spring:
+ # datasource:
+  #  driver-class-name: com.mysql.cj.jdbc.Driver
+ #   url: jdbc:mysql://localhost:3306/pandamicmonitor?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+  #  username: root
+ #   password: kzs3178042333
 
-server:
-  port: 9000
+#server:
+ # port: 9000

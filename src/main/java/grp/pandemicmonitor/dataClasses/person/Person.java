@@ -1,11 +1,37 @@
 package grp.pandemicmonitor.dataClasses.person;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Person {
     private String idNo,mail,fullName,phoneNo,address,gender;
     private Date birthday;
     private int age;
+
+    public Person(String idNo, String mail, String fullName, String phoneNo, String address, String gender, Date birthday) {
+        this.idNo = idNo;
+        this.mail = mail;
+        this.fullName = fullName;
+        this.phoneNo = phoneNo;
+        this.address = address;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.age = LocalDate.now().getYear() - birthday.getYear()+1900;
+    }
+    public Person() {
+        this.idNo = "";
+        this.mail = "";
+        this.fullName = "";
+        this.phoneNo = "";
+        this.address = "";
+        this.gender = "";
+        this.birthday = new Date(2000-1-1);
+        this.age = 0;
+    }
+
+    public void displayInfo(){
+        System.out.println("("+idNo+","+fullName+","+gender+","+birthday+","+age+","+phoneNo+","+mail+","+address+")");
+    }
 
     public String getIdNo() {
         return idNo;
