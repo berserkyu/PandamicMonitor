@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>重大传染病疫情流调系统</title>
+</head>
+<body>
+
+<h1 align="center">用户注册</h1>
+<form action="" method="get">
+    <table align="center">
+        <tr>
+            <td align="right"><lable for="name">真实姓名：</lable></td>
+            <td><input type="text" name="name" required placeholder="请输入您的真实姓名"></td>
+        </tr>
+        <tr>
+            <td align="right"><lable>性别：</lable></td>
+            <td>
+                <input type="radio" name="gender" value="male">男
+                <input type="radio" name="gender" value="female">女
+            </td>
+        </tr>
+        <tr>
+            <td align="right"><lable>出生日期：</lable></td>
+            <td>
+                <input type="text" size="1" name="year" placeholder="yyyy" value="">年
+                <select name="month">
+                    <option value="0">--选择月份--</option>
+                    <option value="1">1月</option>
+                    <option value="2">2月</option>
+                    <option value="3">3月</option>
+                    <option value="4">4月</option>
+                    <option value="5">5月</option>
+                    <option value="6">6月</option>
+                    <option value="7">7月</option>
+                    <option value="8">8月</option>
+                    <option value="9">9月</option>
+                    <option value="10">10月</option>
+                    <option value="11">11月</option>
+                    <option value="12">12月</option>
+                </select>
+                <input type="text" size="1" name="day" placeholder="dd">日
+            </td>
+        </tr>
+        <tr>
+            <td align="right"><lable for="my id card">证件号：</lable></td>
+            <td>
+                <select name="type">
+                    <option value="">--请选择证件类型--</option>
+                    <option value="">身份证</option>
+                    <option value="">港澳台身份证</option>
+                </select>
+                <input type="text" name="id card" required placeholder="请输入您的证件号">
+            </td>
+        </tr>
+        <tr>
+            <td align="right"><lable for="myemail">电子邮箱：</lable></td>
+            <td><input type="email" name="myemail" required placeholder="请输入您的电子邮箱">必须包含@字符</td>
+        </tr>
+        <tr>
+            <td align="right"><lable for="address">地址：</lable></td>
+            <td><input type="text" name="address" required id="address" value="" placeholder="请输入您的家庭住址"></td>
+        </tr>
+        <tr>
+            <td align="right"><lable for="phone number">手机号码：</lable></td>
+            <td><input type="text" name="phone number" required id="phone number" value="" placeholder="请输入您的手机号码"></td>
+        </tr>
+        <tr>
+            <td align="right"><lable for="password">密码：</lable></td>
+            <td><input type="password" name="password" required pattern="[a-zA-Z]\w{5,17}$" id="password" value="" placeholder="请输入您的密码"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>字母开头，长度在6~18之间，只能包含大小写字母、数字和下划线</td>
+        </tr>
+        <tr>
+            <td align="right"><lable for="password2">确认密码：</lable></td>
+            <td><input type="password" name="password2" required pattern="[a-zA-Z]\w{5,17}$" id="password2" value="" placeholder="请再输入一遍密码"></td>
+        </tr>
+    </table>
+    <div align="center">
+        <input type="submit" value="注册">
+        <input type="reset" value="重置">
+        <p>已有账号？<a href="http://localhost:63342/%E9%87%8D%E5%A4%A7%E4%BC%A0%E6%9F%93%E7%97%85%E7%96%AB%E6%83%85%E6%B5%81%E8%B0%83%E7%B3%BB%E7%BB%9F/HTML/%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2.html?_ijt=khumvpjkvmjik0ao4r20l6drqj">立即登录</a></p>
+    </div>
+</form>
+
+</body>
+</html>
