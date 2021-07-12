@@ -101,10 +101,6 @@ public class PersonDaoImple implements PersonDao {
         return  result;
     }
 
-    @Override
-    public List<Person> getAllPersonInvolvedInRoute(List<Location> route)  throws SQLException{
-        return null;
-    }
 
     @Override
     public List<Person> getAllPersonVisited(Location loc)  throws SQLException{
@@ -126,4 +122,10 @@ public class PersonDaoImple implements PersonDao {
         List<Person> l = jdbcTemplate.query(sqlQuery,new PersonMapper());
         return  l;
     }
+
+    @Override
+    public List<Person> getAllPersonInvolvedInRoute(List<Location> route)  throws SQLException{
+        return null;
+    }
+
 }

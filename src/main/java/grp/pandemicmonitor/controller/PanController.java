@@ -24,5 +24,5 @@ public class PanController {
 
         return "hello" + message;
     }
-
+    @RequestMapping(value)
 }
