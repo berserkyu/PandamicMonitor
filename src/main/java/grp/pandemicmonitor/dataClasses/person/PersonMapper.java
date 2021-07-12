@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+//将数据库里的person转化为java里的person对象
 public class PersonMapper implements RowMapper<Person> {
     @Override
     public Person mapRow(ResultSet rs,int rowNum)throws SQLException {
@@ -17,6 +18,7 @@ public class PersonMapper implements RowMapper<Person> {
         p.setAddress(rs.getString("address"));
         p.setAge(rs.getInt("age"));
         p.setGender(rs.getString("gender"));
+        p.setPassword("");
         return  p;
     }
 }

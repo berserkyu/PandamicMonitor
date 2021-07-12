@@ -3,10 +3,20 @@ package grp.pandemicmonitor.dataClasses.person;
 import java.time.LocalDate;
 import java.util.Date;
 
+//所有人员的信息
 public class Person {
-    private String idNo,mail,fullName,phoneNo,address,gender;
+    //人员基本信息
+    private String idNo,mail,fullName,phoneNo,address,gender,password;
     private Date birthday;
     private int age;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Person(String idNo, String mail, String fullName, String phoneNo, String address, String gender, Date birthday) {
         this.idNo = idNo;
@@ -27,6 +37,7 @@ public class Person {
         this.gender = "";
         this.birthday = new Date(2000-1-1);
         this.age = 0;
+        this.password = "";
     }
 
     public void displayInfo(){
