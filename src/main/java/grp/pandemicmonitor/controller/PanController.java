@@ -3,6 +3,7 @@ package grp.pandemicmonitor.controller;
 import grp.pandemicmonitor.dataClasses.location.Location;
 import grp.pandemicmonitor.dataClasses.location.LocationDaoImple;
 import grp.pandemicmonitor.dataClasses.person.Person;
+import grp.pandemicmonitor.dataClasses.person.PersonDao;
 import grp.pandemicmonitor.dataClasses.person.PersonDaoImple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 @Controller
@@ -26,12 +28,5 @@ public class PanController {
         return "hello" + message;
     }
 
-    @RequestMapping(value="/PandamicMonitor/LoginVerify")
-    public String  verifyLogin(String mail,String pword){
-        if(per.validateLogin(mail,pword)!=null){
-            return  "userEditFrontPage.html";
-        }else{
-            return  null;
-        }
-    }
+
 }

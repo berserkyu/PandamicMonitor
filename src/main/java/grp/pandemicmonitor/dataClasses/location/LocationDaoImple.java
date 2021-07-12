@@ -17,7 +17,7 @@ public class LocationDaoImple implements LocationDao{
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public Location getLocation(long ID) throws SQLException {
+    public Location getLocation(long ID)  {
         String sqlQuery = String.format("SELECT * FROM Location WHERE locId=%d",ID);
         List<Location> result = jdbcTemplate.query(sqlQuery,new LocationMapper());
         if(result.isEmpty()){
@@ -28,14 +28,14 @@ public class LocationDaoImple implements LocationDao{
     }
     //可能会导致程序内存不够用
     @Override
-    public List<Location> getAllLocations() throws SQLException {
+    public List<Location> getAllLocations()  {
         String sqlQuery = "SELECT * FROM Location";
         List<Location> result = jdbcTemplate.query(sqlQuery,new LocationMapper());
         return result;
     }
     //此处运算假设地球是圆的
     @Override
-    public List<Location> getLocationWithin(Location origin, double radius)  throws SQLException{
+    public List<Location> getLocationWithin(Location origin, double radius) {
         String sqlQuery = String.format("SELECT l2.locId,l2.locName,l2.longitude,l2.latitude " +
                                         "FROM location as l1,location as l2 " +
                                         "WHERE getDistance(l1.latitude,l1.longitude,l2.latitude,l2.longitude)<%f " +
@@ -48,7 +48,7 @@ public class LocationDaoImple implements LocationDao{
     }
 
     @Override
-    public void addLocation(String name, double longitude, double latitude)  throws SQLException{
+    public void addLocation(String name, double longitude, double latitude) {
         String sqlCmd = String.format("INSERT INTO location(locName,longitude,latitude) " +
                                         " VALUES('%s',%f,%f)",
                                        name,longitude,latitude);
@@ -62,7 +62,7 @@ public class LocationDaoImple implements LocationDao{
     }
 
     @Override
-    public void deleteLocation(long ID)  throws SQLException{
+    public void deleteLocation(long ID) {
         String sqlCmd = String.format("DELETE FROM location WHERE locId=%d",ID);
         int result = jdbcTemplate.update(sqlCmd);
         if(result==1){
@@ -73,7 +73,7 @@ public class LocationDaoImple implements LocationDao{
     }
 
     @Override
-    public void updateLocationMessage(long ID, String name, double longitude, double latitude)  throws SQLException{
+    public void updateLocationMessage(long ID, String name, double longitude, double latitude)  {
         String sqlCmd = String.format("UPDATE location  " +
                                         "SET locName='%s'," +
                                         "longitude=%f," +
