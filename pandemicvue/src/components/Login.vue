@@ -23,8 +23,8 @@
 
         <!--按钮-->
         <el-form-item class="btns">
-          <el-button type="primary">用户登录</el-button>
-          <el-button type="info">管理员登录</el-button>
+          <el-button type="primary" v-on:click="user">用户登录</el-button>
+          <el-button type="info" v-on:click="admin">管理员登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -33,6 +33,8 @@
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+  const {defaults} = require("autoprefixer");
+
   export default {
     name: "Login",
     data() {
@@ -41,6 +43,8 @@
           username: "",
           password: "",
         },
+        responseResult: [],
+
         loginRules: {
           username: [
             { required: true, message: '请输入用户名/邮箱', trigger: 'blur' },
@@ -53,7 +57,44 @@
         },
       };
     },
+    methods:{
+      user() {
+        this.$axios
+          .post('/login',{
+            mail: this.loginForm.username,
+            password: this.loginForm.password
+          })
+          .then(successResponse => {
+            if(successResponse.data.code === 200){
+              this.$router.replace({path:'/helloworld'})
+              this.$message.success("用户登录成功！");
+            }else
+              this.$message.error("邮箱或密码不存在！");
 
+          })
+          .catch(failResponse =>{
+            alert("跨域操作失败！")
+          })
+      },
+      admin() {
+        this.$axios
+          .post('/login',{
+          mail: this.loginForm.username,
+          password: this.loginForm.password
+        })
+          .then(successResponse => {
+            if(successResponse.data.code === 200){
+            this.$router.replace({path:'/home'})
+            this.$message.success("管理员登录成功！");
+          }else
+            this.$message.error("邮箱或密码不存在！");
+
+        })
+          .catch(failResponse =>{
+            alert("操作失败！")
+          })
+      },
+    }
   }
 </script>
 
@@ -82,7 +123,7 @@
     padding: 5px;
     position: absolute;
     left: 50%;
-    transform: translate(-50%,-70%);
+    transform: translate(-50%,-60%);
     background-color: #ffff80;
   }
   img{
