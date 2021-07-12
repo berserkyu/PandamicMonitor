@@ -10,7 +10,7 @@ import './assets/css/global.css'
 
 const axios = require('axios');
 Vue.prototype.$axios = axios
-axios.defaults.baseURL = 'http://localhost:9000'
+axios.defaults.baseURL = 'http://localhost:8081'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 

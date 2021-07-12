@@ -40,8 +40,8 @@
     data() {
       return {
         loginForm: {
-          username: "",
-          password: "",
+          username: "changed@hotmail.com",
+          password: "newPword",
         },
         responseResult: [],
 
@@ -60,7 +60,8 @@
     methods:{
       user() {
         this.$axios
-          .post('/login',{
+          .post('/pandemicmonitor/login',{
+
             mail: this.loginForm.username,
             password: this.loginForm.password
           })
@@ -78,7 +79,7 @@
       },
       admin() {
         this.$axios
-          .post('/login',{
+          .post('/pandemicmonitor/login',{
           mail: this.loginForm.username,
           password: this.loginForm.password
         })
