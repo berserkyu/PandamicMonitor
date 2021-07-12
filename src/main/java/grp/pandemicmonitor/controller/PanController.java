@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Date;
 import java.util.List;
@@ -24,5 +25,13 @@ public class PanController {
 
         return "hello" + message;
     }
-    @RequestMapping(value)
+
+    @RequestMapping(value="/PandamicMonitor/LoginVerify")
+    public String  verifyLogin(String mail,String pword){
+        if(per.validateLogin(mail,pword)!=null){
+            return  "userEditFrontPage.html";
+        }else{
+            return  null;
+        }
+    }
 }

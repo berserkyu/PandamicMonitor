@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PersonDao {
     public Person getPerson(String idNo) throws SQLException;
-    public Person validateLogin(String mail,String pword) throws SQLException;
+    public Person validateLogin(String mail,String pword) ;
     public boolean addPerson(Person p) throws SQLException;
     public boolean addPerson(Person p,String pword) throws SQLException;
     public boolean changePersonalInfo(String idNo,String fullName,String phoneNo,String address) throws SQLException;

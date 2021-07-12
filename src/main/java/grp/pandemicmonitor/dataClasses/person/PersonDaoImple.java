@@ -40,7 +40,7 @@ public class PersonDaoImple implements PersonDao {
     }
 
     @Override
-    public Person validateLogin(String mail,String pword) throws SQLException{
+    public Person validateLogin(String mail,String pword) {
         String sqlQuery = String.format("select * from person,loginInfo " +
                                         "where person.mail=loginInfo.mail " +
                                         "and logiInfo.mail='%s' " +
