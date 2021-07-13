@@ -23,7 +23,7 @@ public class LoginController {
 
 
     @CrossOrigin
-    @RequestMapping(value = "/pandemicmonitor/login")
+    @RequestMapping(value = "pandemicmonitor/login")
     @ResponseBody
     //收到登录请求 验证登录信息
     public Result verifyLogin(@RequestBody LoginInfo l){
