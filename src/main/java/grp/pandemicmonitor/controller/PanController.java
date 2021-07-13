@@ -22,9 +22,10 @@ public class PanController {
     LocationDaoImple loc;
     @Autowired
     PersonDaoImple per;
-    @RequestMapping(value ="/pandamicmonitor")
+    @RequestMapping(value ="/pandamic")
     public @ResponseBody String say(String message){
-        return "hello" + message;
+
+        return "xxxxx";
     }
 
 

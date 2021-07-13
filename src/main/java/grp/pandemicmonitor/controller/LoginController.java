@@ -15,6 +15,12 @@ public class LoginController {
     @Autowired
     PersonDaoImple per;
 
+    @RequestMapping( "/")
+    public String hello(){
+        System.out.println("shit");
+        return "index";
+    }
+
 
     @CrossOrigin
     @RequestMapping(value = "/pandemicmonitor/login")
@@ -48,7 +54,7 @@ public class LoginController {
     //更新邮箱与密码都通过此接口
     @RequestMapping(value = "updateuserlogininfo")
     @ResponseBody
-    public Result updateUserLoginInfo(newLoginInfo nl ){
+    public Result updateUserLoginInfo(newLoginInfo nl){
         //先更新邮箱
         if(!per.changePersonMail(nl.getOldmail(),nl.getOldmail())
                 || !per.changePassword(nl.getNewmail(),nl.getOldpword(),nl.getNewpword()) ){
