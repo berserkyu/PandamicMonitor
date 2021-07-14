@@ -1,12 +1,15 @@
 package grp.pandemicmonitor.dataClasses.person;
 
+import grp.pandemicmonitor.dataClasses.Address;
+
 import java.time.LocalDate;
 import java.util.Date;
 
 //所有人员的信息
 public class Person {
     //人员基本信息
-    private String idNo,mail,fullName,phoneNo,address,gender,password;
+    private String idNo,mail,fullName,phoneNo,gender,password;
+    Address address;
     private Date birthday;
     private int age;
 
@@ -18,14 +21,14 @@ public class Person {
         this.password = password;
     }
 
-    public Person(String idNo, String mail, String fullName, String phoneNo, String address, String gender, Date birthday) {
+    public Person(String idNo, String mail, String fullName, String phoneNo, Address address, String gender, Date birthday) {
         this.idNo = idNo;
         this.mail = mail;
         this.fullName = fullName;
         this.phoneNo = phoneNo;
-        this.address = address;
         this.gender = gender;
         this.birthday = birthday;
+        this.address = address;
         this.age = LocalDate.now().getYear() - birthday.getYear()+1900;
     }
     public Person() {
@@ -33,7 +36,7 @@ public class Person {
         this.mail = "";
         this.fullName = "";
         this.phoneNo = "";
-        this.address = "";
+        this.address = new Address("","","","");
         this.gender = "";
         this.birthday = new Date(2000-1-1);
         this.age = 0;
@@ -76,11 +79,11 @@ public class Person {
         this.phoneNo = phoneNo;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

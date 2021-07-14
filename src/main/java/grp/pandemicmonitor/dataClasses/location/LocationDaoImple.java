@@ -3,7 +3,12 @@ package grp.pandemicmonitor.dataClasses.location;
 import java.sql.SQLException;
 import java.util.List;
 
+import grp.pandemicmonitor.dataClasses.Address;
+import grp.pandemicmonitor.dataClasses.Result;
 
+
+import com.sun.org.apache.regexp.internal.RE;
+import grp.pandemicmonitor.dataClasses.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -13,6 +18,8 @@ import javax.swing.plaf.synth.SynthEditorPaneUI;
 
 @Component
 public class LocationDaoImple implements LocationDao{
+
+
     @Autowired
     JdbcTemplate jdbcTemplate;
 
@@ -48,42 +55,35 @@ public class LocationDaoImple implements LocationDao{
     }
 
     @Override
-    public void addLocation(String name, double longitude, double latitude) {
-        String sqlCmd = String.format("INSERT INTO location(locName,longitude,latitude) " +
-                                        " VALUES('%s',%f,%f)",
-                                       name,longitude,latitude);
-        System.out.println(sqlCmd);
+    public long addLocation(String name, Address address) {
+        String sqlCmd = String.format("INSERT INTO location(locName,province,city,area,address) " +
+                                        " VALUES('%s','%s','%s','%s','%s')",
+                                       name,address.getProvince(),address.getCity(),address.getArea(),
+                                        address.getAddress());
         int result = jdbcTemplate.update(sqlCmd);
-        if(result==1){
-
-        }else {
-
-        }
+        if(result!=1) return -1;
+        return result;
     }
 
     @Override
-    public void deleteLocation(long ID) {
+    public boolean deleteLocation(long ID) {
         String sqlCmd = String.format("DELETE FROM location WHERE locId=%d",ID);
         int result = jdbcTemplate.update(sqlCmd);
-        if(result==1){
-
-        }else{
-
-        }
+        return result==1;
     }
 
     @Override
-    public void updateLocationMessage(long ID, String name, double longitude, double latitude)  {
+    public boolean updateLocation(long ID, String name,Address address)  {
         String sqlCmd = String.format("UPDATE location  " +
                                         "SET locName='%s'," +
-                                        "longitude=%f," +
-                                        "latitude=%f " +
-                                        "WHERE locId=%d",name,longitude,latitude,ID);
+                                        "province='%s'," +
+                                        "city='%s'" +
+                                        "area='%s'" +
+                                        "address='%s' " +
+                                        "WHERE locId=%d"
+                ,name,address.getProvince(), address.getCity(),
+                address.getArea(),address.getAddress(),ID);
         int result = jdbcTemplate.update(sqlCmd);
-        if(result==1){
-
-        }else{
-
-        }
+        return result==1;
     }
 }

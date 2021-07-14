@@ -15,7 +15,7 @@ public class LoginController {
     @Autowired
     PersonDaoImple per;
 
-    @RequestMapping( "/")
+    @RequestMapping( "/x")
     public String hello(){
         System.out.println("shit");
         return "index";
@@ -23,12 +23,12 @@ public class LoginController {
 
 
     @CrossOrigin
-    @RequestMapping(value = "pandemicmonitor/login")
+    @RequestMapping(value = "/login")
     @ResponseBody
     //收到登录请求 验证登录信息
     public Result verifyLogin(@RequestBody LoginInfo l){
         Person p = per.validateLogin(l.getMail(),l.getPassword(),l.getType());
-        System.out.println("login request: " +l.getMail()+"  "+l.getPassword()+"  "+l.getType());
+        System.out.println("login request:  " +l.getMail()+"  "+l.getPassword()+"  "+l.getType());
         if(p!=null){
             p.displayInfo();
             //返回200代表验证通过
@@ -41,9 +41,10 @@ public class LoginController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/pandemicmonitor/register")
+    @RequestMapping(value = "/register")
     @ResponseBody
     public Result register(@RequestBody Person p){
+        System.out.println("register requested");
         if(per.addPerson(p,p.getPassword())){
             return new Result(200);
         }
@@ -52,7 +53,7 @@ public class LoginController {
 
     //更新登录信息
     //更新邮箱与密码都通过此接口
-    @RequestMapping(value = "updateuserlogininfo")
+    @RequestMapping(value = "changelogininfo")
     @ResponseBody
     public Result updateUserLoginInfo(newLoginInfo nl){
         //先更新邮箱
