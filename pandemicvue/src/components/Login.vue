@@ -1,6 +1,7 @@
 <template>
   <div class="login_container">
     <!--登录块-->
+    <span class="span">重大传染病疫情流调系统</span>
     <div class="login_box">
       <!--logo-->
       <div class="avatar_box">
@@ -11,15 +12,15 @@
         <!--用户名-->
         <el-form-item prop="username">
           用户名/邮箱：
-          <el-input v-model="loginForm.username" prefix-icon="iconfont icon-denglu"></el-input>
+          <el-input v-model="loginForm.username" ></el-input>
         </el-form-item>
         <!--密码-->
         <el-form-item prop="password">
           密码：
-          <el-input type="password" v-model="loginForm.password" prefix-icon="iconfont icon-mima"></el-input>
+          <el-input type="password" v-model="loginForm.password" ></el-input>
         </el-form-item>
 
-        <el-link type="primary" class="register">注册账号</el-link>
+        <el-link type="primary" class="register" v-on:click="register">注册账号</el-link>
 
         <!--按钮-->
         <el-form-item class="btns">
@@ -31,21 +32,24 @@
   </div>
 </template>
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 <script>
+  // 引入autoprefixer（为了引用successResponse）
   const {defaults} = require("autoprefixer");
 
   export default {
     name: "Login",
     data() {
       return {
+        //页面成员
         loginForm: {
           username: "",
           password: "",
         },
-        responseResult: [],
 
+        //判断账号和密码输入是否符合规则
         loginRules: {
+          //自己创建规则
           username: [
             { required: true, message: '请输入用户名/邮箱', trigger: 'blur' },
             { min: 10, max: 30, message: '长度在 10 到 30 个字符', trigger: 'blur' }
@@ -59,18 +63,22 @@
     },
     methods:{
       user() {
-        this.$axios
+        this.$axios//url是后端的RequestMapping中的路径
           .post('/login',{
+            //回传含有mail，password，type的类
             mail: this.loginForm.username,
-            password: this.loginForm.password
+            password: this.loginForm.password,
+            type: 1
           })
           .then(successResponse => {
             if(successResponse.data.code === 200){
-              this.$router.replace({path:'/helloworld'})
+              //路由到其他页面
+              this.$router.replace({path:'/home'})
               this.$message.success("用户登录成功！");
             }else
+            {
               this.$message.error("邮箱或密码不存在！");
-
+            }
           })
           .catch(failResponse =>{
             alert("跨域操作失败！")
@@ -79,8 +87,9 @@
       admin() {
         this.$axios
           .post('/login',{
-          mail: this.loginForm.username,
-          password: this.loginForm.password
+            mail: this.loginForm.username,
+            password: this.loginForm.password,
+            type:0
         })
           .then(successResponse => {
             if(successResponse.data.code === 200){
@@ -91,20 +100,28 @@
 
         })
           .catch(failResponse =>{
-            alert("操作失败！")
+            alert("跨域操作失败！")
           })
       },
+      register(){
+        this.$router.replace({path:'/register'})
+      }
     }
   }
 </script>
 
 <style scoped>
-  /*根节点样式*/
   .login_container {
     background-color: rgba(188, 236, 141, 0.84);
     height: 100%;
   }
-  /*输入框样式*/
+  span{
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 35px;
+  }
   .login_box {
     width: 450px;
     height: 300px;
@@ -113,7 +130,7 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -25%);
   }
   .avatar_box{
     width: 130px;
