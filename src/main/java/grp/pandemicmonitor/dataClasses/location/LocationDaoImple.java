@@ -23,6 +23,7 @@ public class LocationDaoImple implements LocationDao{
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    //通过地点编号获取地点信息
     @Override
     public Location getLocation(long ID)  {
         String sqlQuery = String.format("SELECT * FROM Location WHERE locId=%d",ID);
@@ -33,7 +34,7 @@ public class LocationDaoImple implements LocationDao{
             return  result.get(0);
         }
     }
-    //可能会导致程序内存不够用
+    //获得所有地点信息
     @Override
     public List<Location> getAllLocations()  {
         String sqlQuery = "SELECT * FROM Location";
@@ -41,6 +42,8 @@ public class LocationDaoImple implements LocationDao{
         return result;
     }
     //此处运算假设地球是圆的
+    //在数据库里定义GetDistance函数：利用半正矢公式计算两个坐标之间距离
+    //获得origin地点半径radius距离内的所有地点信息
     @Override
     public List<Location> getLocationWithin(Location origin, double radius) {
         String sqlQuery = String.format("SELECT l2.locId,l2.locName,l2.longitude,l2.latitude " +
@@ -53,7 +56,7 @@ public class LocationDaoImple implements LocationDao{
         List<Location> result = jdbcTemplate.query(sqlQuery,new LocationMapper());
         return  result;
     }
-
+    //增加新地点
     @Override
     public long addLocation(String name, Address address) {
         String sqlCmd = String.format("INSERT INTO location(locName,province,city,area,address) " +
@@ -64,14 +67,14 @@ public class LocationDaoImple implements LocationDao{
         if(result!=1) return -1;
         return result;
     }
-
+    //删除地点信息
     @Override
     public boolean deleteLocation(long ID) {
         String sqlCmd = String.format("DELETE FROM location WHERE locId=%d",ID);
         int result = jdbcTemplate.update(sqlCmd);
         return result==1;
     }
-
+    //更新地点信息：将更新任何一项信息的动作都放到一个接口里
     @Override
     public boolean updateLocation(long ID, String name,Address address)  {
         String sqlCmd = String.format("UPDATE location  " +

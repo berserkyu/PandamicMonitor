@@ -40,6 +40,7 @@ public class LoginController {
         }
     }
 
+    //注册新用户
     @CrossOrigin
     @RequestMapping(value = "/register")
     @ResponseBody
@@ -53,6 +54,7 @@ public class LoginController {
 
     //更新登录信息
     //更新邮箱与密码都通过此接口
+    @CrossOrigin
     @RequestMapping(value = "changelogininfo")
     @ResponseBody
     public Result updateUserLoginInfo(newLoginInfo nl){

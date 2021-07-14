@@ -8,9 +8,13 @@ import java.util.Date;
 //所有人员的信息
 public class Person {
     //人员基本信息
+    //身份证号,邮箱,全名,电话号码,性别,密码
     private String idNo,mail,fullName,phoneNo,gender,password;
+    //地址
     Address address;
+    //生日
     private Date birthday;
+    //年龄
     private int age;
 
     public String getPassword() {
