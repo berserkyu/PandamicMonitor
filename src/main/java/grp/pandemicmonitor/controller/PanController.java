@@ -24,19 +24,10 @@ public class PanController {
     LocationDaoImple loc;
     @Autowired
     PersonDaoImple per;
-
+    //测试用函数
     @RequestMapping(value ="/test")
     public @ResponseBody String say(@RequestBody String message){
-        System.out.println("shitttttt");
-        Address address = new Address("湖北省","武汉市","武昌区","武汉大学");
-        long x = loc.addLocation("武汉大学",address);
-        if(x!=-1){
-            System.out.println("Add Location Failed");
-        }else{
-            Location location = loc.getLocation(x);
-            location.displayInfo();
-        }
-        return "xxxxx";
+        return "test001";
     }
 
 

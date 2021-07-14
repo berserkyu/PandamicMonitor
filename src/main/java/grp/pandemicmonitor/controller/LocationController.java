@@ -6,10 +6,11 @@ import grp.pandemicmonitor.dataClasses.location.LocationDaoImple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+//和地点信息相关的Controller
 public class LocationController {
     @Autowired
     private LocationDaoImple loc;
-
+    //新增地点
     @RequestMapping(value = "/location/add")
     public Result addLocation(Location l){
        if( loc.addLocation(l.getLocName(),l.getAddress())!=-1){
@@ -17,7 +18,7 @@ public class LocationController {
        }
        return new Result(400);
     }
-
+    //改变现有地点信息
     @RequestMapping(value = "/location/change")
     public Result changeLocationInfo(Location l){
         if(loc.updateLocation(l.getID(),l.getLocName(),l.getAddress())){
@@ -25,7 +26,7 @@ public class LocationController {
         }
         return new Result(400);
     }
-
+    //删除地点信息
     @RequestMapping(value = "/location/delete")
     public Result deleteLocation(Location l){
         if(loc.deleteLocation(l.getID())) return new Result(200);
