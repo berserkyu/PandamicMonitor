@@ -15,23 +15,22 @@
       <el-aside width="230px">
         <el-menu background-color="#4a5064"
                  text-color="#fff"
-                 active-text-color="#409eff">
+                 active-text-color="#409eff"
+                 unique-opened
+                 :router = "true"
+                 default-active="/userlist">
 
-          <el-submenu index="1">
+          <el-submenu :index="item.id" v-for="item in menuList" :key="item.id">
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>导航一</span>
+              <span>{{ item.title }}</span>
             </template>
-
             <el-menu-item-group>
-              <template slot="title">分组一</template>
-              <el-menu-item index="1-1">选项1</el-menu-item>
-              <el-menu-item index="1-2">选项2</el-menu-item>
+              <el-menu-item :index="i.path" v-for="i in item.sList" :key="i.id">
+                <span>{{ i.title }}</span>
+              </el-menu-item>
             </el-menu-item-group>
 
-            <el-menu-item-group title="分组2">
-              <el-menu-item index="1-3">选项3</el-menu-item>
-            </el-menu-item-group>
 
           </el-submenu>
         </el-menu>
@@ -52,30 +51,73 @@
       return{
         menuList:[
           {
-            id:0,
-            title: '用户列表',
-            path: '/userlist',
-            mainId:0
+            id: 0,
+            path: '/admin',
+            title: '管理员权限',
+            sList:[
+              {
+                id: 0,
+                title: '用户列表',
+                path: '/userlist',
+              },
+              {
+                id: 1,
+                title: '录入新地点信息',
+                path: '/admininputaddress',
+              },
+              {
+                id: 2,
+                title: '用户行动路径',
+                path: '/2',
+              },
+              {
+                id: 3,
+                title: '与被调查人员路径相交用户',
+                path: '/3',
+              },
+              {
+                id: 4,
+                title: '查询重点路径',
+                path: '/4',
+              },
+            ],
           },
           {
-            id:1,
-            title: '修改用户密码',
-            path: '/changepassword',
-            mainId:1
-          },
-          {
-            id:2,
-            title: '更新用户信息',
-            path: '/infoupdate',
-            mainId:1
+            id: 1,
+            path: '/user',
+            title: '用户信息平台',
+            sList:[
+              {
+                id: 10,
+                title: '修改密码',
+                path: '/changepassword',
+              },
+              {
+                id: 11,
+                title: '更新用户信息',
+                path: '/infoupdate',
+              },
+              {
+                id: 12,
+                title: '手动录入新地点信息',
+                path: '/12',
+              },
+              {
+                id: 13,
+                title: '扫描二维码录入地点信息',
+                path: '/13',
+              },
+              {
+                id: 14,
+                title: '查询重点路径',
+                path: '/14',
+              },
+            ],
           },
         ],
       }
     },
-    //Onload时间
-    created() {
-      this.getMenuList();
-    },
+
     methods:{
       logout(){
         this.$confirm('是否确定登出？', '提示', {
@@ -96,9 +138,7 @@
           });
         });
       },
-      getMenuList(){
 
-      },
     }
   }
 </script>
@@ -122,12 +162,9 @@
     display: flex;
     align-items: center;
   }
-
   .span {
     margin-left: 15px;
   }
-
-
   .el-aside {
     background-color: #444444;
   }
@@ -138,6 +175,7 @@
   .el-main {
     background-color: #eaedf1;
   }
+
 
   img {
     width: 230px;

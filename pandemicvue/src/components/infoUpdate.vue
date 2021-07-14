@@ -72,7 +72,7 @@ export default {
   methods:{
     infoUpdateSubmit(){
       this.$axios
-      .post('/updateuserlogininfo',{
+      .post('/changelogininfo',{
         name: this.infoUpdateForm.username,
         mail: this.infoUpdateForm.email,
         address: this.infoUpdateForm.address,
@@ -82,9 +82,7 @@ export default {
         if(successResponse.data.code === 200) {
           this.$message.success("更新用户信息成功！");
         }else
-        {
           this.$message.error("更新信息格式错误！");
-        }
       }).catch(failResponse =>{alert("跨域操作失败！")})
     }
   }
@@ -95,7 +93,6 @@ export default {
 <style scoped>
   /*根节点样式*/
   .infoUpdate_container {
-    background-color: #e0dfdf;
     height: 100%;
   }
   /*输入框样式*/

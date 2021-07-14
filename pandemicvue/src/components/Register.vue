@@ -67,7 +67,7 @@
           <el-input type="password" v-model="registerForm.checkpassword" placeholder="请再输入一遍密码" clearable show-password></el-input>
         </el-form-item>
         <!--跳转登录页面-->
-        <el-link href="http://localhost:8080/#/login" type="primary" class="login">登录账号</el-link>
+        <el-link v-on:click="login" type="primary" class="login">登录账号</el-link>
         <!--按钮-->
         <el-form-item class="btns">
           <el-button type="primary" @click="submitForm('registerForm')">注册</el-button>
@@ -169,10 +169,15 @@
         }
       }
     },
+
     methods:{
       submitForm(formName){
+        function validateCheckPassword() {
+          return this.registerForm.password === this.registerForm.checkpassword;
+        }
+
         this.$refs(formName).validate((valid) =>{
-          if(valid){
+          if(valid && validateCheckPassword()){
             this.$axios
               .post('/register', {
                   fullname: this.registerForm.name,
@@ -200,6 +205,9 @@
       },
       resetForm(formName){
         this.$refs(formName).resetFields();
+      },
+      login(){
+        this.$router.replace({path:'/login'})
       }
     }
   }

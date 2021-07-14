@@ -7,6 +7,7 @@ import UserList from '../components/UserList.vue'
 import InfoUpdate from '../components/infoUpdate.vue'
 import Register from '../components/Register.vue'
 import ChangePassword from '../components/changePassword.vue'
+import AdminInputAddress from '../components/AdminInputAddress.vue'
 
 Vue.use(VueRouter)
 
@@ -38,7 +39,11 @@ Vue.use(VueRouter)
         {
           path: "/infoupdate",
           component: InfoUpdate
-        }
+        },
+        {
+          path: "/admininputaddress",
+          component: AdminInputAddress
+        },
       ]
     },
     {

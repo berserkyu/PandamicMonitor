@@ -93,7 +93,7 @@ export default {
       if(this.changePassForm.isNewPassCValid )
       {
         this.$axios
-        .post('',{
+        .post('/changelogininfo',{
           oldPassword: this.oldPassword,
           newPassword: this.newPassword
         })
@@ -101,9 +101,7 @@ export default {
           if(successResponse.data.code === 200)
             this.$message.success("密码更改成功！");
           else
-          {
             this.$message.error("旧密码错误！");
-          }
         }).catch(failResponse =>{alert("跨域操作失败！")})
       }
     }
@@ -114,7 +112,6 @@ export default {
 <style scoped>
 /*根节点样式*/
 .changePass_container {
-  background-color: #e0dfdf;
   height: 100%;
 }
 /*输入框样式*/
