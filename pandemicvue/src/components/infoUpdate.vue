@@ -36,9 +36,8 @@
 </template>
 
 <script>
-  // 引入autoprefixer（为了引用successResponse）
-  const {defaults} = require("autoprefixer");
-
+// 引入autoprefixer（为了引用successResponse）
+const {defaults} = require("autoprefixer");
 export default {
   name: "infoUpdate",
   data() {
@@ -50,18 +49,22 @@ export default {
         phone: "",
       },
       infoUpdateRules: {
+        /*姓名约束*/
         username: [
           { required: true, message: '请输入真实姓名', trigger: 'blur' },
           { min: 2, max: 15, message: '格式错误，请输入真实姓名', trigger: 'blur'}
         ],
+        /*电邮约束*/
         email: [
           { required: true, message: '请输入电子邮箱', trigger: 'blur' },
           { min: 10, max: 30, message: '格式错误，必须包含@字符', trigger: 'blur' }
         ],
+        /*地址约束*/
         address: [
           { required: true, message: '请输入地址', trigger: 'blur' },
           { min: 10, max: 50, message: '请输入正确的地址', trigger: 'blur' }
         ],
+        /*电话号码约束*/
         phone: [
           { required: true, message: '请输入电话号码', trigger: 'blur' },
           { min: 10, max: 15, message: '请输入正确的电话号码', trigger: 'blur' }
@@ -72,50 +75,49 @@ export default {
   methods:{
     infoUpdateSubmit(){
       this.$axios
-      .post('/changelogininfo',{
-        name: this.infoUpdateForm.username,
-        mail: this.infoUpdateForm.email,
-        address: this.infoUpdateForm.address,
-        phoneno: this.infoUpdateForm.phone,
-      })
-      .then(successResponse =>{
-        if(successResponse.data.code === 200) {
-          this.$message.success("更新用户信息成功！");
-        }else
-          this.$message.error("更新信息格式错误！");
-      }).catch(failResponse =>{alert("跨域操作失败！")})
+        .post('/changelogininfo',{
+          name: this.infoUpdateForm.username,
+          mail: this.infoUpdateForm.email,
+          address: this.infoUpdateForm.address,
+          phoneno: this.infoUpdateForm.phone,
+        })
+        .then(successResponse =>{
+          if(successResponse.data.code === 200) {
+            this.$message.success("更新用户信息成功！");
+          }else
+            this.$message.error("更新信息格式错误！");
+        }).catch(failResponse =>{alert("跨域操作失败！")})
     }
   }
-
 }
 </script>
 
 <style scoped>
-  /*根节点样式*/
-  .infoUpdate_container {
-    height: 100%;
-  }
-  /*输入框样式*/
-  .infoUpdate_box {
-    width: 1000px;
-    height: 500px;
-    background-color: #fff;
-    border-radius: 15px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-35%, -40%);
-  }
-  .btns{
-    display: flex;
-    justify-content: flex-end;
-  }
-  .infoUpdate_form{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 0 10px;
-    box-sizing: border-box;
-  }
-
+/*根节点样式*/
+.infoUpdate_container {
+  height: 100%;
+}
+/*输入框样式*/
+.infoUpdate_box {
+  width: 1000px;
+  height: 500px;
+  background-color: #fff;
+  border-radius: 15px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-35%, -40%);
+}
+/*按钮样式*/
+.btns{
+  display: flex;
+  justify-content: flex-end;
+}
+.infoUpdate_form{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
 </style>

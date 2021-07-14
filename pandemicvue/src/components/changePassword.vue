@@ -32,9 +32,8 @@
 </template>
 
 <script>
-  // 引入autoprefixer（为了引用successResponse）
-  const {defaults} = require("autoprefixer");
-
+// 引入autoprefixer（为了引用successResponse）
+const {defaults} = require("autoprefixer");
 export default {
   name: "changePassword",
   data() {
@@ -47,14 +46,17 @@ export default {
         isNewPassCValid: "",
       },
       changePassRules: {
+        /*旧密码约束*/
         oldPass: [
           { required: true, message: '请输入旧密码', trigger: 'blur' },
           { min: 6, max: 15, message: '密码错误', trigger: 'blur' }
         ],
+        /*新密码约束*/
         newPass: [
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
         ],
+        /*新密码确认约束*/
         newPassC: [
           { required: true, message: '请输入确认密码', trigger: 'blur' },
           { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
@@ -87,22 +89,21 @@ export default {
         this.$message.error("确认密码错误！");
       }
     },
-
     changePassword(){
       this.validateConfirmPassword();
       if(this.changePassForm.isNewPassCValid )
       {
         this.$axios
-        .post('/changelogininfo',{
-          oldPassword: this.oldPassword,
-          newPassword: this.newPassword
-        })
-        .then(successResponse =>{
-          if(successResponse.data.code === 200)
-            this.$message.success("密码更改成功！");
-          else
-            this.$message.error("旧密码错误！");
-        }).catch(failResponse =>{alert("跨域操作失败！")})
+          .post('/changelogininfo',{
+            oldPassword: this.oldPassword,
+            newPassword: this.newPassword
+          })
+          .then(successResponse =>{
+            if(successResponse.data.code === 200)
+              this.$message.success("密码更改成功！");
+            else
+              this.$message.error("旧密码错误！");
+          }).catch(failResponse =>{alert("跨域操作失败！")})
       }
     }
   }
@@ -125,6 +126,7 @@ export default {
   top: 50%;
   transform: translate(-30%, -40%);
 }
+/*按钮样式*/
 .btns{
   display: flex;
   justify-content: flex-end;
@@ -136,5 +138,4 @@ export default {
   padding: 0 10px;
   box-sizing: border-box;
 }
-
 </style>
