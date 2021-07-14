@@ -10,7 +10,8 @@ import './assets/css/global.css'
 
 const axios = require('axios');
 Vue.prototype.$axios = axios
-axios.defaults.baseURL = 'http://localhost:9000/pandemicmonitor'
+axios.defaults.baseURL = 'http://47.250.55.73:8081/pandemicmonitor'
+
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 
