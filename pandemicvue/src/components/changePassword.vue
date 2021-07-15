@@ -23,7 +23,7 @@
 
         <!--按钮-->
         <el-form-item class="btns">
-          <el-button type="primary">更改密码</el-button>
+          <el-button type="primary" v-on:click="changePassword">更改密码</el-button>
           <el-button type="info">重置</el-button>
         </el-form-item>
       </el-form>
@@ -90,13 +90,14 @@ export default {
       }
     },
     changePassword(){
+      console.log("change password invoked :"+this.changePassForm.oldPass+" to "+this.changePassForm.newPass);
       this.validateConfirmPassword();
       if(this.changePassForm.isNewPassCValid )
       {
         this.$axios
           .post('/changelogininfo',{
-            oldPassword: this.oldPassword,
-            newPassword: this.newPassword
+            oldPassword: this.changePassForm.oldPass,
+            newPassword: this.changePassForm.newPass
           })
           .then(successResponse =>{
             if(successResponse.data.code === 200)

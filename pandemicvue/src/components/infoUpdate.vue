@@ -74,8 +74,9 @@ export default {
   },
   methods:{
     infoUpdateSubmit(){
+      console.log("update submit");
       this.$axios
-        .post('/changelogininfo',{
+        .post('/changeuserinfo',{
           name: this.infoUpdateForm.username,
           mail: this.infoUpdateForm.email,
           address: this.infoUpdateForm.address,

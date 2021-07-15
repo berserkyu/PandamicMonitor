@@ -6,18 +6,23 @@
       </div>
       <p>选择地区：</p>
       <!--cascader级联选择器实现省市区三级联动-->
-      <el-cascader v-model="value" :options="options" @change="handleChange" class="china_area" clearable></el-cascader>
-      <el-form ref="admininputaddressForm" :model="admininputaddressForm" :rules="admininputaddressFormRules" class="admininputaddress_Form">
+      <el-cascader v-model="value" :options="options" @change="handleChange" class="china_area" clearable ref="temp"></el-cascader>
+      <el-form ref="admininputaddressForm" :model="admininputaddressForm" :rules="admininputaddressFormRules" class="admininputaddress_Form" prop="admininputaddressForm">
         <!--详细地址输入框-->
-        <el-form-item prop="moreaddress">详细地址：
+        <el-form-item prop="moreaddress">
+          详细地址：
           <el-input v-model="admininputaddressForm.moreaddress" placeholder="请输入详细地址，如乡村名称、小区楼栋、门牌号等" clearable></el-input>
+        </el-form-item>
+        <!--地点名字输入框-->
+        <el-form-item prop="moreaddress2">
+          地点名字：
+          <el-input v-model="admininputaddressForm.moreaddress2" placeholder="请输入地点名称，如商店名字、商场名称等" clearable></el-input>
         </el-form-item>
         <!--跳回上一页-->
         <el-link type="primary" class="past">上一页</el-link>
         <!--按钮-->
         <el-form-item class="btns">
-          <el-button type="primary" @click="submitForm('registerForm')">录入</el-button>
-          <el-button @click="resetForm('registerForm')">重置</el-button>
+          <el-button type="primary" @click="submit">录入</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -325,10 +330,8 @@ export default {
                 {value:"连南瑶族自治县",label: "连南瑶族自治县"},
                 {value:"其他",label: "其他"}],
             },
-            {value:"东莞", label:"东莞市", children:['——'],
-            },
-            {value:"中山", label:"中山市", children:['——'],
-            },
+            {value:"东莞", label:"东莞市"},
+            {value:"中山", label:"中山市"},
             {value:"潮州", label: "潮州市", children:[
                 {value:"湘桥区",label: "湘桥区"},
                 {value:"潮安县",label: "潮安区"},
@@ -858,14 +861,10 @@ export default {
                 {value:"咸丰县",label: "咸丰县"},
                 {value:"其他",label: "其他"}],
             },
-            {value:"仙桃", label: "仙桃市", children: ['——'],
-            },
-            {value:"天门", label: "天门市", children: ['——'],
-            },
-            {value:"潜江", label: "潜江市", children: ['——'],
-            },
-            {value:"神农架林区", label: "神农架林区", children: ['——'],
-            },
+            {value:"仙桃", label: "仙桃市"},
+            {value:"天门", label: "天门市"},
+            {value:"潜江", label: "潜江市"},
+            {value:"神农架林区", label: "神农架林区"},
             {value:"其他",label: "其他"}],
         },
         {value:"四川", label: "四川省", children: [
@@ -3585,38 +3584,22 @@ export default {
                 {value:"32",label: "南沙区"},
                 {value:"33",label: "其他"}],
             },
-            {value:"13", label: "五指山市", children: ['——'],
-            },
-            {value:"14", label: "琼海市", children: ['——'],
-            },
-            {value:"15", label: "儋州市", children: ['——'],
-            },
-            {value:"16", label: "文昌市", children: ['——'],
-            },
-            {value:"17", label: "万宁市", children: ['——'],
-            },
-            {value:"18", label: "东方市", children: ['——'],
-            },
-            {value:"19", label: "澄迈县", children: ['——'],
-            },
-            {value:"20", label: "定安县", children: ['——'],
-            },
-            {value:"21", label: "屯昌县", children: ['——'],
-            },
-            {value:"22", label: "临高县", children: ['——'],
-            },
-            {value:"23", label: "白沙黎族自治县", children: ['——'],
-            },
-            {value:"24", label: "昌江黎族自治县", children: ['——'],
-            },
-            {value:"25", label: "乐东黎族自治县", children: ['——'],
-            },
-            {value:"26", label: "陵水黎族自治县", children: ['——'],
-            },
-            {value:"27", label: "保亭黎族苗族自治县", children: ['——'],
-            },
-            {value:"28", label: "琼中黎族苗族自治县", children: ['——'],
-            },
+            {value:"13", label: "五指山市"},
+            {value:"14", label: "琼海市"},
+            {value:"15", label: "儋州市"},
+            {value:"16", label: "文昌市"},
+            {value:"17", label: "万宁市"},
+            {value:"18", label: "东方市"},
+            {value:"19", label: "澄迈县"},
+            {value:"20", label: "定安县"},
+            {value:"21", label: "屯昌县"},
+            {value:"22", label: "临高县"},
+            {value:"23", label: "白沙黎族自治县"},
+            {value:"24", label: "昌江黎族自治县"},
+            {value:"25", label: "乐东黎族自治县"},
+            {value:"26", label: "陵水黎族自治县"},
+            {value:"27", label: "保亭黎族苗族自治县"},
+            {value:"28", label: "琼中黎族苗族自治县"},
             {value:"29",label: "其他"}],
         },
         {value:"甘肃", label: "甘肃省", children: [
@@ -3631,9 +3614,7 @@ export default {
                 {value:"9",label: "榆中县"},
                 {value:"10",label: "其他"}],
             },
-            {value:"11", label: "嘉峪关市", children: [
-                {value:"13",label: "其他"}],
-            },
+            {value:"11", label: "嘉峪关市"},
             {value:"14", label: "金昌市", children: [
                 {value:"15",label: "金川区"},
                 {value:"16",label: "永昌县"},
@@ -3977,8 +3958,7 @@ export default {
             {value:"971", label: "可克达拉市"},
             {value:"9511", label: "昆玉市"},
             {value:"9611", label: "胡杨河市"},
-            {value:"9711", label: "新星市", children: ['——'],
-            },
+            {value:"9711", label: "新星市"},
             {value:"981", label: "伊犁哈萨克自治州", children: [
                 {value:"99",label: "伊宁市"},
                 {value:"100",label: "奎屯市"},
@@ -4077,15 +4057,66 @@ export default {
         }
       ],
       admininputaddressForm:{
-        moreaddress:''
+        moreaddress:'',
+        moreaddress2:'',
       },
       /*Form组件提供的表单验证功能，通过rules属性传入约定的验证规则，并将Form-Item的prop属性设置为需校验的字段名*/
       admininputaddressFormRules:{
         moreaddress:[
-          {required:true, message:'请输入您的地址', trigger:'blur'},
-          {min:10, max:50, message:'长度在10到15个字符', trigger:'blur'}
+          {required:true, message:'请输入地址', trigger:'blur'},
+          {min:5, max:50, message:'长度在5到50个字符', trigger:'blur'}
+        ],
+        moreaddress2:[
+          {required:true, message:'请输入地点名称', trigger:'blur'},
+          {min:5, max:50, message:'长度在5到50个字符', trigger:'blur'}
         ]
       }
+    }
+  },
+  methods: {
+    submit() {
+      this.$confirm('是否确认提交录入信息？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center:true
+      }).then(() => {
+        this.postToBackend();
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消提交'
+        });
+      });
+    },
+    postToBackend(){
+      console.log(this.admininputaddressForm.moreaddress2);
+      console.log(typeof(this.$refs['temp'].$children[0].$options.propsData.value));
+      console.log(this.admininputaddressForm.moreaddress);
+      this.$axios
+        .post('/location/add',{
+          ID: 0,
+          locName: this.admininputaddressForm.moreaddress2,
+          prefix : this.$refs['temp'].$children[0].$options.propsData.value,
+          address: this.admininputaddressForm.moreaddress
+        })
+        .then(successResponse => {
+          if(successResponse.data.code === 200){
+            this.$message({
+              type: 'success',
+              message: '提交录入信息成功！'
+            });
+          }else
+          {
+            this.$message({
+              type: 'error',
+              message: '提交录入信息失败'
+            });
+          }
+        })
+        .catch(failResponse =>{
+          alert("跨域操作失败！")
+        })
     }
   }
 }
@@ -4097,10 +4128,9 @@ export default {
   background-color: rgba(188, 236, 141, 0.84);
   height: 100%;
 }
-/*输入框样式*/
 .address_box {
   width: 450px;
-  height: 260px;
+  height: 380px;
   background-color: #fff;
   border-radius: 15px;
   position: absolute;
@@ -4151,7 +4181,7 @@ img{
 /*上一页按钮样式*/
 .past{
   position: absolute;
-  bottom: 20%;
+  bottom: 12.5%;
 }
 p{
   padding: 0 10px;
