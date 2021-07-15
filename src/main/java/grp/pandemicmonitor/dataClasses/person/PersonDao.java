@@ -1,9 +1,8 @@
 package grp.pandemicmonitor.dataClasses.person;
 
-import grp.pandemicmonitor.dataClasses.LoginInfo;
+import grp.pandemicmonitor.dataClasses.loginInfo.LoginInfo;
 import grp.pandemicmonitor.dataClasses.location.Location;
 
-import java.sql.SQLException;
 import java.sql.Time;
 import java.util.Date;
 import java.util.List;

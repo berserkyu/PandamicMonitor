@@ -1,6 +1,5 @@
 package grp.pandemicmonitor.dataClasses.person;
 
-import grp.pandemicmonitor.dataClasses.Address;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -16,7 +15,8 @@ public class PersonMapper implements RowMapper<Person> {
         p.setBirthday(rs.getDate("birthday"));
         p.setFullName(rs.getString("fullName"));
         p.setPhoneNo(rs.getString("phoneNo"));
-        p.setAddress(new Address(rs.getString("province"),rs.getString("city"),rs.getString("area"),rs.getString("addresss")));
+        p.setAddress(rs.getString("address"));
+       // p.setAddress(new Address(rs.getString("province"),rs.getString("city"),rs.getString("area"),rs.getString("addresss")));
         p.setAge(rs.getInt("age"));
         p.setGender(rs.getString("gender"));
         p.setPassword("");

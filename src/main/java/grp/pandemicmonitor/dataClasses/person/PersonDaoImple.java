@@ -1,10 +1,9 @@
 package grp.pandemicmonitor.dataClasses.person;
 
-import grp.pandemicmonitor.dataClasses.LoginInfo;
+import grp.pandemicmonitor.dataClasses.loginInfo.LoginInfo;
 import grp.pandemicmonitor.dataClasses.location.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
 import org.springframework.stereotype.Component;
 
@@ -56,10 +55,10 @@ public class PersonDaoImple implements PersonDao {
     //验证登录信息
     public Person validateLogin(String mail,String pword,int type) {
         //查询(邮箱，密码，账号类型)都对得上的数据记录
-        String sqlQuery = String.format("select * from person,loginInfo " +
-                                        "where person.mail=loginInfo.mail " +
-                                        "and loginInfo.mail='%s' " +
-                                        "and loginInfo.pword='%s'" +
+        String sqlQuery = String.format("select * from person,logininfo " +
+                                        "where person.mail=logininfo.mail " +
+                                        "and logininfo.mail='%s' " +
+                                        "and logininfo.pword='%s'" +
                                         "and accType=%d",
                                         mail,pword,type);
         List<Person> result = jdbcTemplate.query(sqlQuery,new PersonMapper());

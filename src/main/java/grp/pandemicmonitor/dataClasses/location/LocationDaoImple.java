@@ -1,19 +1,14 @@
 package grp.pandemicmonitor.dataClasses.location;
 
-import java.sql.SQLException;
 import java.util.List;
 
-import grp.pandemicmonitor.dataClasses.Address;
-import grp.pandemicmonitor.dataClasses.Result;
+import grp.pandemicmonitor.dataClasses.Address.Address;
 
 
-import com.sun.org.apache.regexp.internal.RE;
-import grp.pandemicmonitor.dataClasses.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.swing.plaf.synth.SynthEditorPaneUI;
 
 
 @Component
@@ -58,11 +53,10 @@ public class LocationDaoImple implements LocationDao{
     }
     //增加新地点
     @Override
-    public long addLocation(String name, Address address) {
+    public long addLocation(Location l) {
         String sqlCmd = String.format("INSERT INTO location(locName,province,city,area,address) " +
                                         " VALUES('%s','%s','%s','%s','%s')",
-                                       name,address.getProvince(),address.getCity(),address.getArea(),
-                                        address.getAddress());
+                                       l.getLocName(),l.getProvince(),l.getCity(),l.getArea(), l.getAddress());
         int result = jdbcTemplate.update(sqlCmd);
         if(result!=1) return -1;
         return result;

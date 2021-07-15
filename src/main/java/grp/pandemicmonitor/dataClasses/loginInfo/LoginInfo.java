@@ -1,4 +1,4 @@
-package grp.pandemicmonitor.dataClasses;
+package grp.pandemicmonitor.dataClasses.loginInfo;
 
 //登录信息类
 public class LoginInfo {

@@ -1,7 +1,5 @@
 package grp.pandemicmonitor.dataClasses.person;
 
-import grp.pandemicmonitor.dataClasses.Address;
-
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -11,7 +9,8 @@ public class Person {
     //身份证号,邮箱,全名,电话号码,性别,密码
     private String idNo,mail,fullName,phoneNo,gender,password;
     //地址
-    Address address;
+    //Address address;
+    String address;
     //生日
     private Date birthday;
     //年龄
@@ -25,13 +24,14 @@ public class Person {
         this.password = password;
     }
 
-    public Person(String idNo, String mail, String fullName, String phoneNo, Address address, String gender, Date birthday) {
+    public Person(String idNo, String mail, String fullName, String phoneNo,/*Address address*/String address, String gender, Date birthday) {
         this.idNo = idNo;
         this.mail = mail;
         this.fullName = fullName;
         this.phoneNo = phoneNo;
         this.gender = gender;
         this.birthday = birthday;
+        //this.address = address;
         this.address = address;
         this.age = LocalDate.now().getYear() - birthday.getYear()+1900;
     }
@@ -40,7 +40,8 @@ public class Person {
         this.mail = "";
         this.fullName = "";
         this.phoneNo = "";
-        this.address = new Address("","","","");
+        this.address = "";
+        // this.address = new Address("","","","");
         this.gender = "";
         this.birthday = new Date(2000-1-1);
         this.age = 0;
@@ -82,12 +83,20 @@ public class Person {
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
     }
-
+    /*
     public Address getAddress() {
         return address;
     }
 
     public void setAddress(Address address) {
+        this.address = address;
+    }*/
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
         this.address = address;
     }
 

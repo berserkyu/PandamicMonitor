@@ -1,7 +1,6 @@
 package grp.pandemicmonitor.dataClasses.location;
 
-import grp.pandemicmonitor.dataClasses.Address;
-import grp.pandemicmonitor.dataClasses.Result;
+import grp.pandemicmonitor.dataClasses.Address.Address;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,7 +10,7 @@ public interface LocationDao  {
     //得到编号为ID的地点信息
     public Location getLocation(long ID) ;//x
     //新增地点
-    public long addLocation(String name, Address address) throws SQLException;//x
+    public long addLocation(Location l) throws SQLException;//x
     //更新地点信息（例。商家转移店铺）
     public boolean updateLocation(long ID,String name,Address address) ;//x
     //删除地点信息
