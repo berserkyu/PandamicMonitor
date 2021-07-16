@@ -90,7 +90,6 @@ export default {
       }
     },
     changePassword(){
-      console.log("change password invoked :"+this.changePassForm.oldPass+" to "+this.changePassForm.newPass);
       this.validateConfirmPassword();
       if(this.changePassForm.isNewPassCValid )
       {

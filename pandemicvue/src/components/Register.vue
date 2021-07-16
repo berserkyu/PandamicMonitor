@@ -14,8 +14,8 @@
         <!--性别单选框-->
         <el-form-item label="性别：" prop="gender">
           <el-radio-group v-model="registerForm.gender">
-            <el-radio label="1">男</el-radio>
-            <el-radio label="2">女</el-radio>
+            <el-radio label="男">男</el-radio>
+            <el-radio label="女">女</el-radio>
           </el-radio-group>
         </el-form-item>
         <!--日期选择器-->
@@ -60,7 +60,7 @@
         <el-link v-on:click="login" type="primary" class="login">登录账号</el-link>
         <!--按钮-->
         <el-form-item class="btns">
-          <el-button type="primary" @click="submitForm('registerForm')">注册</el-button>
+          <el-button type="primary" v-on:click="submitForm">注册</el-button>
           <el-button @click="resetForm('registerForm')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -151,20 +151,48 @@ export default {
     }
   },
   methods:{
-    submitForm(formName){
-      this.$refs(formName).validate((valid) =>{
+    submitForm(){
+      this.$refs['registerForm'].validate((valid) =>{
         /*若表单验证成功则注册成功，否则注册失败*/
         if(valid){
-          alert('注册成功！');
+          this.$axios
+            .post('/register',{
+              idNo: this.registerForm.certificateid,
+              fullName: this.registerForm.name,
+              phoneNo: this.registerForm.phonenumber,
+              gender: this.registerForm.gender,
+              mail: this.registerForm.email,
+              address: this.registerForm.address,
+              password: this.registerForm.password,
+              birthday: this.registerForm.birth
+            })
+            .then(successResponse => {
+              if(successResponse.data.code === 200){
+                this.$message({
+                  type: 'success',
+                  message: '注册！'
+                });
+              }else
+              {
+                console.log("no success response");
+                this.$message({
+                  type: 'error',
+                  message: '注册失败'
+                });
+              }
+            })
+            .catch(failResponse =>{
+              alert("操作失败！")
+            })
         }
         else{
-          console.log('注册失败！');
+          console.log('请输入正确信息');
           return false;
         }
       });
     },
     resetForm(formName){
-      this.$refs(formName).resetFields();
+      this.$refs[formName].resetFields();
     },
     login(){
       this.$router.replace({path:'/login'})
