@@ -1,4 +1,5 @@
 {
+  "qrcode": "1.2.2",
   "name": "pandemicvue",
   "version": "1.0.0",
   "description": "A Vue.js project",
@@ -17,6 +18,8 @@
     "less": "^4.1.1",
     "less-loader": "^10.0.1",
     "vue": "^2.5.2",
+    "vue-qrcode-component": "^2.1.1",
+    "vue-qrcode-reader": "^3.0.3",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

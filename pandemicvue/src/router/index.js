@@ -8,6 +8,7 @@ import InfoUpdate from '../components/infoUpdate.vue'
 import Register from '../components/Register.vue'
 import ChangePassword from '../components/changePassword.vue'
 import AdminInputAddress from '../components/AdminInputAddress.vue'
+import qrCodeTest from '../components/QRcodetest.vue'
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,9 @@ Vue.use(VueRouter)
       path: "/",
       //转向login
       redirect: "/login"
+    },{
+      path: "/qrCodeTest",
+      component: qrCodeTest
     },
     {
       //设置路径名和其对应的页面
@@ -43,7 +47,7 @@ Vue.use(VueRouter)
         {
           path: "/admininputaddress",
           component: AdminInputAddress
-        },
+        }
       ]
     },
     {
@@ -53,10 +57,11 @@ Vue.use(VueRouter)
     {
       path: "/register",
       component: Register
-    },
+    }
   ]
 
   const router = new VueRouter({
+    mode: 'history',
     routes
   })
 

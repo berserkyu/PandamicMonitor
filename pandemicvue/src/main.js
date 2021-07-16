@@ -6,6 +6,12 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/global.css'
+import VueQRCodeComponent from 'vue-qrcode-component'
+import VueQrcodeReader from "vue-qrcode-reader";
+
+
+Vue.use(VueQrcodeReader);
+Vue.component('qr-code', VueQRCodeComponent)
 
 
 const axios = require('axios');
