@@ -31,7 +31,7 @@ public class PersonDaoImple implements PersonDao {
     //添加人员信息
     public boolean addPerson(Person p)  {
         String sqlCmd = String.format("INSERT INTO person(idno,mail,birthDay,fullname,phoneno" +
-                        ",address,age,gender) VALUES('%s','%s','%s','%s','%s','%s',%d,'%s')",
+                        ",address,age,gender) VALUES('%s','%s',DATE '%s','%s','%s','%s',%d,'%s')",
                 p.getIdNo(),p.getMail(),p.getBirthday(),p.getFullName(),
                 p.getPhoneNo(),p.getAddress(),p.getAge(),p.getGender());
         int result = jdbcTemplate.update(sqlCmd);
@@ -45,7 +45,7 @@ public class PersonDaoImple implements PersonDao {
         //先添加人员信息，若失败返回
         if(!addPerson(p)) return  false;
         //若成功则添加登录信息
-        String sqlCmd = String.format("INSERT INTO loginInfo(mail,pword) VALUES(%s,%s)",p.getMail(),pword);
+        String sqlCmd = String.format("INSERT INTO loginInfo(mail,pword) VALUES('%s','%s')",p.getMail(),pword);
         int result = jdbcTemplate.update(sqlCmd);
         return result==1;
     }

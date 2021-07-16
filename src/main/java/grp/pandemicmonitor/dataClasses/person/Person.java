@@ -1,7 +1,8 @@
 package grp.pandemicmonitor.dataClasses.person;
 
 import java.time.LocalDate;
-import java.util.Date;
+//import java.util.Date;
+import java.sql.Date;
 
 //所有人员的信息
 public class Person {
@@ -33,7 +34,7 @@ public class Person {
         this.birthday = birthday;
         //this.address = address;
         this.address = address;
-        this.age = LocalDate.now().getYear() - birthday.getYear()+1900;
+        this.age = LocalDate.now().getYear() - birthday.getYear()-1900;
     }
     public Person() {
         this.idNo = "";
@@ -49,7 +50,7 @@ public class Person {
     }
 
     public void displayInfo(){
-        System.out.println("("+idNo+","+fullName+","+gender+","+birthday+","+age+","+phoneNo+","+mail+","+address+")");
+        System.out.println("("+idNo+","+fullName+","+gender+","+birthday.toString()+","+age+","+phoneNo+","+mail+","+address+")");
     }
 
     public String getIdNo() {
@@ -73,6 +74,7 @@ public class Person {
     }
 
     public void setFullName(String fullName) {
+        System.out.println("set fullname");
         this.fullName = fullName;
     }
 
@@ -105,7 +107,9 @@ public class Person {
     }
 
     public void setBirthday(Date birthday) {
+        System.out.println("set bday : "+birthday.toString());
         this.birthday = birthday;
+        age = this.age = LocalDate.now().getYear() - birthday.getYear()-1900;
     }
 
     public int getAge() {

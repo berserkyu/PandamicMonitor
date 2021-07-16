@@ -76,6 +76,7 @@ public class LoginController {
     @ResponseBody
     public Result register(@RequestBody Person p){
         System.out.println("register requested ");
+        p.displayInfo();
         if(per.addPerson(p,p.getPassword())){
             return new Result(200);
         }
