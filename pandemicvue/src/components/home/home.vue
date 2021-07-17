@@ -100,7 +100,7 @@
               {
                 id: 12,
                 title: '手动录入新地点信息',
-                path: '/12',
+                path: '/userinputaddress',
               },
               {
                 id: 13,

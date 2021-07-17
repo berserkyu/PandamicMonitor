@@ -39,6 +39,7 @@ export default {
   data() {
     return {
       changePassForm: {
+        mail: "",
         oldPass: "",
         newPass: "",
         newPassC: "",
@@ -63,6 +64,9 @@ export default {
         ]
       },
     };
+  },
+  created() {
+    this.changePassForm.mail = this.$cookies.get('mail');
   },
   methods:{
     // validateOldPassword(){
@@ -95,11 +99,12 @@ export default {
       {
         this.$axios
           .post('/changelogininfo',{
+            mail: this.changePassForm.mail,
             oldPassword: this.changePassForm.oldPass,
             newPassword: this.changePassForm.newPass
           })
           .then(successResponse =>{
-            if(successResponse.data.code === 200)
+            if(successResponse.data.code === 200 )
               this.$message.success("密码更改成功！");
             else
               this.$message.error("旧密码错误！");

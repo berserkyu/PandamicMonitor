@@ -1,8 +1,15 @@
 'use strict'
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
+import Vue from 'vue'
 
 const path = require('path')
+
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
+Vue.$cookies.config('7d')
+Vue.$cookies.set('theme','default');
+Vue.$cookies.set('hover-time','1s');
 
 module.exports = {
   dev: {

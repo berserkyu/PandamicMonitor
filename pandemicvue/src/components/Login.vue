@@ -35,7 +35,7 @@
 
 <script>
   // 引入autoprefixer（为了引用successResponse）
-  const {defaults} = require("autoprefixer");
+  const {defaults} = require("autoprefixer")
 
   export default {
     name: "Login",
@@ -73,7 +73,8 @@
           .then(successResponse => {
             if(successResponse.data.code === 200){
               //路由到其他页面
-              this.$router.replace({path:'/home'})
+              this.$cookies.set('main',this.loginForm.username,1);
+              this.$router.replace({path:'/home'});
               this.$message.success("用户登录成功！");
             }else
             {
