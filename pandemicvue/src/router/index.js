@@ -10,6 +10,7 @@ import ChangePassword from '../components/changePassword.vue'
 import AdminInputAddress from '../components/AdminInputAddress.vue'
 import qrCodeTest from '../components/QRcodetest.vue'
 import UserInputAddress from '../components/UserInputAddress.vue'
+import Cam from '../components/Cam.vue'
 
 Vue.use(VueRouter)
 
@@ -53,6 +54,10 @@ Vue.use(VueRouter)
         {
           path: "/userinputaddress",
           component: UserInputAddress
+        },
+        {
+          path: "/cam",
+          component: Cam
         },
       ]
     },

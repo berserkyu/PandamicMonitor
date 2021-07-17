@@ -1,10 +1,6 @@
 <template>
   <div class="userlist_container">
-    <!--头部-->
-    <el-header class="userlist_header">
-      重大传染病疫情流调系统
-      <el-button class="logout_button" align="right" type="danger">登出</el-button>
-    </el-header>
+
     <!--搜索筛选-->
     <el-form :inline="true" :model="userlistForm" class="user_search">
       <el-form-item label="搜索：">
@@ -17,7 +13,7 @@
     </el-form>
     <!--用户信息列表-->
     <el-main>
-      <el-table :data="tableData" highlight-current-row border style="width: 100%;" class="userlist_table" height="500">
+      <el-table :data="tableData" v-for="user_info in tableData" highlight-current-row border style="width: 100%;" class="userlist_table" height="500">
         <el-table-column prop="name" label="姓名"></el-table-column>
         <el-table-column prop="id" label="证件号"></el-table-column>
         <el-table-column prop="email" label="电子邮箱"></el-table-column>
@@ -120,58 +116,19 @@
           name: '思宇',
           id: '000005',
           email: '000005@qq.com'
-        },{
-          name: '俊宇',
-          id: '000006',
-          email: '000006@qq.com'
-        }, {
-          name: '宗胜',
-          id: '000007',
-          email: '000007@qq.com'
-        }, {
-          name: '倩茹',
-          id: '000008',
-          email: '000008@qq.com'
-        }, {
-          name: '浩廷',
-          id: '000009',
-          email: '000009@qq.com'
-        },{
-          name: '思宇',
-          id: '000010',
-          email: '000010@qq.com'
-        },{
-          name: '俊宇',
-          id: '000011',
-          email: '000011@qq.com'
-        }, {
-          name: '宗胜',
-          id: '000012',
-          email: '000012@qq.com'
-        }, {
-          name: '倩茹',
-          id: '000013',
-          email: '000013@qq.com'
-        }, {
-          name: '浩廷',
-          id: '000013',
-          email: '000014@qq.com'
-        },{
-          name: '思宇',
-          id: '000014',
-          email: '000014@qq.com'
         }],
         addFormVisible: false,
         editFormVisible: false,
         userlistForm:{
           name:''
         },
+        user_info: [],
         addForm:{
           name:'',
-            idtype:'',
-            idno:'',
-            email:'',
-            password:''
+          idtype:'',
+          idno:'',
+          email:'',
+          password:''
         },
         editForm:{
           name:'',
@@ -229,57 +186,130 @@
         this.addFormVisible = true;
       },
       save() { //新增用户表单的保存
+        this.$confirm('是否确定新增此用户？', '提示', {
+          confirmButtonText: '确定', //弹出框的确定提交按钮
+          cancelButtonText: '取消', //弹出框的取消提交按钮
+          type: 'warning', //弹出框类型
+          center: true
+        }).then(() => { //按下确定弹出消息
+
+          this.$axios
+            .post('', {
+              name: this.addForm.name,
+              idtype: this.addForm.idtype,
+              id: this.addForm.idno,
+              mail: this.addForm.email,
+              password: this.addForm.password
+            })
+            .then(successResponse => {
+              if (successResponse.data.code === 200) {
+                this.$message({
+                  type: 'success',
+                  message: '新增用户成功！'
+                });
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: '新增用户失败'
+                });
+              }
+            }) .catch(failResponse =>{alert("跨域操作失败！")})
+
+        })
       },
-      save2(
-      ) { //编辑用户信息表单的保存
+      save2() { //编辑用户信息表单的保存
+        this.$confirm('是否确定编辑此用户信息？', '提示', {
+          confirmButtonText: '确定', //弹出框的确定提交按钮
+          cancelButtonText: '取消', //弹出框的取消提交按钮
+          type: 'warning', //弹出框类型
+          center: true
+        }).then(() => { //按下确定弹出消息
+
+          this.$axios
+            .post('', {
+              name: this.editForm.name,
+              mail: this.editForm.email,
+              address: this.editForm.address,
+              phoneno: this.editForm.phonenumber
+            })
+            .then(successResponse => {
+              if (successResponse.data.code === 200) {
+                this.$message({
+                  type: 'success',
+                  message: '新增用户成功！'
+                });
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: '新增用户失败'
+                });
+              }
+            }) .catch(failResponse =>{alert("跨域操作失败！")})
+
+        })
       },
       edit(obj){ //编辑按钮方法
         this.editForm = obj;
         this.editFormVisible = true;
       },
-      del(){ //删除按钮方法
+      del() { //删除按钮方法
         this.$confirm('是否确定删除此用户？', '提示', {
           confirmButtonText: '确定', //弹出框的确定提交按钮
           cancelButtonText: '取消', //弹出框的取消提交按钮
           type: 'warning', //弹出框类型
-          center:true
+          center: true
         }).then(() => { //按下确定弹出消息
-          this.$message({
-            type: 'success',
-            message: '删除成功！'
-          });
-        }).catch(() => { //按下取消弹出消息
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
-        });
+
+          this.$axios
+            .post('', {
+              id: this.user_info.id
+            })
+            .then(successResponse => {
+              if (successResponse.data.code === 200) {
+                this.$message({
+                  type: 'success',
+                  message: '删除用户成功！'
+                });
+              } else {
+                this.$message({
+                  type: 'error',
+                  message: '删除用户失败'
+                });
+              }
+            }) .catch(failResponse =>{alert("跨域操作失败！")})
+        })
+      },
+      getdata() {
+        this.$axios
+          .post('', {
+            id: this.user_info.id,
+            name: this.user_info.name,
+            mail: this.user_info.mail
+          })
+          .then(successResponse => {
+            if (successResponse.data.code === 200) {
+              this.tableData = successResponse.data.tableData;
+            }
+          }) .catch(failResponse =>{alert("跨域操作失败！")})
       }
     }
   }
+
 </script>
 
 <style scoped>
   /*根节点样式*/
   .userlist_container{
-    background-color: white;
     height:100%;
     width:100%;
   }
-  .userlist_header{
-    background-color:rgba(188, 236, 141, 0.84);
-    height: 100%;
-    width: 100%;
-  }
+
   .user_search{
-    margin-top:40px;
+    margin-top:20px;
+    margin-left: 15px;
     padding: 0 10px;
   }
-  .logout_button{
-    margin-top: 10px;
-    position: relative;
-    margin-left:1200px;
-  }
+
   .deleteColor{
     color:red;
   }

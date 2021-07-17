@@ -1,9 +1,7 @@
 <template>
   <div class="address_container">
     <div class="address_box">
-      <div class="avatar_box">
-        <img src="../assets/logo.png" alt/>
-      </div>
+
       <p>选择地区：</p>
       <!--cascader级联选择器实现省市区三级联动-->
       <el-cascader v-model="value" :options="options" @change="handleChange" class="china_area" clearable ref="temp"></el-cascader>
@@ -4125,7 +4123,6 @@ export default {
 <style scoped>
 /*根节点样式*/
 .address_container {
-  background-color: rgba(188, 236, 141, 0.84);
   height: 100%;
 }
 .address_box {
@@ -4136,28 +4133,9 @@ export default {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-25%, -50%);
 }
-/*logo样式*/
-.avatar_box{
-  width: 100px;
-  height: 100px;
-  border: 1px solid white;
-  border-radius: 50%;
-  padding: 5px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%,-60%);
-  background-color: #ffff80;
-}
-img{
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 5%;
-  left: 0;
-  transform: scale(0.7);
-}
+
 /*按钮样式*/
 .btns{
   display: flex;
