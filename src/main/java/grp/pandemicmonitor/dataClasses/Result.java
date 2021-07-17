@@ -4,8 +4,23 @@ package grp.pandemicmonitor.dataClasses;
 public class Result {
     //代表请求结果
     private int code;
+    private int sessionID;
+
+    public int getSessionID() {
+        return sessionID;
+    }
+
+    public void setSessionID(int sessionID) {
+        this.sessionID = sessionID;
+    }
 
     public Result(int code){
+        this.sessionID = 0;
+        this.code = code;
+    }
+
+    public Result(int code,int ses){
+        this.sessionID = ses;
         this.code = code;
     }
 

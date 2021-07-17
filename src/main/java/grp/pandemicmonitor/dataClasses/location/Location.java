@@ -1,9 +1,6 @@
 package grp.pandemicmonitor.dataClasses.location;
 
 
-import com.sun.xml.internal.ws.server.ServerRtException;
-import grp.pandemicmonitor.dataClasses.Address.Address;
-
 public class Location {
     //每个地点唯一的ID，用0代表未赋值
     private long ID;
@@ -74,15 +71,6 @@ public class Location {
         this.address = null;
         this.locName = "";
     }
-
-    public Location(long ID,String locName,String prefix,String address){
-        System.out.println("prefix"+prefix+"x");
-        this.ID = ID;
-        this.address = null;
-        this.locName = locName;
-    }
-
-
 
 
     public long getID(){ return ID;}

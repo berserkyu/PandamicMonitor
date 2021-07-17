@@ -28,6 +28,18 @@ public class PersonDaoImple implements PersonDao {
     }
 
     @Override
+    //得到邮箱为mail的人员信息
+    public Person getPersonByMail(String mail){
+        String sqlQuery = String.format("SELECT * FROM person WHERE mail='%s'",mail);
+        List<Person> result = jdbcTemplate.query(sqlQuery,new PersonMapper());
+        if(result.isEmpty()){
+            return null;
+        }else{
+            return result.get(0);
+        }
+    }
+
+    @Override
     //添加人员信息
     public boolean addPerson(Person p)  {
         String sqlCmd = String.format("INSERT INTO person(idno,mail,birthDay,fullname,phoneno" +
@@ -77,17 +89,19 @@ public class PersonDaoImple implements PersonDao {
                 l.getMail(),l.getPassword(),l.getType());
         List<Person> result = jdbcTemplate.query(sqlQuery,new PersonMapper());
         if(result.isEmpty()) return  null;
+
         return  result.get(0);
     }
 
     @Override
     //更改密码
-    public boolean changePassword(String mail,String oldPword,String newPword) {
+    public boolean changePassword(String sessionId,String oldPword,String newPword) {
         String sqlCmd = String.format("UPDATE loginInfo" +
                                     " SET pword='%s'" +
-                                    " WHERE mail='%s'" +
-                                    " AND pword='%s'",
-                                    newPword,mail,oldPword);
+                                    " WHERE pword='%s'" +
+                                    " AND mail = (SELECT mail FROM sessions " +
+                                                " WHERE sessionId='%s')",
+                                    newPword,sessionId,oldPword);
         int rowsAffected = jdbcTemplate.update(sqlCmd);
         if(rowsAffected<1){
             System.out.println("change password failed");
@@ -97,11 +111,11 @@ public class PersonDaoImple implements PersonDao {
 
     @Override
     //更改个人信息
-    public boolean changePersonalInfo(String idNo, String fullName, String phoneNo, String address)  {
+    public boolean changePersonalInfo(String mail, String fullName, String phoneNo, String address)  {
         String sqlCmd = String.format("UPDATE person  " +
                                     " SET fullname='%s',phoneno='%s',address='%s'" +
-                                    " WHERE idno='%s'",
-                                   fullName,phoneNo,address,idNo);
+                                    " WHERE mail='%s'",
+                                   fullName,phoneNo,address,mail);
         int result = jdbcTemplate.update(sqlCmd);
         return  result==1;
     }

@@ -1,0 +1,43 @@
+package grp.pandemicmonitor.dataClasses.visit;
+
+import java.sql.Time;
+import java.util.Date;
+
+public class Visit {
+    private String idNo;
+    private long locId;
+    private Date date;
+    private Time time;
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
+    }
+
+    public long getLocId() {
+        return locId;
+    }
+
+    public void setLocId(long locId) {
+        this.locId = locId;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
+    }
+}

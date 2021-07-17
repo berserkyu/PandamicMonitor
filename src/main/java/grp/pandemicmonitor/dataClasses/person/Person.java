@@ -109,7 +109,7 @@ public class Person {
     public void setBirthday(Date birthday) {
         System.out.println("set bday : "+birthday.toString());
         this.birthday = birthday;
-        age = this.age = LocalDate.now().getYear() - birthday.getYear()-1900;
+        this.age = LocalDate.now().getYear() - birthday.getYear()-1900;
     }
 
     public int getAge() {

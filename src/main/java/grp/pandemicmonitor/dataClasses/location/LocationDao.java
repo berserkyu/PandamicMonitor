@@ -8,15 +8,24 @@ import java.util.List;
 //地点信息的数据库接口
 public interface LocationDao  {
     //得到编号为ID的地点信息
-    public Location getLocation(long ID) ;//x
+    Location getLocation(long ID) ;//x
     //新增地点
-    public long addLocation(Location l) throws SQLException;//x
+    long addLocation(Location l) throws SQLException;//x
     //更新地点信息（例。商家转移店铺）
-    public boolean updateLocation(long ID,String name,Address address) ;//x
+    boolean updateLocation(long ID,String name,Address address) ;//x
     //删除地点信息
-    public boolean deleteLocation(long ID) ;//x
-    public List<Location> getAllLocations() ;//x
+    boolean deleteLocation(long ID) ;//x
+    List<Location> getAllLocations() ;//x
     //得到在origin地点半径radius以内的所有地点
-    public List<Location> getLocationWithin(Location origin,double radius) ;//x
+    List<Location> getLocationWithin(Location origin,double radius) ;//x
+
+    //得到在province省内的所有地点
+    List<Location> getLocationWithinProvince(String province);
+    //得到在province省,city市内的所有地点
+    List<Location> getLocationWithinCity(String province,String city);
+    //得到在province省,city市,area区内的所有地点
+    List<Location> getLocationWithinArea(String province,String city,String area);
+    //得到在province省,city市,area区内的address地点
+    Location getLocationWithAddress(String province,String city,String area,String address);
 
 }

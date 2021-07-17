@@ -1,15 +1,19 @@
 package grp.pandemicmonitor.controller;
 
+import grp.pandemicmonitor.InputFromFrontEnd.InputVisit;
 import grp.pandemicmonitor.dataClasses.Address.Address;
 import grp.pandemicmonitor.dataClasses.Result;
 import grp.pandemicmonitor.dataClasses.location.Location;
 import grp.pandemicmonitor.dataClasses.location.LocationDaoImple;
+import grp.pandemicmonitor.dataClasses.visit.Visit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 //和地点信息相关的Controller
 @Controller
@@ -33,8 +37,8 @@ public class LocationController {
     @RequestMapping(value = "/location/change")
     @CrossOrigin
     @ResponseBody
-    public Result changeLocationInfo(Location l){
-        if(loc.updateLocation(l.getID(),l.getLocName(),new Address("",""))){
+    public Result changeLocationInfo(@RequestBody  Location l){
+        if(loc.updateLocation(l.getID(),l.getLocName(),new Address(l.getProvince(),l.getCity(),l.getArea(),l.getAddress()))){
             return  new Result(200);
         }
         return new Result(400);
@@ -43,8 +47,54 @@ public class LocationController {
     @RequestMapping(value = "/location/delete")
     @CrossOrigin
     @ResponseBody
-    public Result deleteLocation(Location l){
+    public Result deleteLocation(@RequestBody Location l){
         if(loc.deleteLocation(l.getID())) return new Result(200);
         return new Result(400);
     }
+
+    //得到某一地点信息
+    @RequestMapping(value = "location/get")
+    @CrossOrigin
+    @ResponseBody
+    public Location getLocation(@RequestBody  long locId){
+        return loc.getLocation(locId);
+    }
+
+    @RequestMapping(value = "location/getall")
+    @CrossOrigin
+    @ResponseBody
+    public List<Location> getAllLocation(){
+
+        return  loc.getAllLocations();
+    }
+
+    @RequestMapping(value = "location/getprovince")
+    @CrossOrigin
+    @ResponseBody
+    public List<Location> getLocationWithinProvince(@RequestBody String province){
+        return loc.getLocationWithinProvince(province);
+    }
+
+    @RequestMapping(value = "location/getcity")
+    @CrossOrigin
+    @ResponseBody
+    public List<Location> getLocationWihtinCity(@RequestBody Address a){
+        return loc.getLocationWithinCity(a.getProvince(),a.getCity());
+    }
+
+    @RequestMapping(value = "location/getarea")
+    @CrossOrigin
+    @ResponseBody
+    public List<Location> getLocationWihtinArea(@RequestBody Address a){
+        return loc.getLocationWithinArea(a.getProvince(),a.getCity(),a.getArea());
+    }
+
+    @RequestMapping(value = "location/getaddress")
+    @CrossOrigin
+    @ResponseBody
+    public Location getLocationWithAddress(@RequestBody Address a){
+        return  loc.getLocationWithAddress(a.getProvince(),a.getCity(),a.getArea(),a.getAddress());
+    }
+
+
 }

@@ -1,19 +1,13 @@
 package grp.pandemicmonitor.dataClasses.location;
 
 import java.util.List;
-
 import grp.pandemicmonitor.dataClasses.Address.Address;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-
-
 @Component
 public class LocationDaoImple implements LocationDao{
-
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -21,7 +15,7 @@ public class LocationDaoImple implements LocationDao{
     //通过地点编号获取地点信息
     @Override
     public Location getLocation(long ID)  {
-        String sqlQuery = String.format("SELECT * FROM Location WHERE locId=%d",ID);
+        String sqlQuery = String.format("SELECT * FROM location WHERE locId=%d",ID);
         List<Location> result = jdbcTemplate.query(sqlQuery,new LocationMapper());
         if(result.isEmpty()){
             return  null;
@@ -32,9 +26,8 @@ public class LocationDaoImple implements LocationDao{
     //获得所有地点信息
     @Override
     public List<Location> getAllLocations()  {
-        String sqlQuery = "SELECT * FROM Location";
-        List<Location> result = jdbcTemplate.query(sqlQuery,new LocationMapper());
-        return result;
+        String sqlQuery = "SELECT * FROM location";
+        return jdbcTemplate.query(sqlQuery,new LocationMapper());
     }
     //此处运算假设地球是圆的
     //在数据库里定义GetDistance函数：利用半正矢公式计算两个坐标之间距离
@@ -48,8 +41,7 @@ public class LocationDaoImple implements LocationDao{
                                         "AND l1.locId=%d"
                                         ,radius,origin.getID());
         System.out.println(sqlQuery);
-        List<Location> result = jdbcTemplate.query(sqlQuery,new LocationMapper());
-        return  result;
+        return jdbcTemplate.query(sqlQuery,new LocationMapper());
     }
     //增加新地点
     @Override
@@ -82,5 +74,40 @@ public class LocationDaoImple implements LocationDao{
                 address.getArea(),address.getAddress(),ID);
         int result = jdbcTemplate.update(sqlCmd);
         return result==1;
+    }
+
+    //得到在province省内的所有地点
+    @Override
+    public List<Location> getLocationWithinProvince(String province){
+        String sqlQuery = String.format("SELECT * FROM location WHERE province='%s'",province);
+        return jdbcTemplate.query(sqlQuery,new LocationMapper());
+    }
+    //得到在province省,city市内的所有地点
+    @Override
+    public List<Location> getLocationWithinCity(String province,String city){
+        String sqlQuery = String.format("SELECT * FROM location WHERE province='%s' " +
+                                        "AND city='%s'",province,city);
+        return jdbcTemplate.query(sqlQuery,new LocationMapper());
+    }
+    //得到在province省,city市,area区内的所有地点
+    @Override
+    public List<Location> getLocationWithinArea(String province,String city,String area){
+        String sqlQuery = String.format("SELECT * FROM location WHERE province='%s' " +
+                                        "AND city='%s' " +
+                                        "AND area='%s'",province,city,area);
+        return  jdbcTemplate.query(sqlQuery,new LocationMapper());
+
+    }
+
+    //得到在province省,city市,area区内的address地点
+    @Override
+    public Location getLocationWithAddress(String province,String city,String area,String address){
+        String sqlQuery = String.format("SELECT * FROM location WHERE province='%s' " +
+                "AND city='%s' " +
+                "AND area='%s' " +
+                "AND address='%s' ",province,city,area,address);
+        List<Location> ll = jdbcTemplate.query(sqlQuery,new LocationMapper());
+        if(ll.isEmpty()) return null;
+        return  ll.get(0);
     }
 }
