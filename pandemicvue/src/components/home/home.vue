@@ -7,6 +7,7 @@
         <img class="img" src="../../assets/img.png" alt/>
         <span class="span">重大传染病疫情流调系统</span>
       </div>
+      <router-link to="/cam"></router-link>
       <el-button type="danger" v-on:click="logout">登出</el-button>
     </el-header>
     <!--主体-->
@@ -105,7 +106,7 @@
               {
                 id: 13,
                 title: '扫描二维码录入地点信息',
-                path: '/13',
+                path: '/cam',
               },
               {
                 id: 14,
@@ -129,7 +130,7 @@
             type: 'success',
             message: '登出成功!'
           });
-          window.sessionStorage.clear();
+          window.$cookies.clear();
           this.$router.push("/login");
         }).catch(() => {
           this.$message({

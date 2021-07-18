@@ -7,20 +7,59 @@
       @click="onTake"
       icon="el-icon-camera"
       size="small">
-      扫描二维码
+      二维码拍摄上传
     </el-button>
     <!--用于拍摄上传二维码弹窗-->
     <el-dialog
-      title="二维码扫描"
+      title="二维码上传"
       :visible.sync="visible"
       @close="onCancel"
-      width="400px">
+      width="700px">
       <!--拍摄上传对话框-->
-      <div :style="'width:400px'"class="box">
-        <!--<video id="videoCamera" class="canvas" :width="scanWidth" :height="scanHeight" autoPlay></video>-->
-        <qrcode-stream @decode="onDecode"></qrcode-stream>
-
-
+      <div class="box">
+        <video id="videoCamera" class="canvas" :width="scanWidth" :height="scanHeight" autoPlay></video>
+        <canvas id="canvasCamera" class="canvas" :width="scanWidth" :height="scanHeight"></canvas>
+        <!--<qrcode-stream @decode="onDecode"></qrcode-stream>-->
+      </div>
+      <div slot="footer">
+        <!--扫描按钮-->
+        <el-button
+          @click="onDecode"
+          icon="el-icon-full-screen"
+          size="small">
+          <qrcode-stream @decode="onDecode"></qrcode-stream>
+          扫描
+        </el-button>
+        <!--拍摄二维码按钮-->
+        <el-button
+          @click="drawImage"
+          icon="el-icon-camera"
+          size="small">
+          拍下二维码
+        </el-button>
+        <!--重新拍摄按钮-->
+        <el-button
+          @click="resetCanvas"
+          icon="el-icon-refresh"
+          size="small">
+          重新拍摄
+        </el-button>
+        <!--关闭拍摄上传弹窗按钮-->
+        <el-button
+          @click="onCancel"
+          icon="el-icon-circle-close"
+          size="small">
+          取消
+        </el-button>
+        <!--拍摄后上传按钮-->
+        <el-button
+          @click="onUpload"
+          :loading="loading"
+          type="primary"
+          icon="el-icon-upload2"
+          size="small">
+          上传二维码
+        </el-button>
       </div>
     </el-dialog>
   </div>
@@ -111,7 +150,7 @@ export default {
       }
     },
     //镜头权限的调用
-    /*getCompetence() {
+    getCompetence() {
       //在model中render后才能取得dom节点,不能直接获取
       this.$nextTick(() => {
         const _this = this;
@@ -164,7 +203,7 @@ export default {
           });
         });
       });
-    },*/
+    },
     //绘制图片
     drawImage() {
       //canvas画图
@@ -215,7 +254,7 @@ export default {
 <style scoped>
 .box {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .canvas {

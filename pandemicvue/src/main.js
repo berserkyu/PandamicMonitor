@@ -21,6 +21,9 @@ Vue.$cookies.set('hover-time','1s');
 Vue.use(VueQrcodeReader);
 Vue.component('qr-code', VueQRCodeComponent)
 Vue.use(VueCookies)
+Vue.$cookies.config('7d')
+Vue.$cookies.set('theme','default');
+Vue.$cookies.set('hover-time','1s');
 
 const axios = require('axios')
 Vue.prototype.$axios = axios
@@ -34,5 +37,6 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  render: c=>c(App)
 })

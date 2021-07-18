@@ -2,9 +2,7 @@
   <div class="useraddress_container">
     <!--用户输入地址块-->
     <div class="useraddress_box">
-      <div class="avatar_box">
-        <img src="../assets/logo.png" alt/>
-      </div>
+
       <el-form ref="useraddressForm" :model="useraddressForm" :rules="useraddressRules" class="useraddress_Form" label-width="90px">
         <p><b>若有地址编号可直接填地址编号并提交，若无请手动输入所在地的详细地址并提交。</b></p>
         <!--地址编号输入-->
@@ -29,8 +27,6 @@
         <el-form-item label="地点名字：" prop="locationName">
           <el-input v-model="useraddressForm2.locationName" placeholder="请输入地点名称，如商店名字、商场名称等" clearable></el-input>
         </el-form-item>
-        <!--回到上一页链接-->
-        <el-link type="primary" class="past">上一页</el-link>
         <!--提交按钮-->
         <el-form-item class="btns2">
           <el-button type="primary" v-on:click="submitAddr">提交</el-button>
@@ -159,38 +155,17 @@
 <style scoped>
   /*根节点样式*/
   .useraddress_container {
-    background-color: rgba(188, 236, 141, 0.84);
     height: 100%;
   }
   .useraddress_box {
-    width: 500px;
-    height: 450px;
+    width: 900px;
+    height: 500px;
     background-color: #fff;
     border-radius: 15px;
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
-  }
-  /*logo样式*/
-  .avatar_box{
-    width: 30px;
-    height: 30px;
-    border: 1px solid white;
-    border-radius: 50%;
-    padding: 5px;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%,-60%);
-    background-color: #ffff80;
-  }
-  img{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 5%;
-    left: 0;
-    transform: scale(0.7);
+    transform: translate(-35%, -43%);
   }
   /*按钮样式*/
   .btns{
