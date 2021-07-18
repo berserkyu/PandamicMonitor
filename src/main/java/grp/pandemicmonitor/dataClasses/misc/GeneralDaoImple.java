@@ -13,7 +13,7 @@ public class GeneralDaoImple implements GeneralDao{
     JdbcTemplate jdbcTemplate;
     @Override
     public boolean initSession(int sessionID,String mail){
-        String sqlCmd = String.format("INSERT INTO sessions VALUES('%d,'%s',now())",
+        String sqlCmd = String.format("INSERT INTO sessions VALUES(%d,'%s',now())",
                                     sessionID,mail);
 
         int result = jdbcTemplate.update(sqlCmd);

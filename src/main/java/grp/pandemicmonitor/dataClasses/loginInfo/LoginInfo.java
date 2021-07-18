@@ -6,7 +6,7 @@ public class LoginInfo {
         int result = 7;
         int strlen = toHash.length();
         for (int i = 0; i < strlen; i++) {
-            result = result*31 + toHash.charAt(i);
+            result = result*7 + toHash.charAt(i);
         }
         return  result;
     }

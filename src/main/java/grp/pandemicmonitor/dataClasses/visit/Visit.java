@@ -12,6 +12,18 @@ public class Visit {
     public String getIdNo() {
         return idNo;
     }
+    public Visit(){
+        this.idNo = "";
+        this.locId = 0;
+        this.date = new Date();
+        this.time = null;
+    }
+    public Visit(String idNo, long locId, Date date, Time time) {
+        this.idNo = idNo;
+        this.locId = locId;
+        this.date = date;
+        this.time = time;
+    }
 
     public void setIdNo(String idNo) {
         this.idNo = idNo;

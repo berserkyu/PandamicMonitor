@@ -39,7 +39,7 @@ public class LocationDaoImple implements LocationDao{
                                         "WHERE getDistance(l1.latitude,l1.longitude,l2.latitude,l2.longitude)<%f " +
                                         "AND l1.locId!=l2.locId " +
                                         "AND l1.locId=%d"
-                                        ,radius,origin.getID());
+                                        ,radius,origin.getLocId());
         System.out.println(sqlQuery);
         return jdbcTemplate.query(sqlQuery,new LocationMapper());
     }

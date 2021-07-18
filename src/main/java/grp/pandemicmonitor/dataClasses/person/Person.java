@@ -74,7 +74,6 @@ public class Person {
     }
 
     public void setFullName(String fullName) {
-        System.out.println("set fullname");
         this.fullName = fullName;
     }
 
@@ -107,7 +106,6 @@ public class Person {
     }
 
     public void setBirthday(Date birthday) {
-        System.out.println("set bday : "+birthday.toString());
         this.birthday = birthday;
         this.age = LocalDate.now().getYear() - birthday.getYear()-1900;
     }

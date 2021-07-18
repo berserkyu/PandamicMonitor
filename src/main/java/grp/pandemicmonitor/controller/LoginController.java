@@ -98,7 +98,9 @@ public class LoginController {
     @RequestMapping(value = "/changeuserinfo")
     @ResponseBody
     public Result changeUserInfo(@RequestBody NewUserInfo newUserInfo){
-        if(per.changePersonalInfo("000001",newUserInfo.getName(),newUserInfo.getPhoneno(),newUserInfo.getAddress())){
+        System.out.println("change user info requested");
+        System.out.println(newUserInfo.getOldMail()+","+ newUserInfo.getNewMail()+","+ newUserInfo.getName()+","+newUserInfo.getPhoneno()+","+newUserInfo.getAddress());
+        if(per.changePersonalInfo(newUserInfo.getOldMail(), newUserInfo.getNewMail(), newUserInfo.getName(),newUserInfo.getPhoneno(),newUserInfo.getAddress())){
             return new Result(200);
         }
         return new Result(400);

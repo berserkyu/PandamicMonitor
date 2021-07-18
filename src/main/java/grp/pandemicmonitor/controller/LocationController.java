@@ -37,8 +37,8 @@ public class LocationController {
     @RequestMapping(value = "/location/change")
     @CrossOrigin
     @ResponseBody
-    public Result changeLocationInfo(@RequestBody  Location l){
-        if(loc.updateLocation(l.getID(),l.getLocName(),new Address(l.getProvince(),l.getCity(),l.getArea(),l.getAddress()))){
+    public Result changeLocationInfo(@RequestBody Location l){
+        if(loc.updateLocation(l.getLocId(),l.getLocName(),new Address(l.getProvince(),l.getCity(),l.getArea(),l.getAddress()))){
             return  new Result(200);
         }
         return new Result(400);
@@ -48,7 +48,7 @@ public class LocationController {
     @CrossOrigin
     @ResponseBody
     public Result deleteLocation(@RequestBody Location l){
-        if(loc.deleteLocation(l.getID())) return new Result(200);
+        if(loc.deleteLocation(l.getLocId())) return new Result(200);
         return new Result(400);
     }
 
@@ -56,8 +56,11 @@ public class LocationController {
     @RequestMapping(value = "location/get")
     @CrossOrigin
     @ResponseBody
-    public Location getLocation(@RequestBody  long locId){
-        return loc.getLocation(locId);
+    public Location getLocation(@RequestBody Location location){
+        System.out.println("location info requested"+location.getLocId());
+        Location l= loc.getLocation(location.getLocId());
+        l.displayInfo();
+       return l;
     }
 
     @RequestMapping(value = "location/getall")

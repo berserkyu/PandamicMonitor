@@ -95,13 +95,12 @@ public class PersonDaoImple implements PersonDao {
 
     @Override
     //更改密码
-    public boolean changePassword(String sessionId,String oldPword,String newPword) {
+    public boolean changePassword(String mail,String oldPword,String newPword) {
         String sqlCmd = String.format("UPDATE loginInfo" +
                                     " SET pword='%s'" +
                                     " WHERE pword='%s'" +
-                                    " AND mail = (SELECT mail FROM sessions " +
-                                                " WHERE sessionId='%s')",
-                                    newPword,sessionId,oldPword);
+                                    " AND mail = '%s'",
+                                    newPword,oldPword,mail);
         int rowsAffected = jdbcTemplate.update(sqlCmd);
         if(rowsAffected<1){
             System.out.println("change password failed");
@@ -111,13 +110,15 @@ public class PersonDaoImple implements PersonDao {
 
     @Override
     //更改个人信息
-    public boolean changePersonalInfo(String mail, String fullName, String phoneNo, String address)  {
+    public boolean changePersonalInfo(String oldmail,String newmail, String fullName, String phoneNo, String address)  {
         String sqlCmd = String.format("UPDATE person  " +
                                     " SET fullname='%s',phoneno='%s',address='%s'" +
                                     " WHERE mail='%s'",
-                                   fullName,phoneNo,address,mail);
+                                   fullName,phoneNo,address, oldmail);
         int result = jdbcTemplate.update(sqlCmd);
-        return  result==1;
+        if(result==1) System.out.println("changed personal info success");
+        else System.out.println("changed personal info fail   "+oldmail+"->"+newmail);
+        return  result==1 && changePersonMail(oldmail,newmail);
     }
 
     @Override
@@ -125,9 +126,19 @@ public class PersonDaoImple implements PersonDao {
     public boolean changePersonMail(String oldMail, String newMail) {
         //在数据库里定义了一个Procedure updateMail(oldmail,newmail)
         //其中先执行更新登录信息里的邮箱，再更新人员信息的邮箱
-        String sqlCmd = String.format("CALL updateMail('%s','%s')",
-                                    oldMail,newMail);
+        String sqlCmd = String.format("UPDATE logininfo SET mail='%s' WHERE mail='%s'",
+                newMail,oldMail);
         int result = jdbcTemplate.update(sqlCmd);
+        if(result!=1) {
+            System.out.println("change logininfo mail fail");
+            return  false;
+        }
+        sqlCmd = String.format("UPDATE person SET mail='%s' WHERE mail='%s'",
+                newMail,oldMail);
+        result = jdbcTemplate.update(sqlCmd);
+        if(result!=1){
+            System.out.println("change person mail fail");
+        }
         return result==1;
     }
 
@@ -176,7 +187,7 @@ public class PersonDaoImple implements PersonDao {
         String sqlQuery = String.format("SELECT person.idno,mail,birthDay,fullname,phoneno,address,age,gender " +
                                         "FROM person,visit " +
                                         "WHERE person.idno=visit.idno " +
-                                        "AND locId='%s'",loc.getID());
+                                        "AND locId='%s'",loc.getLocId());
         List<Person> l = jdbcTemplate.query(sqlQuery,new PersonMapper());
         return  l;
     }
@@ -189,7 +200,7 @@ public class PersonDaoImple implements PersonDao {
                 "WHERE person.idno=visit.idno " +
                 "AND ((timeVisit<'%s' AND dateVisit='%s') OR " +
                 "dateVisit<'%s' )" +
-                "AND locId=%d",time,date,date,loc.getID());
+                "AND locId=%d",time,date,date,loc.getLocId());
         List<Person> l = jdbcTemplate.query(sqlQuery,new PersonMapper());
         return  l;
     }

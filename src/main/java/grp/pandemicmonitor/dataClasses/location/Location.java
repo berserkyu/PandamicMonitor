@@ -3,7 +3,7 @@ package grp.pandemicmonitor.dataClasses.location;
 
 public class Location {
     //每个地点唯一的ID，用0代表未赋值
-    private long ID;
+    private long locId;
     //地点名字（例.商家名字）
     private String locName;
     //地址
@@ -11,6 +11,8 @@ public class Location {
     String prefix;
     String province;
     String city;
+    String area;
+
 
     public void setAddress(String address) {
         this.address = address;
@@ -62,32 +64,34 @@ public class Location {
         this.area = area;
     }
 
-    String area;
 
 
     public Location(){
         System.out.println("location");
-        this.ID = -1;
+        this.locId = -1;
         this.address = null;
         this.locName = "";
     }
 
 
-    public long getID(){ return ID;}
+    public long getLocId() {
+        return locId;
+    }
+
+    public void setLocId(long locId) {
+        this.locId = locId;
+    }
+
     public String getLocName(){return locName;}
 
     public void setLocName(String locName) {
         System.out.println("locname "+locName);
         this.locName = locName;
     }
-    public void setID(long ID) {
-        System.out.println("id "+ID);
-        this.ID = ID;
-    }
+
 
     public void displayInfo(){
-        System.out.println(ID+" : "+locName+","+province+","+city+","+area+","+address);
-        System.out.println(ID+" : "+locName.length()+","+province.length()+","+city.length()+","+area.length()+","+address.length());
+        System.out.println(locId+" : "+locName+","+province+","+city+","+area+","+address);
     }
 }
 
