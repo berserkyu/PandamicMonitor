@@ -11,9 +11,15 @@ import VueQRCodeComponent from 'vue-qrcode-component'
 import VueQrcodeReader from "vue-qrcode-reader";
 
 
+
+
+Vue.use(VueCookies)
+Vue.$cookies.config('7d')
+Vue.$cookies.set('theme','default');
+Vue.$cookies.set('hover-time','1s');
+
 Vue.use(VueQrcodeReader);
 Vue.component('qr-code', VueQRCodeComponent)
-
 Vue.use(VueCookies)
 
 const axios = require('axios')

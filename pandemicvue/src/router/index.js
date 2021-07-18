@@ -10,6 +10,7 @@ import ChangePassword from '../components/changePassword.vue'
 import AdminInputAddress from '../components/AdminInputAddress.vue'
 import qrCodeTest from '../components/QRcodetest.vue'
 import UserInputAddress from '../components/UserInputAddress.vue'
+import Cam from '../components/Cam'
 
 Vue.use(VueRouter)
 
@@ -19,6 +20,10 @@ Vue.use(VueRouter)
       path: "/",
       //转向login
       redirect: "/login"
+    },
+    {
+      path: "/cam",
+      component: Cam
     },
     {
       path: "/qrCodeTest",

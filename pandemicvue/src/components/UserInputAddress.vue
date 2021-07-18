@@ -12,28 +12,28 @@
           <el-input v-model="useraddressForm.addressid" placeholder="请输入您所在地点的地址编号" clearble></el-input>
         </el-form-item>
         <el-form-item class="btns">
-          <el-button type="primary" @click="submit">提交</el-button>
+          <el-button type="primary" v-on:click="submitId">提交</el-button>
         </el-form-item>
       </el-form>
       <!--表单-->
       <el-form ref="useraddressForm" :model="useraddressForm2" :rules="useraddressRules2" class="useraddress_Form2" label-width="90px">
         <!--地区输入-->
-        <el-form-item label="地区：" prop="address">
-          <el-input v-model="useraddressForm2.address" placeholder="请输入地区，如xx省xx市xx区/县" clearable></el-input>
+        <el-form-item label="地区：" prop="area">
+          <el-input v-model="useraddressForm2.area" placeholder="请输入地区，如xx省xx市xx区/县" clearable></el-input>
         </el-form-item>
         <!--详细地址输入-->
-        <el-form-item label="详细地址：" prop="moreaddress">
-          <el-input v-model="useraddressForm2.moreaddress" placeholder="请输入详细地址，如乡村名称、小区楼栋、门牌号等" clearable></el-input>
+        <el-form-item label="详细地址：" prop="address">
+          <el-input v-model="useraddressForm2.address" placeholder="请输入详细地址，如乡村名称、小区楼栋、门牌号等" clearable></el-input>
         </el-form-item>
         <!--地点名字输入-->
-        <el-form-item label="地点名字：" prop="moreaddress2">
-          <el-input v-model="useraddressForm2.moreaddress2" placeholder="请输入地点名称，如商店名字、商场名称等" clearable></el-input>
+        <el-form-item label="地点名字：" prop="locationName">
+          <el-input v-model="useraddressForm2.locationName" placeholder="请输入地点名称，如商店名字、商场名称等" clearable></el-input>
         </el-form-item>
         <!--回到上一页链接-->
         <el-link type="primary" class="past">上一页</el-link>
         <!--提交按钮-->
         <el-form-item class="btns2">
-          <el-button type="primary" @click="submit2">提交</el-button>
+          <el-button type="primary" v-on:click="submitAddr">提交</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -59,9 +59,9 @@
           addressid:''
         },
         useraddressForm2:{
-          address:'',
-          moreaddress:'',
-          moreaddress2:''
+          area:'',
+          adress:'',
+          locationName:''
         },
         /*Form组件提供的表单验证功能，通过rules属性传入约定的验证规则，并将Form-Item的prop属性设置为需校验的字段名*/
         useraddressRules:{ //地址编号的表单验证
@@ -71,29 +71,80 @@
           ]
         },
         useraddressRules2:{ //手动输入地址的表单验证
+          area:[{min:5, max:50, message:'长度在5到50个字符', trigger:'blur'}],
           address:[{min:5, max:50, message:'长度在5到50个字符', trigger:'blur'}],
-          moreaddress:[{min:5, max:50, message:'长度在5到50个字符', trigger:'blur'}],
-          moreaddress2:[{min:5, max:50, message:'长度在5到50个字符', trigger:'blur'}]
+          locationName:[{min:5, max:50, message:'长度在5到50个字符', trigger:'blur'}]
         }
       }
     },
     methods: {
+      confirmId(){
+        console.log("confirmId invoked");
+        console.log(this.$cookies.get("mail")+"  "+this.useraddressForm.addressid);
+        this.$axios.post("visit/add",{
+          mail: this.$cookies.get("mail"),
+          locId: this.useraddressForm.addressid,
+          date: Date.now()
+        }).then(successResponse =>{
+          if(successResponse.data.code=200){
+            this.$message("登记成功！");
+          }else{
+            this.$message("登记失败！");
+          }
+        }).catch(failResponse=>{
+          this.$message("操作失败！");
+        })
+      },
       /*输入地址编号提交按钮*/
-      submit(){
+      submitId(){
+        console.log(this.useraddressForm.addressid);
+        this.$axios//url是后端的RequestMapping中的路径
+          .post('/location/get',{
+            locId: this.useraddressForm.addressid
+          })
+          .then(successResponse => {
+            if(successResponse.data.length==0){
+              this.$message.error("编号不存在！");
+            }
+            else {
+              var info = successResponse.data.locName+" "+successResponse.data.province + ","+successResponse.data.city+","+successResponse.data.area+","+successResponse.data.address;
+              this.$confirm(info,"确认",{
+                confirmButtonText: "确认",//确认按钮文字更换
+                cancelButtonText: "取消",//取消按钮文字更换
+                showClose: false,//是否显示右上角关闭按钮
+                type: "warning"
+              }).then(this.confirmId);
+            }
+          })
+          .catch(failResponse =>{
+            alert("跨域操作失败！")
+          })
       },
       /*手动输入地点提交按钮*/
-      submit2() {
+      submitAddr() {
         /*按提交按钮弹出提示框*/
         this.$confirm('是否确认提交输入信息？', '提示', {
           confirmButtonText: '确定', //弹出框的确定提交按钮
           cancelButtonText: '取消', //弹出框的取消提交按钮
           type: 'warning', //弹出框类型
           center:true
-        }).then(() => { //按下确定弹出消息
-          this.$message({
-            type: 'success',
-            message: '提交输入信息成功！'
-          });
+        }).then(() => { //按下确定提交信息
+          this.$axios.post("/visit/addElse",{
+            mail: this.$cookies.get("mail"),
+            locName: this.useraddressForm2.locationName,
+            area: this.useraddressForm2.area,
+            address: this.useraddressForm2.address
+          }).then(successResponse=>{
+            this.$message({
+              type: 'success',
+              message: '提交输入信息成功！'
+            });
+          }).catch(()=>{
+            this.$message({
+              type: 'warning',
+              message: '提交失败'
+            });
+          })
         }).catch(() => { //按下取消弹出消息
           this.$message({
             type: 'info',

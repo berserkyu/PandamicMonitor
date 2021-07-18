@@ -73,7 +73,8 @@
           .then(successResponse => {
             if(successResponse.data.code === 200){
               //路由到其他页面
-              this.$cookies.set('main',this.loginForm.username,1);
+              this.$cookies.set('mail',this.loginForm.username,'1d');
+              this.$cookies.set('pandemicSession',successResponse.data.sessionId,'1d');
               this.$router.replace({path:'/home'});
               this.$message.success("用户登录成功！");
             }else

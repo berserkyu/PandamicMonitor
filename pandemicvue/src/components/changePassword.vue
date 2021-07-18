@@ -39,7 +39,6 @@ export default {
   data() {
     return {
       changePassForm: {
-        mail: "",
         oldPass: "",
         newPass: "",
         newPassC: "",
@@ -99,7 +98,7 @@ export default {
       {
         this.$axios
           .post('/changelogininfo',{
-            mail: this.changePassForm.mail,
+            mail: this.$cookies.get('mail'),
             oldPassword: this.changePassForm.oldPass,
             newPassword: this.changePassForm.newPass
           })

@@ -78,12 +78,14 @@ export default {
       this.$axios
         .post('/changeuserinfo',{
           name: this.infoUpdateForm.username,
-          mail: this.infoUpdateForm.email,
+          oldMail: this.$cookies.get("mail"),
+          newMail: this.infoUpdateForm.email,
           address: this.infoUpdateForm.address,
-          phoneno: this.infoUpdateForm.phone,
+          phoneno: this.infoUpdateForm.phone
         })
         .then(successResponse =>{
           if(successResponse.data.code === 200) {
+            this.$cookies.set("mail",this.infoUpdateForm.email);
             this.$message.success("更新用户信息成功！");
           }else
             this.$message.error("更新信息格式错误！");
