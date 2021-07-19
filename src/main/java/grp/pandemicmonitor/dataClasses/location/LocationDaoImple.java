@@ -47,11 +47,25 @@ public class LocationDaoImple implements LocationDao{
     @Override
     public long addLocation(Location l) {
         String sqlCmd = String.format("INSERT INTO location(locName,province,city,area,address) " +
-                                        " VALUES('%s','%s','%s','%s','%s')",
-                                       l.getLocName(),l.getProvince(),l.getCity(),l.getArea(), l.getAddress());
+                                        " SELECT * FROM (SELECT '%s','%s','%s','%s','%s') as tmp" +
+                                        " WHERE NOT EXISTS(SELECT * FROM location" +
+                                                        " WHERE locName='%s'" +
+                                                        " AND province='%s'" +
+                                                        " AND city='%s'" +
+                                                        " AND area='%s'" +
+                                                        " AND address='%s')",
+                                       l.getLocName(),l.getProvince(),l.getCity(),l.getArea(), l.getAddress(),
+                                        l.getLocName(),l.getProvince(),l.getCity(),l.getArea(), l.getAddress() );
         int result = jdbcTemplate.update(sqlCmd);
         if(result!=1) return -1;
-        return result;
+        sqlCmd = String.format("SELECT * FROM location WHERE locName='%s' " +
+                                                        "AND province='%s' " +
+                                                        "AND city='%s' " +
+                                                        "AND area='%s' " +
+                                                        "AND address='%s'",
+                l.getLocName(),l.getProvince(),l.getCity(),l.getArea(), l.getAddress());
+        List<Location> ll = jdbcTemplate.query(sqlCmd,new LocationMapper());
+        return ll.get(0).getLocId();
     }
     //删除地点信息
     @Override

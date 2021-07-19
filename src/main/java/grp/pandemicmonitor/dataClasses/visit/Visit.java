@@ -1,12 +1,14 @@
 package grp.pandemicmonitor.dataClasses.visit;
 
 import java.sql.Time;
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Visit {
     private String idNo;
     private long locId;
-    private Date date;
+    private java.sql.Date date;
     private Time time;
 
     public String getIdNo() {
@@ -15,8 +17,8 @@ public class Visit {
     public Visit(){
         this.idNo = "";
         this.locId = 0;
-        this.date = new Date();
-        this.time = null;
+        this.date = Date.valueOf(LocalDate.now());
+        this.time = Time.valueOf(LocalTime.now());
     }
     public Visit(String idNo, long locId, Date date, Time time) {
         this.idNo = idNo;

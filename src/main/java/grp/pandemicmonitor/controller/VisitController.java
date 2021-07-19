@@ -2,7 +2,7 @@ package grp.pandemicmonitor.controller;
 
 import grp.pandemicmonitor.InputFromFrontEnd.InputVisit;
 import grp.pandemicmonitor.InputFromFrontEnd.InputVisitElse;
-import grp.pandemicmonitor.dataClasses.Result;
+import grp.pandemicmonitor.dataClasses.Results.Result;
 import grp.pandemicmonitor.dataClasses.person.Person;
 import grp.pandemicmonitor.dataClasses.person.PersonDaoImple;
 import grp.pandemicmonitor.dataClasses.visit.Visit;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.sql.Date;
 import java.sql.Time;
 
 @Controller

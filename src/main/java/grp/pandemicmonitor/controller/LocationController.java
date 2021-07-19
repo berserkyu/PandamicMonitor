@@ -1,11 +1,10 @@
 package grp.pandemicmonitor.controller;
 
-import grp.pandemicmonitor.InputFromFrontEnd.InputVisit;
 import grp.pandemicmonitor.dataClasses.Address.Address;
-import grp.pandemicmonitor.dataClasses.Result;
+import grp.pandemicmonitor.dataClasses.Results.Result;
+import grp.pandemicmonitor.dataClasses.Results.ResultLocation;
 import grp.pandemicmonitor.dataClasses.location.Location;
 import grp.pandemicmonitor.dataClasses.location.LocationDaoImple;
-import grp.pandemicmonitor.dataClasses.visit.Visit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,10 +27,11 @@ public class LocationController {
     public Result addLocation(@RequestBody Location l){
         System.out.println("add location requested");
         l.displayInfo();
-       if(loc.addLocation(l)!=-1){
-           return new Result(200);
+        long r = loc.addLocation(l);
+       if(r!=-1){
+           return new ResultLocation(200,r);
        }
-       return new Result(400);
+       return new ResultLocation(400,0);
     }
     //改变现有地点信息
     @RequestMapping(value = "/location/change")

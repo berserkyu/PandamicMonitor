@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Component
 public class VisitDaoImple implements VisitDao{
@@ -15,9 +16,13 @@ public class VisitDaoImple implements VisitDao{
 
     @Override
     public boolean addVisit(Visit s){
+        System.out.println("xxxxxxxxx");
         String sqlCmd = String.format("INSERT INTO visit(idNo,locId,dateVisit,timeVisit) " +
-                        "VALUES ('%s',%d,'%s','%s')",
-                s.getIdNo(),s.getLocId(),s.getDate().toString(),s.getTime().toString());
+                        "SELECT '%s',location.locId,'%s','%s' " +
+                        "FROM location " +
+                        "WHERE location.locId=%d ",
+                s.getIdNo(),s.getDate().toString(),s.getTime().toString(),s.getLocId());
+        System.out.println(sqlCmd);
         int result = jdbcTemplate.update(sqlCmd);
         return  result==1;
     }

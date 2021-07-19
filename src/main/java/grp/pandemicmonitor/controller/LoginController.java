@@ -2,7 +2,8 @@ package grp.pandemicmonitor.controller;
 
 import grp.pandemicmonitor.dataClasses.loginInfo.LoginInfo;
 import grp.pandemicmonitor.dataClasses.loginInfo.PasswordChange;
-import grp.pandemicmonitor.dataClasses.Result;
+import grp.pandemicmonitor.dataClasses.Results.Result;
+import grp.pandemicmonitor.dataClasses.Results.ResultLogin;
 import grp.pandemicmonitor.dataClasses.loginInfo.NewUserInfo;
 import grp.pandemicmonitor.dataClasses.misc.GeneralDaoImple;
 import grp.pandemicmonitor.dataClasses.person.PersonDaoImple;
@@ -58,7 +59,7 @@ public class LoginController {
             p.displayInfo();
             int sessionId = LoginInfo.hash(l.getMail()+l.getPassword());
             //返回200代表验证通过
-            if(gen.initSession(sessionId,l.getMail())) return new Result(200,sessionId);
+            if(gen.initSession(sessionId,l.getMail())) return new ResultLogin(200,sessionId);
             //返回400代表验证不通过
             System.out.println("init session failed");
         }
