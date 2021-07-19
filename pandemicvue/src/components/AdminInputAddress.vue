@@ -4102,7 +4102,7 @@ export default {
           if(successResponse.data.code === 200){
             this.$message({
               type: 'success',
-              message: '提交录入信息成功！'
+              message: '提交录入信息成功！地点编号：'+successResponse.data.locId
             });
           }else
           {
