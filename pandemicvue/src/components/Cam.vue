@@ -17,9 +17,8 @@
       @close="onCancel"
       width="700px">
       <!--二维码扫描框-->
-
       <div class="box">
-        <qrcode-stream @decode="onDecode" :camera="camera" :track="drawOutline" class="scanBox"></qrcode-stream>
+        <qrcode-stream @decode="onDecode" :camera="camera" :track="paintOutline" class="scanBox"></qrcode-stream>
       </div>
     </el-dialog>
   </div>
@@ -67,39 +66,23 @@ export default {
       this.visible = false;
       this.camera = 'off';
     },
+
     //标记二维码
-    drawOutline(decodeData, context){
-      this.camera = 'auto';
-      var points = [];
-      for(var k in decodeData){
-        switch(k){
-          case "topLeft":
-            points[0] = decodeData[k];
-            break;
-          case"topRight":
-            points[1] = decodeData[k];
-            break;
-          case"bottomRight":
-            points[2] = decodeData[k];
-            break;
-          case"bottomLeft":
-            points[3] = decodeData[k];
-            break;
-          default:
-            break;
+    paintOutline (detectedCodes, ctx) {
+      for (const detectedCode of detectedCodes) {
+        const [ firstPoint, ...otherPoints ] = detectedCode.cornerPoints
+
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = 10;
+        ctx.beginPath();
+        ctx.moveTo(firstPoint.x, firstPoint.y);
+        for (const { x, y } of otherPoints) {
+          ctx.lineTo(x, y);
         }
+        ctx.lineTo(firstPoint.x, firstPoint.y);
+        ctx.closePath();
+        ctx.stroke();
       }
-      context.lineWidth = 20;
-      context.strokeStyle = 'blue';
-      context.beginPath();
-      console.log(points[0]);
-      context.moveTo(points[0].x, points[0].y);
-      for(const {x,y} of points){
-        context.lineTo(x,y);
-      }
-      context.lineTo(points[0].x, points[0].y);
-      context.closePath();
-      context.stroke();
     },
   },
 }

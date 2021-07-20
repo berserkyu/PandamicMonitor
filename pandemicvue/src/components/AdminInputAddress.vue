@@ -4483,6 +4483,7 @@
       });
     },
     Qrcode() {
+      console.log("qrcode");
       this.postToBackend();
 
       this.dialogVisible2 = true;
@@ -4492,21 +4493,19 @@
         let qrcode = new QRCode("qrcode", {
           width: 150,
           height: 150,
-          text: "PandemicMonitorLoc1000"+count,
+          text: "PandemicMonitor"+count,
           colorDark: "#000",
           colorLight: "#fff",
         });
       });
     },
     postToBackend(){
-      console.log(this.admininputaddressForm.moreaddress2);
-      console.log(typeof(this.$refs['temp'].$children[0].$options.propsData.value));
-      console.log(this.admininputaddressForm.moreaddress);
+      console.log(this.$refs['admininputaddressForm'].$children[0].$children[1].inputValue);
       this.$axios
         .post('/location/add',{
           ID: 0,
           locName: this.admininputaddressForm.moreaddress2,
-          prefix : this.$refs['temp'].$children[0].$options.propsData.value,
+          prefix : this.$refs['admininputaddressForm'].$children[0].$children[1].inputValue,
           address: this.admininputaddressForm.moreaddress
         })
         .then(successResponse => {
@@ -4515,7 +4514,7 @@
               type: 'success',
               message: '提交录入信息成功！地点编号：'+successResponse.data.locId
             });
-          count++;//成功就录入就加一
+          count=successResponse.data.locId//成功就录入就加一
           }else
           {
             this.$message({

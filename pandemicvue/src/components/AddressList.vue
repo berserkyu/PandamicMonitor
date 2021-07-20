@@ -7,29 +7,32 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="getdata">刷新</el-button>
       </el-form-item>
     </el-form>
     <!--地点信息列表-->
     <el-main>
-      <el-table :data="tableData" highlight-current-row border style="width: 100%;" class="addresslist_table" height="500">
-        <el-table-column label="地址编号" prop="addressid"></el-table-column>
+      <el-table :data="tableData" highlight-current-row border style="width: 100%;" class="addresslist_table" height="500px" >
+        <el-table-column label="地址编号" prop="locId"></el-table-column>
         <el-table-column label="地点" prop="address"></el-table-column>
         <el-table-column label="二维码">
           <template slot-scope="scope">
-            <img :src="scope.row.tag" alt/>
+
             <el-popover
               placement="bottom"
               :title="scope.row.realName"
               trigger="click">
-              <img :src="scope.row.tag" alt/>
-              <el-button slot="reference" @click="showQRCode(scope.row.id)">点击显示二维码</el-button>
+
+
+              <el-button slot="reference" @click="showQRCode(scope.row.locId)">点击显示二维码</el-button>
+              <div id="qrcode"></div>
             </el-popover>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="180" align="center">
           <template slot-scope="scope">
             <el-button type="text" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-button>
-            <el-button type="text" icon="el-icon-delete" class="deleteColor" @click="del(scope.row.id)">删除</el-button>
+            <el-button type="text" icon="el-icon-delete" class="deleteColor" @click="del(scope.row.locId)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -39,7 +42,7 @@
         <el-form label-width="120px" :model="editForm" :rules="editRules" ref="editForm" class="edit_Form">
           <!--编辑地址编号输入框-->
           <el-form-item label="地址编号" prop="addressid">
-            <el-input v-model="editForm.addressid" placeholder="请输入地址编号" clearable></el-input>
+            <el-input v-model="editForm.addressid" placeholder="请输入地址编号" readonly></el-input>
           </el-form-item>
           <!--编辑地点输入框-->
           <el-form-item label="地点" prop="address">
@@ -57,7 +60,12 @@
 </template>
 
 <script>
+  import QRCode from "qrcodejs2";
+
   export default{
+    mounted() {
+      this.getdata();
+    },
     name:'AddressList',
     data(){
       var validateNum = (rule, value, callback) => { //限制地址编号框只能输入正整数方法
@@ -96,8 +104,8 @@
     methods:{
       search(){ //搜索按钮方法
         this.$axios
-          .post('getaddressbyname',{
-            id: this.addresslistForm.addressid
+          .post('/location/get',{
+            locId: this.addresslistForm.addressid
           })
           .then(successResponse => {
             console.log("success");
@@ -113,9 +121,9 @@
         }).then(() => { //按下确定弹出消息
 
           this.$axios
-            .post('', {
-              name: this.editForm.address,
-              id: this.editForm.addressid,
+            .post('location/changename', {
+              locName: this.editForm.address,
+              locId: this.editForm.addressid,
             })
             .then(successResponse => {
               if (successResponse.data.code === 200) {
@@ -135,22 +143,24 @@
       },
       edit(obj){ //编辑按钮方法
         this.editForm = obj;
+        this.editForm.addressid = obj.locId;
         this.editFormVisible = true;
       },
       del(addressid){ //删除按钮方法
+        console.log(addressid);
         this.$confirm('是否确定删除此地点？', '提示', {
           confirmButtonText: '确定', //弹出框的确定提交按钮
           cancelButtonText: '取消', //弹出框的取消提交按钮
           type: 'warning', //弹出框类型
           center:true
         }).then(() => { //按下确定弹出消息
-          console.log(addressid);
+
           this.$axios
-            .post('deleteaddress', {
-              id: addressid
+            .post('/location/delete', {
+              locId: addressid
             })
             .then(successResponse => {
-              if (successResponse.data.code === 200) {
+              if (successResponse.data.code == 200) {
                 this.$message({
                   type: 'success',
                   message: '删除地点成功！'
@@ -168,22 +178,30 @@
       getdata() {
         console.log("get all data");
         this.$axios
-          .get('/getaddress')
+          .get('/location/getall')
           .then(successResponse => {
-            console.log("success");
-            this.tableData = successResponse.data.tableData;
+            if(successResponse.data.code=200){
+              console.log("success");
+              console.log(successResponse);
+              this.tableData = successResponse.data.tableData;
+            }else{
+              console.log("failed");
+            }
+
           }) .catch(failResponse =>{alert("跨域操作失败！")})
       },
       showQRCode(addressid){
         console.log(addressid);
-        this.$axios
-          .post('deleteaddress', {
-            id: addressid
-          })
-          .then(successResponse => {
-            //从后端获取地点二维码对应文本
+          document.getElementById("qrcode").innerHTML = "";
+          let qrcode = new QRCode("qrcode", {
+            width: 200,
+            height: 200,
+            text: "PandemicMonitor"+""+addressid,
+            colorDark: "#000",
+            colorLight: "#fff",
+          });
+          console.log(addressid+"qrcode done");
 
-          }).catch(failResponse =>{alert("跨域操作失败！")})
       }
     }
   }
