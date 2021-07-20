@@ -1,5 +1,6 @@
 package grp.pandemicmonitor.controller;
 
+import grp.pandemicmonitor.dataClasses.Results.ResultPersonTest;
 import grp.pandemicmonitor.dataClasses.loginInfo.LoginInfo;
 import grp.pandemicmonitor.dataClasses.loginInfo.PasswordChange;
 import grp.pandemicmonitor.dataClasses.Results.Result;
@@ -11,6 +12,8 @@ import grp.pandemicmonitor.dataClasses.person.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 //登录相关行为的Controller
 @Controller
@@ -109,9 +112,43 @@ public class LoginController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/getuser")
+    @RequestMapping(value = "/getuserbymail")
     @ResponseBody
-    public Person getUser(@RequestBody String mail){
+    public Person getUserByMail(@RequestBody String mail){
         return per.getPersonByMail(mail);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/getuserbyid")
+    @ResponseBody
+    public Person getUserById(@RequestBody String id){
+        return per.getPersonById(id);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/getuserbyname")
+    @ResponseBody
+    public ResultPersonTest getUserByName(@RequestBody Person p){
+        System.out.println("get user by name requested : "+p.getFullName());
+        return new ResultPersonTest(200,per.getPersonByName(p.getFullName()));
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/getalluser")
+    @ResponseBody
+    public ResultPersonTest getAllUser(){
+        System.out.println("get all user requested");
+        return new ResultPersonTest(200,per.getAllPerson());
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/deleteuser")
+    @ResponseBody
+    public Result deleteUser(@RequestBody Person p){
+        System.out.println("delete user requested : "+p.getIdNo());
+        if(per.deletePerson(p.getIdNo())){
+            return new Result(200);
+        }
+        return new Result(400);
     }
 }

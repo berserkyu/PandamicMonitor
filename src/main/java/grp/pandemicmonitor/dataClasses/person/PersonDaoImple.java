@@ -40,6 +40,32 @@ public class PersonDaoImple implements PersonDao {
     }
 
     @Override
+    //得到邮箱为mail的人员信息
+    public Person getPersonById(String id){
+        String sqlQuery = String.format("SELECT * FROM person WHERE idNo='%s'",id);
+        List<Person> result = jdbcTemplate.query(sqlQuery,new PersonMapper());
+        if(result.isEmpty()){
+            return null;
+        }else{
+            return result.get(0);
+        }
+    }
+
+    @Override
+    //得到邮箱为mail的人员信息
+    public List<Person> getPersonByName(String name){
+        String sqlQuery = String.format("SELECT * FROM person WHERE fullname='%s'",name);
+        List<Person> result = jdbcTemplate.query(sqlQuery,new PersonMapper());
+        if(result.isEmpty()){
+            System.out.println("result is null");
+            return null;
+        }else{
+            System.out.println("result is not null");
+            return result;
+        }
+    }
+
+    @Override
     //添加人员信息
     public boolean addPerson(Person p)  {
         String sqlCmd = String.format("INSERT INTO person(idno,mail,birthDay,fullname,phoneno" +
@@ -144,21 +170,27 @@ public class PersonDaoImple implements PersonDao {
 
     @Override
     //删除人员信息
-    public void deletePerson(String idNo)  {
+    public boolean deletePerson(String idNo)  {
         //必须先删除依赖于人员信息的登录信息(通过邮箱)
         String sqlCmd = String.format("DELETE FROM loginInfo" +
                                     " WHERE mail IN( SELECT mail" +
                                                     " FROM person" +
                                                     " WHERE idno='%s')",idNo);
+        System.out.println(sqlCmd);
         int result = jdbcTemplate.update(sqlCmd);
         if(result!=1){
             System.out.println("delete person SQL failed at loginInfo");
-            return;
+            return false;
         }
         //若成功了再删除人员信息
         sqlCmd = String.format("DELETE FROM person WHERE idNo='%s'",idNo);
+        System.out.println(sqlCmd);
         result = jdbcTemplate.update(sqlCmd);
-        if(result!=1) System.out.println("delete person SQL failed at person");
+        if(result!=1){
+            System.out.println("delete person SQL failed at person");
+            return false;
+        }
+        return true;
     }
 
     @Override

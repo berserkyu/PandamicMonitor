@@ -13,6 +13,8 @@ public interface PersonDao {
     Person getPerson(String idNo) ;//x
     //得到邮箱为mail的人员信息
     Person getPersonByMail(String mail) ;//x
+    Person getPersonById(String id);
+    List<Person> getPersonByName(String name);
     //验证登录信息
     Person validateLogin(String mail,String pword,int type) ;//x
     //通过LoginInfo类验证登录信息
@@ -29,7 +31,7 @@ public interface PersonDao {
     //修改数据库里的人员登录密码
     boolean changePassword(String mail,String oldPword,String newPword);//x
     //删除人员信息
-    void deletePerson(String idNo);//x
+    boolean deletePerson(String idNo);//x
     //得到某人员登录密码
     String getPassword(String idNo);//x
     //得到所有人员
