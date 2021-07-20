@@ -75,7 +75,7 @@
               //路由到其他页面
               this.$cookies.set('mail',this.loginForm.username,'1d');
               this.$cookies.set('pandemicSession',successResponse.data.sessionId,'1d');
-              this.$router.replace({path:'/home'});
+              this.$router.replace({path:'/userhome'});
               this.$message.success("用户登录成功！");
             }else
             {
@@ -95,7 +95,7 @@
         })
           .then(successResponse => {
             if(successResponse.data.code === 200){
-            this.$router.replace({path:'/home'})
+            this.$router.replace({path:'/adminhome'})
             this.$message.success("管理员登录成功！");
           }else
             this.$message.error("邮箱或密码不存在！");

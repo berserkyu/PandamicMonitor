@@ -55,69 +55,44 @@
             title: '管理员权限',
             sList:[
               {
-                id: 0,
+                id: 10,
                 title: '用户列表',
                 path: '/userlist',
               },
               {
-                id: 1,
+                id: 11,
                 title: '录入新地点信息',
                 path: '/admininputaddress',
               },
               {
-                id: 2,
+                id: 12,
                 title: '地点信息列表',
                 path: '/addresslist',
-              },
-              {
-                id: 3,
-                title: '用户行动路径',
-                path: '/3',
-              },
-              {
-                id: 4,
-                title: '与被调查人员路径相交用户',
-                path: '/4',
-              },
-              {
-                id: 5,
-                title: '查询重点路径',
-                path: '/5',
               },
             ],
           },
           {
             id: 1,
-            path: '/user',
-            title: '用户信息平台',
-            sList:[
-              {
-                id: 10,
-                title: '修改密码',
-                path: '/changepassword',
-              },
-              {
-                id: 11,
-                title: '更新用户信息',
-                path: '/infoupdate',
-              },
-              {
-                id: 12,
-                title: '手动录入新地点信息',
-                path: '/userinputaddress',
-              },
+            path: '/admin',
+            title: '调查人员平台',
+            sList: [
               {
                 id: 13,
-                title: '扫描二维码录入地点信息',
-                path: '/cam',
+                title: '用户行动路径',
+                path: '/3',
               },
               {
                 id: 14,
-                title: '查询重点路径',
-                path: '/14',
+                title: '与被调查人员路径相交用户',
+                path: '/4',
               },
-            ],
-          },
+              {
+                id: 15,
+                title: '查询重点路径',
+                path: '/5',
+              },
+            ]
+          }
         ],
       }
     },

@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../components/Login.vue'
-import Home from '../components/home/Home.vue'
-import UserList from '../components/UserList.vue'
-import InfoUpdate from '../components/infoUpdate.vue'
+import Login from '../components/Login'
+import AdminHome from '../components/home/adminHome'
+import UserHome from '../components/home/userHome'
+import UserList from '../components/admin/UserList'
+import InfoUpdate from '../components/user/infoUpdate'
 import Register from '../components/Register.vue'
-import ChangePassword from '../components/changePassword.vue'
-import AdminInputAddress from '../components/AdminInputAddress.vue'
+import ChangePassword from '../components/user/changePassword'
+import AdminInputAddress from '../components/admin/AdminInputAddress'
 import qrCodeTest from '../components/QRcodetest.vue'
-import UserInputAddress from '../components/UserInputAddress.vue'
-import Cam from '../components/Cam'
-import AddressList from "../components/AddressList";
+import UserInputAddress from '../components/user/UserInputAddress'
+import Cam from '../components/user/Cam'
+import AddressList from "../components/admin/AddressList";
 
 Vue.use(VueRouter)
 
@@ -31,14 +32,33 @@ Vue.use(VueRouter)
       component: Login
     },
     {
-      path: "/home",
-      component: Home,
+      path: "/register",
+      component: Register
+    },
+    {
+      path: "/adminhome",
+      component: AdminHome,
       redirect: "/userlist",
       children:[
         {
           path: "/userlist",
           component: UserList
         },
+        {
+          path: "/admininputaddress",
+          component: AdminInputAddress
+        },
+        {
+          path: "/addresslist",
+          component: AddressList
+        },
+      ]
+    },
+    {
+      path: "/userhome",
+      component: UserHome,
+      redirect: "/cam",
+      children: [
         {
           path: "/changepassword",
           component: ChangePassword
@@ -48,10 +68,6 @@ Vue.use(VueRouter)
           component: InfoUpdate
         },
         {
-          path: "/admininputaddress",
-          component: AdminInputAddress
-        },
-        {
           path: "/userinputaddress",
           component: UserInputAddress
         },
@@ -59,15 +75,7 @@ Vue.use(VueRouter)
           path: "/cam",
           component: Cam
         },
-        {
-          path: "/addresslist",
-          component: AddressList
-        },
       ]
-    },
-    {
-      path: "/register",
-      component: Register
     }
   ]
 
