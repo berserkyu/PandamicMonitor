@@ -9,10 +9,13 @@ import java.util.List;
 public interface LocationDao  {
     //得到编号为ID的地点信息
     Location getLocation(long ID) ;//x
+    List<Location> getLocation1(long ID) ;//x
     //新增地点
     long addLocation(Location l) throws SQLException;//x
     //更新地点信息（例。商家转移店铺）
     boolean updateLocation(long ID,String name,Address address) ;//x
+
+    boolean updateLocationName(long ID,String name) ;//x
     //删除地点信息
     boolean deleteLocation(long ID) ;//x
     List<Location> getAllLocations() ;//x

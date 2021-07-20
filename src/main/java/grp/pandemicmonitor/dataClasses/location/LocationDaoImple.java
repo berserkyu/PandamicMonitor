@@ -23,6 +23,13 @@ public class LocationDaoImple implements LocationDao{
             return  result.get(0);
         }
     }
+
+    @Override
+    public List<Location> getLocation1(long ID)  {
+        String sqlQuery = String.format("SELECT * FROM location WHERE locId=%d",ID);
+        List<Location> result = jdbcTemplate.query(sqlQuery,new LocationMapper());
+        return  result;
+    }
     //获得所有地点信息
     @Override
     public List<Location> getAllLocations()  {
@@ -47,17 +54,14 @@ public class LocationDaoImple implements LocationDao{
     @Override
     public long addLocation(Location l) {
         String sqlCmd = String.format("INSERT INTO location(locName,province,city,area,address) " +
-                                        " SELECT * FROM (SELECT '%s','%s','%s','%s','%s') as tmp" +
-                                        " WHERE NOT EXISTS(SELECT * FROM location" +
-                                                        " WHERE locName='%s'" +
-                                                        " AND province='%s'" +
-                                                        " AND city='%s'" +
-                                                        " AND area='%s'" +
-                                                        " AND address='%s')",
+                                        " VALUES('%s','%s','%s','%s','%s') ON DUPLICATE KEY UPDATE locName=locName",
                                        l.getLocName(),l.getProvince(),l.getCity(),l.getArea(), l.getAddress(),
-                                        l.getLocName(),l.getProvince(),l.getCity(),l.getArea(), l.getAddress() );
+                                        l.getLocName(),l.getProvince(),l.getCity(),l.getArea(), l.getAddress());
         int result = jdbcTemplate.update(sqlCmd);
-        if(result!=1) return -1;
+        if(result!=1){
+            System.out.println("add location result is not 1 : "+result);
+            return -1;
+        }
         sqlCmd = String.format("SELECT * FROM location WHERE locName='%s' " +
                                                         "AND province='%s' " +
                                                         "AND city='%s' " +
@@ -65,6 +69,7 @@ public class LocationDaoImple implements LocationDao{
                                                         "AND address='%s'",
                 l.getLocName(),l.getProvince(),l.getCity(),l.getArea(), l.getAddress());
         List<Location> ll = jdbcTemplate.query(sqlCmd,new LocationMapper());
+        System.out.println("locID returned "+ll.get(0).getLocId());
         return ll.get(0).getLocId();
     }
     //删除地点信息
@@ -90,6 +95,16 @@ public class LocationDaoImple implements LocationDao{
         return result==1;
     }
 
+
+    @Override
+    public boolean updateLocationName(long ID,String name){
+        String sqlCmd = String.format("UPDATE location  " +
+                                    "SET locName='%s' "+
+                                    "WHERE locId=%d",name,ID);
+        int result = jdbcTemplate.update(sqlCmd);
+        return result==1;
+
+    }
     //得到在province省内的所有地点
     @Override
     public List<Location> getLocationWithinProvince(String province){

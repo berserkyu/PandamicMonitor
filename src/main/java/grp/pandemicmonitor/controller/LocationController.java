@@ -3,6 +3,7 @@ package grp.pandemicmonitor.controller;
 import grp.pandemicmonitor.dataClasses.Address.Address;
 import grp.pandemicmonitor.dataClasses.Results.Result;
 import grp.pandemicmonitor.dataClasses.Results.ResultLocation;
+import grp.pandemicmonitor.dataClasses.Results.ResultLocationList;
 import grp.pandemicmonitor.dataClasses.location.Location;
 import grp.pandemicmonitor.dataClasses.location.LocationDaoImple;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,10 @@ public class LocationController {
     private LocationDaoImple loc;
 
     //新增地点
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @RequestMapping(value = "/location/add")
     @ResponseBody
-    public Result addLocation(@RequestBody Location l){
+    public ResultLocation addLocation(@RequestBody Location l){
         System.out.println("add location requested");
         l.displayInfo();
         long r = loc.addLocation(l);
@@ -43,11 +44,23 @@ public class LocationController {
         }
         return new Result(400);
     }
+
+    //改变现有地点信息
+    @RequestMapping(value = "/location/changename")
+    @CrossOrigin
+    @ResponseBody
+    public Result changeLocationName(@RequestBody Location l){
+        if(loc.updateLocationName(l.getLocId(),l.getLocName())){
+            return  new Result(200);
+        }
+        return new Result(400);
+    }
     //删除地点信息
     @RequestMapping(value = "/location/delete")
     @CrossOrigin
     @ResponseBody
     public Result deleteLocation(@RequestBody Location l){
+        System.out.println("delete location requested "+l.getLocId());
         if(loc.deleteLocation(l.getLocId())) return new Result(200);
         return new Result(400);
     }
@@ -56,19 +69,26 @@ public class LocationController {
     @RequestMapping(value = "location/get")
     @CrossOrigin
     @ResponseBody
-    public Location getLocation(@RequestBody Location location){
+    public ResultLocationList getLocation(@RequestBody Location location){
         System.out.println("location info requested"+location.getLocId());
-        Location l= loc.getLocation(location.getLocId());
-        l.displayInfo();
-       return l;
+        List<Location> ll= loc.getLocation1(location.getLocId());
+        if(ll.isEmpty()){
+            return  new ResultLocationList(400,ll);
+        }
+        return new ResultLocationList(200,ll);
     }
 
-    @RequestMapping(value = "location/getall")
+    @RequestMapping(value = "/location/getall")
     @CrossOrigin
     @ResponseBody
-    public List<Location> getAllLocation(){
-
-        return  loc.getAllLocations();
+    public ResultLocationList getAllLocation(){
+        List<Location> ll = loc.getAllLocations();
+        System.out.println("get all location requested xxx "+ll.size());
+        if(ll.isEmpty()){
+            return new ResultLocationList(400,ll);
+        }
+        //for(Location l :ll) l.displayInfo();
+        return new ResultLocationList(200, ll);
     }
 
     @RequestMapping(value = "location/getprovince")

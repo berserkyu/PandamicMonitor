@@ -27,6 +27,7 @@ public class Location {
     }
 
     public void setPrefix(String prefix) {
+        System.out.println("set prefix");
         this.prefix = prefix;
         String t = "";
         int n = prefix.length();
@@ -67,7 +68,6 @@ public class Location {
 
 
     public Location(){
-        System.out.println("location");
         this.locId = -1;
         this.address = null;
         this.locName = "";
@@ -85,7 +85,6 @@ public class Location {
     public String getLocName(){return locName;}
 
     public void setLocName(String locName) {
-        System.out.println("locname "+locName);
         this.locName = locName;
     }
 
