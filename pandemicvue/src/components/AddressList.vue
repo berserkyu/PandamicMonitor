@@ -160,7 +160,7 @@
               locId: addressid
             })
             .then(successResponse => {
-              if (successResponse.data.code == 200) {
+              if (successResponse.data.code === 200) {
                 this.$message({
                   type: 'success',
                   message: '删除地点成功！'
@@ -180,7 +180,7 @@
         this.$axios
           .get('/location/getall')
           .then(successResponse => {
-            if(successResponse.data.code=200){
+            if(successResponse.data.code === 200){
               console.log("success");
               console.log(successResponse);
               this.tableData = successResponse.data.tableData;

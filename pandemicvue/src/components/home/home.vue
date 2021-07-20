@@ -133,7 +133,7 @@
             type: 'success',
             message: '登出成功!'
           });
-          window.$cookies.clear();
+          window.sessionStorage.clear();
           this.$router.push("/login");
         }).catch(() => {
           this.$message({

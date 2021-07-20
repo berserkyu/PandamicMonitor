@@ -9,6 +9,7 @@
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
         <el-button type="primary" icon="el-icon-plus" @click="add">新增用户</el-button>
+        <el-button type="primary" icon="el-icon-refresh" @click="getdata">刷新</el-button>
       </el-form-item>
     </el-form>
     <!--用户信息列表-->
@@ -186,7 +187,7 @@ export default{
 
         this.$axios
           .post('register', {
-            fullname: this.addForm.name,
+            fullName: this.addForm.name,
             idtype: this.addForm.idtype,
             idNo: this.addForm.idno,
             mail: this.addForm.email,
