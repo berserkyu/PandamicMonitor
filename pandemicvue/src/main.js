@@ -38,5 +38,5 @@ new Vue({
   router,
   components: { App },
   template: '<App/>',
-  render: c=>c(App)
+  render: h => h(App)
 })

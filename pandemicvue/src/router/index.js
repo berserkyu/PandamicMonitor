@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/Login.vue'
 import Home from '../components/home/Home.vue'
-import HelloWorld from '../components/HelloWorld.vue'
 import UserList from '../components/UserList.vue'
 import InfoUpdate from '../components/infoUpdate.vue'
 import Register from '../components/Register.vue'
@@ -11,6 +10,7 @@ import AdminInputAddress from '../components/AdminInputAddress.vue'
 import qrCodeTest from '../components/QRcodetest.vue'
 import UserInputAddress from '../components/UserInputAddress.vue'
 import Cam from '../components/Cam'
+import AddressList from "../components/AddressList";
 
 Vue.use(VueRouter)
 
@@ -20,10 +20,6 @@ Vue.use(VueRouter)
       path: "/",
       //转向login
       redirect: "/login"
-    },
-    {
-      path: "/cam",
-      component: Cam
     },
     {
       path: "/qrCodeTest",
@@ -58,6 +54,14 @@ Vue.use(VueRouter)
         {
           path: "/userinputaddress",
           component: UserInputAddress
+        },
+        {
+          path: "/cam",
+          component: Cam
+        },
+        {
+          path: "/addresslist",
+          component: AddressList
         },
       ]
     },

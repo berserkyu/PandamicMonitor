@@ -82,7 +82,7 @@
           locId: this.useraddressForm.addressid,
           date: Date.now()
         }).then(successResponse =>{
-          if(successResponse.data.code=200){
+          if(successResponse.data.code === 200){
             this.$message("登记成功！");
           }else{
             this.$message("登记失败！");
@@ -99,7 +99,7 @@
             locId: this.useraddressForm.addressid
           })
           .then(successResponse => {
-            if(successResponse.data.length==0){
+            if(successResponse.data.length === 0){
               this.$message.error("编号不存在！");
             }
             else {

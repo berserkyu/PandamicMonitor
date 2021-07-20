@@ -7,7 +7,6 @@
         <img class="img" src="../../assets/img.png" alt/>
         <span class="span">重大传染病疫情流调系统</span>
       </div>
-      <router-link to="/cam"></router-link>
       <el-button type="danger" v-on:click="logout">登出</el-button>
     </el-header>
     <!--主体-->
@@ -31,7 +30,6 @@
                 <span>{{ i.title }}</span>
               </el-menu-item>
             </el-menu-item-group>
-
 
           </el-submenu>
         </el-menu>
@@ -68,18 +66,23 @@
               },
               {
                 id: 2,
-                title: '用户行动路径',
-                path: '/2',
+                title: '地点信息列表',
+                path: '/addresslist',
               },
               {
                 id: 3,
-                title: '与被调查人员路径相交用户',
+                title: '用户行动路径',
                 path: '/3',
               },
               {
                 id: 4,
-                title: '查询重点路径',
+                title: '与被调查人员路径相交用户',
                 path: '/4',
+              },
+              {
+                id: 5,
+                title: '查询重点路径',
+                path: '/5',
               },
             ],
           },

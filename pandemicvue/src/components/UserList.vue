@@ -106,7 +106,6 @@ export default{
       userlistForm:{
         name:''
       },
-      user_info: [],
       addForm:{
         name:'',
         idtype:'',
@@ -199,6 +198,7 @@ export default{
                 type: 'success',
                 message: '新增用户成功！'
               });
+              this.addFormVisible = false;//关闭dialog
             } else {
               this.$message({
                 type: 'error',
@@ -226,11 +226,12 @@ export default{
             phoneno: this.editForm.phoneNo
           })
           .then(successResponse => {
-            if (successResponse.data.code == 200) {
+            if (successResponse.data.code === 200) {
               this.$message({
                 type: 'success',
                 message: '编辑用户信息成功！'
               });
+              this.editFormVisible = false;
             } else {
               this.$message({
                 type: 'error',

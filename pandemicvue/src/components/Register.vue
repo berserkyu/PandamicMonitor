@@ -2,9 +2,7 @@
   <div class="register_container">
     <!--注册块-->
     <div class="register_box">
-      <div class="avatar_box">
-        <img src="../assets/logo.png" alt/>
-      </div>
+
       <!--表单-->
       <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="register_Form" label-width="100px">
         <!--姓名输入框-->
@@ -218,26 +216,6 @@ export default {
   left:50%;
   top:50%;
   transform:translate(-50%, -50%);
-}
-/*logo样式*/
-.avatar_box{
-  width:50px;
-  height:50px;
-  border:1px solid white;
-  border-radius:50%;
-  padding:5px;
-  position:absolute;
-  left: 50%;
-  transform:translate(-50%,-60%);
-  background-color:#ffff80;
-}
-img{
-  width:100%;
-  height:100%;
-  position:absolute;
-  top:5%;
-  left:0;
-  transform:scale(0.7);
 }
 /*按钮样式*/
 .btns{
