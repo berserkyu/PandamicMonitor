@@ -27,11 +27,12 @@
 
           <el-submenu :index="item.id" v-for="item in menuList" :key="item.id">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i :class="item.icon"></i>
               <span>{{ item.title }}</span>
             </template>
             <el-menu-item-group>
               <el-menu-item :index="i.path" v-for="i in item.sList" :key="i.id">
+                <i :class="i.icon"></i>
                 <span>{{ i.title }}</span>
               </el-menu-item>
             </el-menu-item-group>
@@ -61,16 +62,19 @@
             id: 0,
             path: '/user',
             title: '用户信息平台',
+            icon: 'el-icon-user',
             sList:[
               {
                 id: 10,
                 title: '修改密码',
                 path: '/changepassword',
+                icon: 'el-icon-lock',
               },
               {
                 id: 11,
                 title: '更新用户信息',
                 path: '/infoupdate',
+                icon: 'el-icon-edit-outline',
               },
             ],
           },
@@ -78,16 +82,19 @@
             id: 1,
             path: '/user',
             title: '记录行动轨迹',
+            icon: 'iconfont icon-jilu',
             sList:[
               {
                 id: 12,
                 title: '手动录入新地点信息',
                 path: '/userinputaddress',
+                icon: 'iconfont icon-shuru',
               },
               {
                 id: 13,
                 title: '扫描二维码录入地点信息',
                 path: '/cam',
+                icon: 'iconfont icon-saoma ',
               },
             ]
           },
@@ -95,11 +102,13 @@
             id: 2,
             path: '/user',
             title: '疫情数据',
+            icon: 'iconfont icon-shuju',
             sList:[
               {
                 id: 14,
-                title: '查询重点路径',
-                path: '/14',
+                title: '查询重点地区',
+                path: '/userkeyroad',
+                icon: 'iconfont icon-lujingguihua ',
               },
             ]
           },

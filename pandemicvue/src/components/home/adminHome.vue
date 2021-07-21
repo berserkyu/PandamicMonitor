@@ -27,11 +27,12 @@
 
           <el-submenu :index="item.id" v-for="item in menuList" :key="item.id">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i :class="item.icon"></i>
               <span>{{ item.title }}</span>
             </template>
             <el-menu-item-group>
               <el-menu-item :index="i.path" v-for="i in item.sList" :key="i.id">
+                <i :class="i.icon"></i>
                 <span>{{ i.title }}</span>
               </el-menu-item>
             </el-menu-item-group>
@@ -59,21 +60,25 @@
             id: 0,
             path: '/admin',
             title: '管理员权限',
+            icon: 'iconfont icon-guanliyuan ',
             sList:[
               {
                 id: 10,
                 title: '用户列表',
                 path: '/userlist',
+                icon: 'iconfont icon-yonghuliebiao',
               },
               {
                 id: 11,
                 title: '录入新地点信息',
                 path: '/admininputaddress',
+                icon: 'iconfont icon-dengji',
               },
               {
                 id: 12,
                 title: '地点信息列表',
                 path: '/addresslist',
+                icon: 'iconfont icon-liebiao1',
               },
             ],
           },
@@ -81,21 +86,25 @@
             id: 1,
             path: '/admin',
             title: '调查人员平台',
+            icon: 'iconfont icon-UI_icon_zhongdianrenbidui',
             sList: [
               {
                 id: 13,
                 title: '用户行动路径',
+                icon: 'iconfont icon-lujingfenxi',
                 path: '/3',
               },
               {
                 id: 14,
                 title: '与被调查人员路径相交用户',
+                icon: 'iconfont icon-xiangjiao',
                 path: '/4',
               },
               {
                 id: 15,
-                title: '查询重点路径',
-                path: '/5',
+                title: '查询重点地区',
+                path: '/adminkeyroad',
+                icon: 'iconfont icon-zhongdiandiqu',
               },
             ]
           }

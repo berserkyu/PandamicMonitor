@@ -45,7 +45,7 @@ export default {
           locId: decodedString.substr(15,n-15),
           mail: this.$cookies.get("mail")
         }).then(successResponse=>{
-          if(successResponse.data.code===200){
+          if(successResponse.data.code === 200){
             this.$message.success("登记成功！");
             this.onCancel();
           }else{

@@ -1,0 +1,128 @@
+{
+  "id": "2690661",
+  "name": "no name",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "169570",
+      "name": "重点路段",
+      "font_class": "zhongdianluduan",
+      "unicode": "e69f",
+      "unicode_decimal": 59039
+    },
+    {
+      "icon_id": "695188",
+      "name": "输入",
+      "font_class": "shuru",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "873504",
+      "name": "路径分析",
+      "font_class": "lujingfenxi",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "1788675",
+      "name": "管理员",
+      "font_class": "guanliyuan",
+      "unicode": "e696",
+      "unicode_decimal": 59030
+    },
+    {
+      "icon_id": "1901685",
+      "name": "扫码",
+      "font_class": "saoma",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "2023414",
+      "name": "调查范围",
+      "font_class": "tiaochafanwei",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "4487894",
+      "name": "数据",
+      "font_class": "shuju",
+      "unicode": "e694",
+      "unicode_decimal": 59028
+    },
+    {
+      "icon_id": "8084552",
+      "name": "登记/录入/添加",
+      "font_class": "dengji",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "8458765",
+      "name": "UI_icon2_重点人比对1",
+      "font_class": "UI_icon_zhongdianrenbidui",
+      "unicode": "e67a",
+      "unicode_decimal": 59002
+    },
+    {
+      "icon_id": "8990451",
+      "name": "相交",
+      "font_class": "xiangjiao",
+      "unicode": "e719",
+      "unicode_decimal": 59161
+    },
+    {
+      "icon_id": "11855566",
+      "name": "路径 352",
+      "font_class": "lujing",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "14463241",
+      "name": "按调查人区划",
+      "font_class": "antiaocharenquhua",
+      "unicode": "e75a",
+      "unicode_decimal": 59226
+    },
+    {
+      "icon_id": "18494112",
+      "name": "用户列表",
+      "font_class": "yonghuliebiao",
+      "unicode": "e7f1",
+      "unicode_decimal": 59377
+    },
+    {
+      "icon_id": "19723408",
+      "name": "列表1",
+      "font_class": "liebiao1",
+      "unicode": "e688",
+      "unicode_decimal": 59016
+    },
+    {
+      "icon_id": "19993925",
+      "name": "路径规划",
+      "font_class": "lujingguihua",
+      "unicode": "e82b",
+      "unicode_decimal": 59435
+    },
+    {
+      "icon_id": "20075843",
+      "name": "记录",
+      "font_class": "jilu",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "22833917",
+      "name": "重点地区",
+      "font_class": "zhongdiandiqu",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    }
+  ]
+}

@@ -12,6 +12,7 @@ import qrCodeTest from '../components/QRcodetest.vue'
 import UserInputAddress from '../components/user/UserInputAddress'
 import Cam from '../components/user/Cam'
 import AddressList from "../components/admin/AddressList";
+import KeyRoad from "../components/KeyRoad"
 
 Vue.use(VueRouter)
 
@@ -52,6 +53,10 @@ Vue.use(VueRouter)
           path: "/addresslist",
           component: AddressList
         },
+        {
+          path: "/adminkeyroad",
+          component: KeyRoad
+        },
       ]
     },
     {
@@ -74,6 +79,10 @@ Vue.use(VueRouter)
         {
           path: "/cam",
           component: Cam
+        },
+        {
+          path: "/userkeyroad",
+          component: KeyRoad
         },
       ]
     }

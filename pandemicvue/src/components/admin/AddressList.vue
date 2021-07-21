@@ -7,7 +7,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-        <el-button type="primary" icon="el-icon-search" @click="getdata">刷新</el-button>
+        <el-button type="primary" icon="el-icon-refresh" @click="getdata">刷新</el-button>
       </el-form-item>
     </el-form>
     <!--地点信息列表-->
