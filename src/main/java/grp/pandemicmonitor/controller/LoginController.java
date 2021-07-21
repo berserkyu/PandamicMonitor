@@ -114,8 +114,8 @@ public class LoginController {
     @CrossOrigin
     @RequestMapping(value = "/getuserbymail")
     @ResponseBody
-    public Person getUserByMail(@RequestBody String mail){
-        return per.getPersonByMail(mail);
+    public Person getUserByMail(@RequestBody Person p){
+        return per.getPersonByMail(p.getMail());
     }
 
     @CrossOrigin
