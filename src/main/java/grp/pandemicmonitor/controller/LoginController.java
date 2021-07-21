@@ -132,7 +132,7 @@ public class LoginController {
         System.out.println("get user by name requested : "+p.getFullName());
         return new ResultPersonTest(200,per.getPersonByName(p.getFullName()));
     }
-
+    //得到所有人员信息
     @CrossOrigin
     @RequestMapping(value = "/getalluser")
     @ResponseBody
@@ -140,7 +140,7 @@ public class LoginController {
         System.out.println("get all user requested");
         return new ResultPersonTest(200,per.getAllPerson());
     }
-
+    //删除人员信息
     @CrossOrigin
     @RequestMapping(value = "/deleteuser")
     @ResponseBody

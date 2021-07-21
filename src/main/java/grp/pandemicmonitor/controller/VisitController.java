@@ -37,7 +37,7 @@ public class VisitController {
     @CrossOrigin
     @ResponseBody
     public Result addVisitInfoId(@RequestBody InputVisit iv){
-        System.out.println("add visit requested");
+        System.out.println("add visit requested "+iv);
         Person p = per.getPersonByMail(iv.getMail());
 
         if(vis.addVisit(new Visit(p.getIdNo(),iv.getLocId(),iv.getDate(),new Time(System.currentTimeMillis())))){

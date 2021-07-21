@@ -12,7 +12,15 @@ public class Location {
     String province;
     String city;
     String area;
+    int cautionLevel;
 
+    public int getCautionLevel() {
+        return cautionLevel;
+    }
+
+    public void setCautionLevel(int cautionLevel) {
+        this.cautionLevel = cautionLevel;
+    }
 
     public void setAddress(String address) {
         this.address = address;
@@ -90,7 +98,7 @@ public class Location {
 
 
     public void displayInfo(){
-        System.out.println(locId+" : "+locName+","+province+","+city+","+area+","+address);
+        System.out.println(locId+" : "+locName+","+province+","+city+","+area+","+address+",  "+cautionLevel);
     }
 }
 

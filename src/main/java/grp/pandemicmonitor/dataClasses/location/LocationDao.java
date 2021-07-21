@@ -2,6 +2,7 @@ package grp.pandemicmonitor.dataClasses.location;
 
 import grp.pandemicmonitor.dataClasses.Address.Address;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -16,18 +17,26 @@ public interface LocationDao  {
     boolean updateLocation(long ID,String name,Address address) ;//x
 
     boolean updateLocationName(long ID,String name) ;//x
+
     //删除地点信息
     boolean deleteLocation(long ID) ;//x
     List<Location> getAllLocations() ;//x
     //得到在origin地点半径radius以内的所有地点
     List<Location> getLocationWithin(Location origin,double radius) ;//x
 
+    List<Location> getAllLocationsWithCautionLevelAfter(Date untill);
+    List<Location> getAllLocationsWithCautionLevel();
+    boolean updateLocationCautionLevel(Date untill);
+
     //得到在province省内的所有地点
     List<Location> getLocationWithinProvince(String province);
+    List<Location> getLocationWithinProvinceWithCautionLevel(String province);
     //得到在province省,city市内的所有地点
     List<Location> getLocationWithinCity(String province,String city);
+    List<Location> getLocationWithinCityWithCautionLevel(String province,String city);
     //得到在province省,city市,area区内的所有地点
     List<Location> getLocationWithinArea(String province,String city,String area);
+    List<Location> getLocationWithinAreaWithCautionLevel(String province,String city,String area);
     //得到在province省,city市,area区内的address地点
     Location getLocationWithAddress(String province,String city,String area,String address);
 

@@ -1,5 +1,7 @@
 package grp.pandemicmonitor.dataClasses.Results;
 
+
+//拓展sessionId的返回结果
 public class ResultLogin extends Result{
     private int sessionID;
 

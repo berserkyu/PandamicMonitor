@@ -24,7 +24,7 @@ public class VisitDaoImple implements VisitDao{
                 s.getIdNo(),s.getDate().toString(),s.getTime().toString(),s.getLocId());
         System.out.println(sqlCmd);
         int result = jdbcTemplate.update(sqlCmd);
-        return  result==1;
+        return result==1;
     }
 
     @Override

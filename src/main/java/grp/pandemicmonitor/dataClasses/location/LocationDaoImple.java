@@ -1,5 +1,6 @@
 package grp.pandemicmonitor.dataClasses.location;
 
+import java.sql.Date;
 import java.util.List;
 import grp.pandemicmonitor.dataClasses.Address.Address;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,11 +106,58 @@ public class LocationDaoImple implements LocationDao{
         return result==1;
 
     }
+
+    @Override
+    public boolean updateLocationCautionLevel(Date untill){
+        return false;
+    }
+
+    @Override
+    public List<Location> getAllLocationsWithCautionLevelAfter(Date after){
+        String sqlCmd = String.format("select location.locId,locName,province,city,area,location.address,sum(person.cautionLevel) as cautionLevel" +
+                                    " from location,visit,person" +
+                                    " where location.locId=visit.locId" +
+                                    " and visit.idno=person.idno" +
+                                    " and dateVisit>Date('%s')" +
+                                    " group by location.locId" +
+                                    " order by cautionLevel desc",after.toString());
+        List<Location> ll = jdbcTemplate.query(sqlCmd,new LocationMapper());
+        return  ll;
+    }
+
+
+
+
+    @Override
+    public List<Location> getAllLocationsWithCautionLevel(){
+        String sqlCmd = "select location.locId,locName,province,city,area,location.address,sum(person.cautionLevel) as cautionLevel" +
+                " from location,visit,person" +
+                " where location.locId=visit.locId" +
+                " and visit.idno=person.idno" +
+                " group by location.locId" +
+                " order by cautionLevel desc";
+        List<Location> ll = jdbcTemplate.query(sqlCmd,new LocationMapper());
+        return  ll;
+    }
+
     //得到在province省内的所有地点
     @Override
     public List<Location> getLocationWithinProvince(String province){
         String sqlQuery = String.format("SELECT * FROM location WHERE province='%s'",province);
         return jdbcTemplate.query(sqlQuery,new LocationMapper());
+    }
+
+    @Override
+    public List<Location> getLocationWithinProvinceWithCautionLevel(String province){
+        String sqlQuery = String.format("select location.locId,locName,province,city,area,location.address,sum(person.cautionLevel) as cautionLevel" +
+                " from location,visit,person" +
+                " where location.locId=visit.locId" +
+                " and visit.idno=person.idno" +
+                " and province='%s'" +
+                " group by location.locId" +
+                " order by cautionLevel desc",province);
+        List<Location> ll = jdbcTemplate.query(sqlQuery,new LocationMapper());
+        return ll;
     }
     //得到在province省,city市内的所有地点
     @Override
@@ -117,6 +165,20 @@ public class LocationDaoImple implements LocationDao{
         String sqlQuery = String.format("SELECT * FROM location WHERE province='%s' " +
                                         "AND city='%s'",province,city);
         return jdbcTemplate.query(sqlQuery,new LocationMapper());
+    }
+
+    @Override
+    public List<Location> getLocationWithinCityWithCautionLevel(String province,String city){
+        String sqlQuery = String.format("select location.locId,locName,province,city,area,location.address,sum(person.cautionLevel) as cautionLevel" +
+                " from location,visit,person" +
+                " where location.locId=visit.locId" +
+                " and visit.idno=person.idno" +
+                " and province='%s'" +
+                " and city='%s'" +
+                " group by location.locId" +
+                " order by cautionLevel desc",province,city);
+        List<Location> ll = jdbcTemplate.query(sqlQuery,new LocationMapper());
+        return ll;
     }
     //得到在province省,city市,area区内的所有地点
     @Override
@@ -126,6 +188,21 @@ public class LocationDaoImple implements LocationDao{
                                         "AND area='%s'",province,city,area);
         return  jdbcTemplate.query(sqlQuery,new LocationMapper());
 
+    }
+
+    @Override
+    public List<Location> getLocationWithinAreaWithCautionLevel(String province,String city,String area){
+        String sqlQuery = String.format("select location.locId,locName,province,city,area,location.address,sum(person.cautionLevel) as cautionLevel" +
+                " from location,visit,person" +
+                " where location.locId=visit.locId" +
+                " and visit.idno=person.idno" +
+                " and province='%s'" +
+                " and city='%s'" +
+                " and area='%s'" +
+                " group by location.locId" +
+                " order by cautionLevel desc",province,city,area);
+        List<Location> ll = jdbcTemplate.query(sqlQuery,new LocationMapper());
+        return ll;
     }
 
     //得到在province省,city市,area区内的address地点

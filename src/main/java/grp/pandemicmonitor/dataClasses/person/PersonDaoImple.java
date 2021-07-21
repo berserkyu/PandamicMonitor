@@ -83,7 +83,7 @@ public class PersonDaoImple implements PersonDao {
         //先添加人员信息，若失败返回
         if(!addPerson(p)) return  false;
         //若成功则添加登录信息
-        String sqlCmd = String.format("INSERT INTO loginInfo(mail,pword) VALUES('%s','%s')",p.getMail(),pword);
+        String sqlCmd = String.format("INSERT INTO logininfo(mail,pword) VALUES('%s','%s')",p.getMail(),pword);
         int result = jdbcTemplate.update(sqlCmd);
         return result==1;
     }
@@ -107,10 +107,10 @@ public class PersonDaoImple implements PersonDao {
     @Override
     //使用LoginInfo类的验证登录信息
     public Person validateLogin(LoginInfo l){
-        String sqlQuery = String.format("select * from person,loginInfo " +
-                        "where person.mail=loginInfo.mail " +
-                        "and loginInfo.mail='%s' " +
-                        "and loginInfo.pword='%s' " +
+        String sqlQuery = String.format("select * from person,logininfo " +
+                        "where person.mail=logininfo.mail " +
+                        "and logininfo.mail='%s' " +
+                        "and logininfo.pword='%s' " +
                         "and accType=%d",
                 l.getMail(),l.getPassword(),l.getType());
         List<Person> result = jdbcTemplate.query(sqlQuery,new PersonMapper());
@@ -122,7 +122,7 @@ public class PersonDaoImple implements PersonDao {
     @Override
     //更改密码
     public boolean changePassword(String mail,String oldPword,String newPword) {
-        String sqlCmd = String.format("UPDATE loginInfo" +
+        String sqlCmd = String.format("UPDATE logininfo" +
                                     " SET pword='%s'" +
                                     " WHERE pword='%s'" +
                                     " AND mail = '%s'",
@@ -172,14 +172,14 @@ public class PersonDaoImple implements PersonDao {
     //删除人员信息
     public boolean deletePerson(String idNo)  {
         //必须先删除依赖于人员信息的登录信息(通过邮箱)
-        String sqlCmd = String.format("DELETE FROM loginInfo" +
+        String sqlCmd = String.format("DELETE FROM logininfo" +
                                     " WHERE mail IN( SELECT mail" +
                                                     " FROM person" +
                                                     " WHERE idno='%s')",idNo);
         System.out.println(sqlCmd);
         int result = jdbcTemplate.update(sqlCmd);
         if(result!=1){
-            System.out.println("delete person SQL failed at loginInfo");
+            System.out.println("delete person SQL failed at logininfo");
             return false;
         }
         //若成功了再删除人员信息
@@ -197,8 +197,8 @@ public class PersonDaoImple implements PersonDao {
     //得到人员的密码
     public String getPassword(String idNo){
         String sqlQuery = String.format("SELECT pword " +
-                                        "FROM person,loginInfo " +
-                                        "WHERE person.mail=loginInfo.mail " +
+                                        "FROM person,logininfo " +
+                                        "WHERE person.mail=loginI=info.mail " +
                                         "AND idNo='%s'",idNo);
         List<String> result = jdbcTemplate.query(sqlQuery, new SingleColumnRowMapper<String>());
         return  result.get(0);
@@ -242,4 +242,12 @@ public class PersonDaoImple implements PersonDao {
         return null;
     }
 
+
+    @Override
+    public boolean setPersonCautionLevel(String mail,int lv){
+        if(lv<0) return false;
+        String sqlCmd = String.format("UPDATE person SET cautionLevel=%d WHERE mail='%s'",lv,mail);
+        int result = jdbcTemplate.update(sqlCmd);
+        return  result==1;
+    }
 }

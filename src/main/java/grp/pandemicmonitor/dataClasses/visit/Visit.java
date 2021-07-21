@@ -23,8 +23,8 @@ public class Visit {
     public Visit(String idNo, long locId, Date date, Time time) {
         this.idNo = idNo;
         this.locId = locId;
-        this.date = date;
-        this.time = time;
+        this.date = Date.valueOf(LocalDate.now());
+        this.time = Time.valueOf(LocalTime.now());
     }
 
     public void setIdNo(String idNo) {

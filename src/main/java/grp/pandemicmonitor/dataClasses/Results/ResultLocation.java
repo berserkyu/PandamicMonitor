@@ -1,6 +1,7 @@
 package grp.pandemicmonitor.dataClasses.Results;
 
 
+//拓展地点数据的返回结果
 public class ResultLocation extends Result{
     long locId;
 

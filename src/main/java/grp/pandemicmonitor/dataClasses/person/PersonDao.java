@@ -32,6 +32,8 @@ public interface PersonDao {
     boolean changePassword(String mail,String oldPword,String newPword);//x
     //删除人员信息
     boolean deletePerson(String idNo);//x
+    //
+    boolean setPersonCautionLevel(String mail,int lv);
     //得到某人员登录密码
     String getPassword(String idNo);//x
     //得到所有人员

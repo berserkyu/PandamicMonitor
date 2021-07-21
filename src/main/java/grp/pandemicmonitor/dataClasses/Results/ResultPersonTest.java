@@ -4,6 +4,8 @@ import grp.pandemicmonitor.dataClasses.person.Person;
 
 import java.util.List;
 
+
+//测试用类 返回复数人员数据
 public class ResultPersonTest extends Result{
     List<Person> tableData;
 
