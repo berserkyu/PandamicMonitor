@@ -51,6 +51,7 @@
         }
       };
       return{
+
         useraddressForm:{
           addressid:''
         },
@@ -83,9 +84,9 @@
           date: Date.now()
         }).then(successResponse =>{
           if(successResponse.data.code === 200){
-            this.$message("登记成功！");
+            this.$message.success("登记成功！");
           }else{
-            this.$message("登记失败！");
+            this.$message.error("登记失败！");
           }
         }).catch(failResponse=>{
           this.$message("操作失败！");
@@ -95,7 +96,7 @@
       submitId(){
         console.log(this.useraddressForm.addressid);
         this.$axios//url是后端的RequestMapping中的路径
-          .post('/location/get',{
+          .post('/location/getInfoFromId',{
             locId: this.useraddressForm.addressid
           })
           .then(successResponse => {
@@ -103,7 +104,12 @@
               this.$message.error("编号不存在！");
             }
             else {
-              var info = successResponse.data.locName+" "+successResponse.data.province + ","+successResponse.data.city+","+successResponse.data.area+","+successResponse.data.address;
+
+              const info = '地点名字:'+ successResponse.data.locName + ' \r\n ' + '地址:' +
+                successResponse.data.province + "," +
+                successResponse.data.city + "," +
+                successResponse.data.area + "," +
+                successResponse.data.address;
               this.$confirm(info,"确认",{
                 confirmButtonText: "确认",//确认按钮文字更换
                 cancelButtonText: "取消",//取消按钮文字更换

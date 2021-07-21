@@ -111,6 +111,7 @@
         mail: this.$cookies.get('mail')
       })
       .then(successResponse => {
+        //设置欢迎用户
         this.welcome = '欢迎' + successResponse.data.fullName + '登录！';
       })
     },
