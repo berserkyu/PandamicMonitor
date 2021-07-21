@@ -78,6 +78,15 @@ public class LocationController {
         return new ResultLocationList(200,ll);
     }
 
+    @RequestMapping(value = "location/getInfoFromId")
+    @CrossOrigin
+    @ResponseBody
+    public Location getLocationInfoById(@RequestBody Location location){
+        System.out.println("location info requested"+location.getLocId());
+
+        return loc.getLocation(location.getLocId());
+    }
+
     @RequestMapping(value = "/location/getall")
     @CrossOrigin
     @ResponseBody

@@ -27,8 +27,7 @@ public class LocationDaoImple implements LocationDao{
     @Override
     public List<Location> getLocation1(long ID)  {
         String sqlQuery = String.format("SELECT * FROM location WHERE locId=%d",ID);
-        List<Location> result = jdbcTemplate.query(sqlQuery,new LocationMapper());
-        return  result;
+        return jdbcTemplate.query(sqlQuery,new LocationMapper());
     }
     //获得所有地点信息
     @Override
