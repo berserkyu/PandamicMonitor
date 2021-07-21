@@ -165,12 +165,12 @@ export default{
     search(){ //搜索按钮方法
       console.log("get all data");
       this.$axios
-        .post('getuserbyname',{
+        .post('/getuserbyname',{
           fullName: this.userlistForm.name
         })
         .then(successResponse => {
           console.log("success");
-          this.tableData = successResponse.data.tableData;
+          this.tableData = successResponse.data.fullName;
         }) .catch(failResponse =>{alert("跨域操作失败！")})
     },
     add(){ //显示新增用户表单

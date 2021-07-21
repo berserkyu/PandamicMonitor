@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <!--开启弹窗拍摄按钮-->
@@ -38,16 +37,17 @@ export default {
     //扫描
     onDecode(decodedString) {
       console.log(decodedString);
-      if(decodedString.length<15 || decodedString.substr(0,15)!="PandemicMonitor"){
+      if(decodedString.length<15 || decodedString.substr(0,15)!=="PandemicMonitor"){
         this.$message.error("二维码不包含有效信息");
       }else {
-        var n = decodedString.length;
+        const n = decodedString.length;
         this.$axios.post("visit/add",{
           locId: decodedString.substr(15,n-15),
           mail: this.$cookies.get("mail")
         }).then(successResponse=>{
-          if(successResponse.data.code==200){
+          if(successResponse.data.code===200){
             this.$message.success("登记成功！");
+            this.onCancel();
           }else{
             this.$message.error("登记失败(地点信息或未被录入)");
           }
@@ -72,7 +72,7 @@ export default {
       for (const detectedCode of detectedCodes) {
         const [ firstPoint, ...otherPoints ] = detectedCode.cornerPoints
 
-        ctx.strokeStyle = "blue";
+        ctx.strokeStyle = "green";
         ctx.lineWidth = 10;
         ctx.beginPath();
         ctx.moveTo(firstPoint.x, firstPoint.y);

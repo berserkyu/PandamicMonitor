@@ -7,6 +7,11 @@
         <img class="img" src="../../assets/img.png" alt/>
         <span class="span">重大传染病疫情流调系统</span>
       </div>
+      <!--显示欢迎字样-->
+      <div class="welcomeLogin">
+        <span>{{welcome}}</span>
+      </div>
+      <!--登出按钮-->
       <el-button type="danger" v-on:click="logout">登出</el-button>
     </el-header>
     <!--主体-->
@@ -44,10 +49,13 @@
 
 
 <script>
+  // 引入autoprefixer（为了引用successResponse）
+  const {defaults} = require("autoprefixer");
   export default {
     name: 'Home',
     data(){
       return{
+        welcome:'',
         menuList:[
           {
             id: 0,
@@ -98,6 +106,14 @@
         ],
       }
     },
+    created() {
+      this.$axios.post('/getuserbymail',{
+        mail: this.$cookies.get('mail')
+      })
+      .then(successResponse => {
+        this.welcome = '欢迎' + successResponse.data.fullName + '登录！';
+      })
+    },
 
     methods:{
       logout(){
@@ -145,6 +161,10 @@
   }
   .span {
     margin-left: 15px;
+  }
+  .welcomeLogin{
+    padding-left: 600px;
+    font-size: 20px;
   }
   .el-aside {
     background-color: #444444;
