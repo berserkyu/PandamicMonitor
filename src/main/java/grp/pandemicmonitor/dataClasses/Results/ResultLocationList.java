@@ -4,7 +4,7 @@ import grp.pandemicmonitor.dataClasses.location.Location;
 
 import java.util.List;
 
-public class ResultLocationList extends  Result{
+public class ResultLocationList extends Result{
     List<Location> tableData;
 
     public List<Location> getTableData() {

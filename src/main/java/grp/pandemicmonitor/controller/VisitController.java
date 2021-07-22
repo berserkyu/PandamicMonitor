@@ -3,6 +3,8 @@ package grp.pandemicmonitor.controller;
 import grp.pandemicmonitor.InputFromFrontEnd.InputVisit;
 import grp.pandemicmonitor.InputFromFrontEnd.InputVisitElse;
 import grp.pandemicmonitor.dataClasses.Results.Result;
+import grp.pandemicmonitor.dataClasses.Results.ResultLocationList;
+import grp.pandemicmonitor.dataClasses.Results.ResultVisitList;
 import grp.pandemicmonitor.dataClasses.person.Person;
 import grp.pandemicmonitor.dataClasses.person.PersonDaoImple;
 import grp.pandemicmonitor.dataClasses.visit.Visit;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Time;
+import java.util.List;
 
 @Controller
 public class VisitController {
@@ -54,5 +57,20 @@ public class VisitController {
             return new Result(200);
         }
         return new Result(400);
+    }
+
+    @RequestMapping(value = "visit/showData")
+    @CrossOrigin
+    @ResponseBody
+    public Result getVisitList(@RequestBody Person p){
+        List<Visit> lv = vis.getVisitList(p.getIdNo());
+        System.out.println(lv.get(0));
+
+        if(lv.isEmpty()){
+            return new ResultVisitList(400,lv);
+        }
+        //for(Location l :ll) l.displayInfo();
+        return new ResultVisitList(200, lv);
+
     }
 }

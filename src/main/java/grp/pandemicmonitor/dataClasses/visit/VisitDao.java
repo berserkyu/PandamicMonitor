@@ -10,4 +10,5 @@ public interface VisitDao {
     boolean addVisitElse(InputVisitElse ive);
     List<Visit> getVisitedLocationsId(String idNo);
     List<Location> getVisitedLocations(String idNo);
+    public List<Visit> getVisitList(String idNo);
 }
