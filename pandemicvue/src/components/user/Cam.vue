@@ -20,20 +20,39 @@
         <qrcode-stream @decode="onDecode" :camera="camera" :track="paintOutline" class="scanBox"></qrcode-stream>
       </div>
     </el-dialog>
+
+    <!--用户打卡记录列表-->
+    <el-main>
+
+      <el-table :data="tableData"  highlight-current-row border style="width: 100%;"
+                class="visitList_table" height="500">
+        <el-table-column label="地址编号" prop="locId"></el-table-column>
+        <el-table-column label="地点" prop="locName"></el-table-column>
+        <el-table-column label="时间" prop="date"></el-table-column>
+        <el-table-column label="日期" prop="time"></el-table-column>
+
+      </el-table>
+    </el-main>
   </div>
 </template>
 
 <script>
-//const Address = require('../utils/url');//上传图片的地址
-export default {
+  export default {
   name: "QRscan",
+  mounted() {
+    this.getData();
+    console.log(this.tableData);
+  },
+
   data() {
     return {
+      tableData:[],
       camera: 'auto', //摄像头
       visible: false, //弹窗是否可视
     }
   },
-  methods: {
+
+    methods: {
     //扫描
     onDecode(decodedString) {
       console.log(decodedString);
@@ -43,11 +62,13 @@ export default {
         const n = decodedString.length;
         this.$axios.post("visit/add",{
           locId: decodedString.substr(15,n-15),
-          mail: this.$cookies.get("mail")
+          mail: this.$cookies.get("mail"),
+          date: Date.now()
         }).then(successResponse=>{
           if(successResponse.data.code === 200){
-            this.$message.success("登记成功！");
+            this.$message.success("登记成功！地点编号：" + decodedString.substr(15,n-15));
             this.onCancel();
+            this.getData();
           }else{
             this.$message.error("登记失败(地点信息或未被录入)");
           }
@@ -84,7 +105,21 @@ export default {
         ctx.stroke();
       }
     },
-  },
+    //显示打卡列表
+    getData() {
+      console.log(this.$cookies.get('idNo'));
+      this.$axios
+        .post('/visit/showData',{
+          idNo: this.$cookies.get('idNo')
+        })
+        .then(successResponse => {
+          console.log(successResponse.data.code);
+          if(successResponse.data.code === 200)
+            this.tableData = successResponse.data.tableData;
+        })
+        .catch(failResponse =>{alert("跨域操作失败！")})
+    }
+  }
 }
 </script>
 
@@ -99,6 +134,10 @@ export default {
 .scanBox{
   height: 600px;
   width: 600px;
+}
+
+.el-button{
+  margin-left: 20px;
 }
 </style>
 

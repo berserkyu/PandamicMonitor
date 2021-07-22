@@ -18,10 +18,13 @@
         <el-table-column prop="fullName" label="姓名"></el-table-column>
         <el-table-column prop="idNo" label="证件号"></el-table-column>
         <el-table-column prop="mail" label="电子邮箱"></el-table-column>
+        <el-table-column prop="sus" :formatter="susSet" label="是否接触患者"></el-table-column>
         <el-table-column label="操作" width="180" align="center">
           <template slot-scope="scope">
             <el-button type="text" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-button>
             <el-button type="text" icon="el-icon-delete" class="deleteColor" @click="del(scope.row.idNo)">删除</el-button>
+            <!--将用户设为调查对象的按钮-->
+            <el-button type="text" icon="el-icon-warning" @click="scope.row.sus = 1">设为可疑人物</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -101,7 +104,10 @@ export default{
   name:'UserList',
   data(){
     return{
-      tableData:[],
+      tableData:[{fullName: "nisndi", idNo:"34141", mail: "jbdcbau@uvsd.com"},
+        {fullName: "nisndi", idNo:"34141", mail: "jbdcbau@uvsd.com"}
+      ],
+
       addFormVisible: false,
       editFormVisible: false,
       userlistForm:{
@@ -162,15 +168,26 @@ export default{
     }
   },
   methods:{
+    //用于将用户设为调查对象
+    susSet:function (row){
+      switch(row.sus){
+        case 0:
+          return "否";
+        case 1:
+          return "是";
+        default:
+          return "否";
+      }
+    },
     search(){ //搜索按钮方法
       console.log("get all data");
       this.$axios
-        .post('/getuserbyname',{
+        .post('getuserbyname',{
           fullName: this.userlistForm.name
         })
         .then(successResponse => {
           console.log("success");
-          this.tableData = successResponse.data.fullName;
+          this.tableData = successResponse.data.tableData;
         }) .catch(failResponse =>{alert("跨域操作失败！")})
     },
     add(){ //显示新增用户表单
@@ -184,7 +201,6 @@ export default{
         type: 'warning', //弹出框类型
         center: true
       }).then(() => { //按下确定弹出消息
-
         this.$axios
           .post('register', {
             fullName: this.addForm.name,
@@ -207,7 +223,6 @@ export default{
               });
             }
           }) .catch(failResponse =>{alert("跨域操作失败！")})
-
       })
     },
     save2() { //编辑用户信息表单的保存
@@ -217,7 +232,6 @@ export default{
         type: 'warning', //弹出框类型
         center: true
       }).then(() => { //按下确定弹出消息
-
         this.$axios
           .post('/changeuserinfo', {
             name: this.editForm.fullName,
@@ -240,7 +254,6 @@ export default{
               });
             }
           }) .catch(failResponse =>{alert("跨域操作失败！")})
-
       })
     },
     edit(obj){ //编辑按钮方法
@@ -289,7 +302,6 @@ export default{
     }
   }
 }
-
 </script>
 
 <style scoped>
@@ -298,13 +310,11 @@ export default{
   height:100%;
   width:100%;
 }
-
 .user_search{
   margin-top:20px;
   margin-left: 15px;
   padding: 0 10px;
 }
-
 .deleteColor{
   color:red;
 }

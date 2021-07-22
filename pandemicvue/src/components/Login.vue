@@ -72,9 +72,21 @@
           })
           .then(successResponse => {
             if(successResponse.data.code === 200){
-              //路由到其他页面
+
+              this.$axios//url是后端的RequestMapping中的路径
+                .post('/getuserbymail',{
+                  //回传含有mail，password，type的类
+                  mail: this.loginForm.username,
+                })
+                .then(successResponse => {
+
+                  this.$cookies.set('idNo',successResponse.data.idNo,'1d');
+              })
+
               this.$cookies.set('mail',this.loginForm.username,'1d');
               this.$cookies.set('pandemicSession',successResponse.data.sessionId,'1d');
+
+              //路由到其他页面
               this.$router.replace({path:'/userhome'});
               this.$message.success("用户登录成功！");
             }else
@@ -91,11 +103,11 @@
           .post('/login',{
             mail: this.loginForm.username,
             password: this.loginForm.password,
-            type:0
+            type: 0
         })
           .then(successResponse => {
             if(successResponse.data.code === 200){
-            this.$router.replace({path:'/adminhome'})
+                this.$router.replace({path:'/adminhome'})
             this.$message.success("管理员登录成功！");
           }else
             this.$message.error("邮箱或密码不存在！");

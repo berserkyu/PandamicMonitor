@@ -111,7 +111,15 @@
         ],
       }
     },
-
+    created() {
+      this.$axios.post('/getuserbymail',{
+        mail: this.$cookies.get('mail')
+      })
+        .then(successResponse => {
+          //设置欢迎用户
+          this.welcome = '欢迎' + ' ' + successResponse.data.fullName + ' ' + '管理员/调查人员登录！';
+        })
+    },
     methods:{
       logout(){
         this.$confirm('是否确定登出？', '提示', {
@@ -160,7 +168,7 @@
     margin-left: 15px;
   }
   .welcomeLogin{
-    padding-left: 600px;
+    padding-left: 500px;
     font-size: 20px;
   }
   .el-aside {

@@ -162,7 +162,7 @@ export default {
               mail: this.registerForm.email,
               address: this.registerForm.address,
               password: this.registerForm.password,
-              birthday: this.registerForm.birth
+              birthday: this.registerForm.birth,
             })
             .then(successResponse => {
               if(successResponse.data.code === 200){
@@ -170,6 +170,7 @@ export default {
                   type: 'success',
                   message: '注册！'
                 });
+                this.$router.replace({path:'/login'})
               }else
               {
                 console.log("no success response");
