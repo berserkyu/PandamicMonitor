@@ -27,9 +27,14 @@
       <el-table :data="tableData"  highlight-current-row border style="width: 100%;"
                 class="visitList_table" height="500">
         <el-table-column label="地址编号" prop="locId"></el-table-column>
+        <el-table-column label="省" prop="province"></el-table-column>
+        <el-table-column label="市" prop="city"></el-table-column>
+        <el-table-column label="区" prop="area"></el-table-column>
+        <el-table-column label="地址" prop="address"></el-table-column>
         <el-table-column label="地点" prop="locName"></el-table-column>
-        <el-table-column label="时间" prop="date"></el-table-column>
-        <el-table-column label="日期" prop="time"></el-table-column>
+        <el-table-column label="危险水平" prop="cautionLevel"></el-table-column>
+        <el-table-column label="时间" prop="dateVisit"></el-table-column>
+        <el-table-column label="日期" prop="timeVisit"></el-table-column>
 
       </el-table>
     </el-main>

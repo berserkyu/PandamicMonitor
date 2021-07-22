@@ -79,12 +79,12 @@
                   mail: this.loginForm.username,
                 })
                 .then(successResponse => {
-
+                  this.$cookies.set('mail',this.loginForm.username,'1d');
+                  this.$cookies.set('pandemicSession',successResponse.data.sessionId,'1d');
                   this.$cookies.set('idNo',successResponse.data.idNo,'1d');
               })
 
-              this.$cookies.set('mail',this.loginForm.username,'1d');
-              this.$cookies.set('pandemicSession',successResponse.data.sessionId,'1d');
+
 
               //路由到其他页面
               this.$router.replace({path:'/userhome'});
@@ -107,7 +107,9 @@
         })
           .then(successResponse => {
             if(successResponse.data.code === 200){
-                this.$router.replace({path:'/adminhome'})
+                this.$router.replace({path:'/adminhome'});
+              this.$cookies.set('mail',this.loginForm.username,'1d');
+              this.$cookies.set('pandemicSession',successResponse.data.sessionId,'1d');
             this.$message.success("管理员登录成功！");
           }else
             this.$message.error("邮箱或密码不存在！");

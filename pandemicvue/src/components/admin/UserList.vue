@@ -24,10 +24,13 @@
             <el-button type="text" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-button>
             <el-button type="text" icon="el-icon-delete" class="deleteColor" @click="del(scope.row.idNo)">删除</el-button>
             <!--将用户设为调查对象的按钮-->
-            <el-button type="text" icon="el-icon-warning" @click="scope.row.sus = 1">设为可疑人物</el-button>
+            <el-button type="text" icon="el-icon-warning" @click="setSus(scope.row)">设为可疑人物</el-button>
+            <!--获取移动路径-->
+            <el-button type="text" icon="el-icon-s-marketing" @click="getPath(scope.row)">获取移动路径</el-button>
           </template>
         </el-table-column>
       </el-table>
+
       <!--新增用户信息对话框-->
       <el-dialog title="新增用户信息" :visible.sync="addFormVisible" width="30%" close-on-click-modal="false" close-on-press-escape="false" show-close="false">
         <!--新增用户信息表单-->
@@ -64,6 +67,7 @@
           <el-button type="primary" @click="save">保存</el-button>
         </div>
       </el-dialog>
+
       <!--编辑用户信息对话框-->
       <el-dialog title="编辑用户信息" :visible.sync="editFormVisible" width="30%" close-on-click-modal="false" close-on-press-escape="false" show-close="false">
         <!--编辑用户信息表单-->
@@ -91,11 +95,67 @@
           <el-button type="primary" @click="save2">保存</el-button>
         </div>
       </el-dialog>
+
+      <!--用户移动路径对话框-->
+      <el-dialog title="移动路径"center :visible.sync="pathFormVisible" width="60%">
+        <!--用户移动路径表单-->
+        <el-form label-width="100px" :model="pathForm" ref="pathForm" class="path_Form">
+          <!--用户姓名-->
+          <el-form-item label="姓名：" prop="fullName">
+            <el-input v-model="pathForm.fullName" placeholder="用户的真实姓名"></el-input>
+          </el-form-item>
+          <!--路径列表-->
+          <el-form-item label="移动路径：" prop="path">
+            <el-table :data="pathData"  highlight-current-row border style="width: 100%;" class="path_table" height="500">
+              <el-table-column prop="locId" label="地点编号"></el-table-column>
+              <el-table-column prop="province" label="省份"></el-table-column>
+              <el-table-column prop="city" label="城市"></el-table-column>
+              <el-table-column prop="area" label="区域"></el-table-column>
+              <el-table-column prop="address" label="地址"></el-table-column>
+              <el-table-column prop="locName" label="地点"></el-table-column>
+              <el-table-column prop="cautionLevel" label="危险水平"></el-table-column>
+              <el-table-column prop="timeVisit" label="时间"></el-table-column>
+              <el-table-column prop="dateVisit" label="日期"></el-table-column>
+            </el-table>
+          </el-form-item>
+        </el-form>
+        <!--关闭弹窗按钮-->
+        <div slot="footer" class="dialog_footer">
+          <el-button @click="pathFormVisible = false">取消</el-button>
+        </div>
+      </el-dialog>
+
+      <!--评估用户危险水平的弹窗-->
+      <el-dialog title="危险水平"center :visible.sync="riskVisible" width="40%">
+        <!--评估用户危险水平的表单-->
+        <el-form label-width="100px" :model="riskForm" ref="riskForm" class="risk_Form">
+          <!--用户危险水平输入-->
+          <el-form-item prop="risk" label="危险水平: ">
+            <el-select v-model="riskForm.risk" placeholder="请评估用户的危险水平" @change="handleChange">
+              <el-option label="1" value="0"></el-option>
+              <el-option label="2" value="1"></el-option>
+              <el-option label="3" value="2"></el-option>
+              <el-option label="4" value="3"></el-option>
+              <el-option label="5" value="4"></el-option>
+              <el-option label="6" value="5"></el-option>
+              <el-option label="7" value="6"></el-option>
+              <el-option label="8" value="7"></el-option>
+              <el-option label="9" value="8"></el-option>
+              <el-option label="10" value="9"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <!--评估用户危险水平的保存按钮-->
+        <div slot="footer" class="dialog_footer">
+          <el-button type="primary" @click="save3">确定</el-button>
+        </div>
+      </el-dialog>
     </el-main>
   </div>
 </template>
 
 <script>
+var usrMail;
 var oldmail;
 export default{
   mounted() {
@@ -107,9 +167,12 @@ export default{
       tableData:[{fullName: "nisndi", idNo:"34141", mail: "jbdcbau@uvsd.com"},
         {fullName: "nisndi", idNo:"34141", mail: "jbdcbau@uvsd.com"}
       ],
+      pathData:[],
 
       addFormVisible: false,
       editFormVisible: false,
+      pathFormVisible: false,
+      riskVisible: false,
       userlistForm:{
         name:''
       },
@@ -125,6 +188,13 @@ export default{
         mail:'',
         address:'',
         phoneNo:''
+      },
+      pathForm:{
+        fullName:'',
+        path:''
+      },
+      riskForm:{
+        risk:''
       },
       /*Form组件提供的表单验证功能，通过rules属性传入约定的验证规则，并将Form-Item的prop属性设置为需校验的字段名*/
       /*新增用户信息表单验证*/
@@ -178,6 +248,26 @@ export default{
         default:
           return "否";
       }
+    },
+    //判定用户为调查对象并评估危险水平
+    setSus(obj){
+      console.log("sus");
+      usrMail = obj.mail;
+      this.riskVisible = true;
+    },
+    //显示用户的移动路径
+    getPath(obj){
+      console.log(obj);
+      this.pathForm = obj;
+      this.$axios.post("/visit/showData",{
+        idNo: obj.idNo
+      }).then(successResponse=>{
+        this.pathData = successResponse.data.tableData;
+      }).catch(failResponse=>{
+        alert("获取路径失败");
+      })
+      this.pathFormVisible = true;
+
     },
     search(){ //搜索按钮方法
       console.log("get all data");
@@ -256,6 +346,29 @@ export default{
           }) .catch(failResponse =>{alert("跨域操作失败！")})
       })
     },
+
+    //保存用户的危险水平
+    save3(){
+      this.$axios
+        .post('setusercautionlv', {
+          cautionLevel: this.riskForm.risk,
+          mail: usrMail
+        })
+        .then(successResponse => {
+          if (successResponse.data.code === 200) {
+            this.$message({
+              type: 'success',
+              message: '已保存'
+            });
+            this.riskVisible = false;//关闭dialog
+          } else {
+            this.$message({
+              type: 'error',
+              message: '保存失败'
+            });
+          }
+        }) .catch(failResponse =>{alert("跨域操作失败！")})
+    },
     edit(obj){ //编辑按钮方法
       console.log(obj);
       this.editForm = obj;
@@ -299,6 +412,10 @@ export default{
           console.log("success");
           this.tableData = successResponse.data.tableData;
         }) .catch(failResponse =>{alert("跨域操作失败！")})
+    },
+    handleChange(data){
+      console.log(data);
+      this.riskForm.risk.value = data;
     }
   }
 }
