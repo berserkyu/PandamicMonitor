@@ -97,6 +97,14 @@ public class Location {
     }
 
 
+    public Location(String locName, String address, String province, String city, String area) {
+        this.locName = locName;
+        this.address = address;
+        this.province = province;
+        this.city = city;
+        this.area = area;
+    }
+
     public void displayInfo(){
         System.out.println(locId+" : "+locName+","+province+","+city+","+area+","+address+",  "+cautionLevel);
     }

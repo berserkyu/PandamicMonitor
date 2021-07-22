@@ -40,4 +40,5 @@ public interface LocationDao  {
     //得到在province省,city市,area区内的address地点
     Location getLocationWithAddress(String province,String city,String area,String address);
 
+
 }

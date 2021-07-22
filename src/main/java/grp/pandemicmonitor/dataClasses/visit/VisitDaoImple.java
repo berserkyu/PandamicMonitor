@@ -2,6 +2,8 @@ package grp.pandemicmonitor.dataClasses.visit;
 
 
 import grp.pandemicmonitor.InputFromFrontEnd.InputVisitElse;
+import grp.pandemicmonitor.dataClasses.location.Location;
+import grp.pandemicmonitor.dataClasses.location.LocationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -28,10 +30,19 @@ public class VisitDaoImple implements VisitDao{
     }
 
     @Override
-    public List<Visit> getVisitedLocations(String idNo){
+    public List<Visit> getVisitedLocationsId(String idNo){
         String sqlQuery = String.format("SELECT * FROM visit WHERE idNo='%s'",idNo);
         List<Visit> result = jdbcTemplate.query(sqlQuery,new VisitMapper());
         return  result;
+    }
+
+    @Override
+    public List<Location> getVisitedLocations(String idNo){
+        String sqlQuery = String.format("SELECT location.locId,locName,province,city,area,address,cautionLevel FROM visit,location " +
+                                        "WHERE location.locId=visit.locId " +
+                                        "AND idNo='%s'",idNo);
+        List<Location> l = jdbcTemplate.query(sqlQuery,new LocationMapper());
+        return  l;
     }
 
     @Override
