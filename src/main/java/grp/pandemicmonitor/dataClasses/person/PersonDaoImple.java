@@ -247,6 +247,7 @@ public class PersonDaoImple implements PersonDao {
     public boolean setPersonCautionLevel(String mail,int lv){
         if(lv<0) return false;
         String sqlCmd = String.format("UPDATE person SET cautionLevel=%d WHERE mail='%s'",lv,mail);
+        System.out.println(sqlCmd);
         int result = jdbcTemplate.update(sqlCmd);
         return  result==1;
     }

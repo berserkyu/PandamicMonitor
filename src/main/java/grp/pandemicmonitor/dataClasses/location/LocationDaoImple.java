@@ -107,8 +107,14 @@ public class LocationDaoImple implements LocationDao{
     }
 
     @Override
-    public boolean updateLocationCautionLevel(Date untill){
-        return false;
+    public boolean updateLocationCautionLevel(Location l){
+        String sqlCmd = String.format("UPDATE location SET cautionLevel= (SELECT sum(person.cautionLevel) " +
+                                                                        "FROM person,visit " +
+                                                                        "WHERE person.idNo=visit.idNo " +
+                                                                        "AND visit.locId=%d) " +
+                                    "WHERE location.locId=%d",l.getLocId(),l.getLocId());
+        int result = jdbcTemplate.update(sqlCmd);
+        return result==1;
     }
 
     @Override
@@ -214,5 +220,15 @@ public class LocationDaoImple implements LocationDao{
         List<Location> ll = jdbcTemplate.query(sqlQuery,new LocationMapper());
         if(ll.isEmpty()) return null;
         return  ll.get(0);
+    }
+
+    @Override
+    public List<LocationVisit> getLocationVisited(String idNo){
+        String sqlQuery = String.format("SELECT * FROM location ,visit " +
+                                        "WHERE visit.idNo='%s' " +
+                                        "AND location.locId=visit.locId " +
+                                        "order by dateVisit desc ,timeVisit desc",idNo);
+        List<LocationVisit> llv = jdbcTemplate.query(sqlQuery,new LocationVisitMapper());
+        return llv;
     }
 }

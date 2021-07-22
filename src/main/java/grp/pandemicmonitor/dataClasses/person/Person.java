@@ -17,6 +17,16 @@ public class Person {
     //年龄
     private int age;
 
+    int cautionLevel;
+
+    public int getCautionLevel() {
+        return cautionLevel;
+    }
+
+    public void setCautionLevel(int cautionLevel) {
+        this.cautionLevel = cautionLevel;
+    }
+
     public String getPassword() {
         return password;
     }

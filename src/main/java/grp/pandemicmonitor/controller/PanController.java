@@ -30,16 +30,7 @@ public class PanController {
 
     @RequestMapping(value ="/test")
     public @ResponseBody String say(){
-        Random random = new Random();
-        List<Person> lp = per.getAllPerson();
-        for(int i=0;i<10;i++){
-            List<Location> locations = vis.getVisitedLocations(lp.get(i).getIdNo());
-            for(Location l:locations){
-                System.out.print(lp.get(i).getIdNo()+" visited ");
-                l.displayInfo();
-            }
-            System.out.println("");
-        }
+
         return "test001";
     }
 

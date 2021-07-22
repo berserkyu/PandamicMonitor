@@ -4,7 +4,10 @@ import grp.pandemicmonitor.InputFromFrontEnd.InputVisit;
 import grp.pandemicmonitor.InputFromFrontEnd.InputVisitElse;
 import grp.pandemicmonitor.dataClasses.Results.Result;
 import grp.pandemicmonitor.dataClasses.Results.ResultLocationList;
+import grp.pandemicmonitor.dataClasses.Results.ResultLocationVisitList;
 import grp.pandemicmonitor.dataClasses.Results.ResultVisitList;
+import grp.pandemicmonitor.dataClasses.location.LocationDaoImple;
+import grp.pandemicmonitor.dataClasses.location.LocationVisit;
 import grp.pandemicmonitor.dataClasses.person.Person;
 import grp.pandemicmonitor.dataClasses.person.PersonDaoImple;
 import grp.pandemicmonitor.dataClasses.visit.Visit;
@@ -25,6 +28,8 @@ public class VisitController {
     VisitDaoImple vis;
     @Autowired
     PersonDaoImple per;
+    @Autowired
+    LocationDaoImple loc;
 
     @RequestMapping(value = "visit/addxx")
     @CrossOrigin
@@ -62,15 +67,17 @@ public class VisitController {
     @RequestMapping(value = "visit/showData")
     @CrossOrigin
     @ResponseBody
-    public Result getVisitList(@RequestBody Person p){
-        List<Visit> lv = vis.getVisitList(p.getIdNo());
-        System.out.println(lv.get(0));
+    public ResultLocationVisitList getVisitList(@RequestBody Person p){
+        System.out.println("visit show data requested");
+        List<LocationVisit> llv = loc.getLocationVisited(p.getIdNo());
 
-        if(lv.isEmpty()){
-            return new ResultVisitList(400,lv);
+        if(llv.isEmpty()){
+            System.out.println("lls is empty");
+            return new ResultLocationVisitList(400,llv);
         }
         //for(Location l :ll) l.displayInfo();
-        return new ResultVisitList(200, lv);
+        System.out.println("lls is not empty");
+        return new ResultLocationVisitList(200, llv);
 
     }
 }

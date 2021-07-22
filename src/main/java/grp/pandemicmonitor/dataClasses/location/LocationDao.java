@@ -2,6 +2,7 @@ package grp.pandemicmonitor.dataClasses.location;
 
 import grp.pandemicmonitor.dataClasses.Address.Address;
 
+import javax.swing.*;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
@@ -26,7 +27,7 @@ public interface LocationDao  {
 
     List<Location> getAllLocationsWithCautionLevelAfter(Date untill);
     List<Location> getAllLocationsWithCautionLevel();
-    boolean updateLocationCautionLevel(Date untill);
+    boolean updateLocationCautionLevel(Location l);
 
     //得到在province省内的所有地点
     List<Location> getLocationWithinProvince(String province);
@@ -39,6 +40,8 @@ public interface LocationDao  {
     List<Location> getLocationWithinAreaWithCautionLevel(String province,String city,String area);
     //得到在province省,city市,area区内的address地点
     Location getLocationWithAddress(String province,String city,String area,String address);
+
+    List<LocationVisit> getLocationVisited(String idNo);
 
 
 }

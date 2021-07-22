@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.CredentialException;
 import java.util.List;
 
 //登录相关行为的Controller
@@ -150,5 +151,18 @@ public class LoginController {
             return new Result(200);
         }
         return new Result(400);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/setusercautionlv")
+    @ResponseBody
+    public Result setUserCautionLevel(@RequestBody Person p){
+        System.out.println("change user caution level requested "+p.getMail()+" - "+p.getCautionLevel());
+        if(per.setPersonCautionLevel(p.getMail(),p.getCautionLevel())){
+            System.out.println("success");
+            return new Result(200);
+        }
+        System.out.println("failure");
+        return  new Result(400);
     }
 }
