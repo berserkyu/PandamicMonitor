@@ -4,6 +4,7 @@ import grp.pandemicmonitor.dataClasses.Address.Address;
 import grp.pandemicmonitor.dataClasses.Results.Result;
 import grp.pandemicmonitor.dataClasses.Results.ResultLocation;
 import grp.pandemicmonitor.dataClasses.Results.ResultLocationList;
+import grp.pandemicmonitor.dataClasses.Results.ResultTextList;
 import grp.pandemicmonitor.dataClasses.location.Location;
 import grp.pandemicmonitor.dataClasses.location.LocationDaoImple;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Vector;
 
 //和地点信息相关的Controller
 @Controller
@@ -96,7 +98,6 @@ public class LocationController {
         if(ll.isEmpty()){
             return new ResultLocationList(400,ll);
         }
-        //for(Location l :ll) l.displayInfo();
         return new ResultLocationList(200, ll);
     }
 
@@ -126,6 +127,28 @@ public class LocationController {
     @ResponseBody
     public Location getLocationWithAddress(@RequestBody Address a){
         return  loc.getLocationWithAddress(a.getProvince(),a.getCity(),a.getArea(),a.getAddress());
+    }
+
+    @RequestMapping(value = "location/getwithincitywithc")
+    @CrossOrigin
+    @ResponseBody
+    public ResultTextList getWithinCityWithClevel(@RequestBody Location l){
+        System.out.println("location/getwithincitywithc");
+        List<Location> ll = loc.getAreasWithinCityWithCautionLevel(l.getProvince(),l.getCity());
+        if(ll.isEmpty()) return new ResultTextList(400,null,null);
+        List<String> primaryData = new Vector<String>();
+        List<List<String>> secondaryData = new Vector<List<String>>();
+        for(Location area:ll){
+            primaryData.add(area.getArea()+" ("+area.getCautionLevel()+")");
+            List<Location> lll = loc.getLocationWithinAreaWithCautionLevel(l.getProvince(),l.getCity(),area.getArea());
+            List<String> addresses = new Vector<String>();
+            for(Location loca:lll){
+                addresses.add(loca.getAddress()+"("+loca.getCautionLevel()+")");
+            }
+            secondaryData.add(addresses);
+        }
+        if(secondaryData.isEmpty()) return new ResultTextList(400,null,null);
+        return new ResultTextList(200,primaryData,secondaryData);
     }
 
 

@@ -174,13 +174,14 @@ public class LocationDaoImple implements LocationDao{
 
     @Override
     public List<Location> getLocationWithinCityWithCautionLevel(String province,String city){
-        String sqlQuery = String.format("select location.locId,locName,province,city,area,location.address,sum(person.cautionLevel) as cautionLevel" +
+        String sqlQuery = String.format("select location.locId,locName,province,city,area,location.address,sum(person.cautionLevel) as cautionLevel " +
                 " from location,visit,person" +
                 " where location.locId=visit.locId" +
                 " and visit.idno=person.idno" +
                 " and province='%s'" +
                 " and city='%s'" +
                 " group by location.locId" +
+                " having cautionLevel>20" +
                 " order by cautionLevel desc",province,city);
         List<Location> ll = jdbcTemplate.query(sqlQuery,new LocationMapper());
         return ll;
@@ -230,5 +231,17 @@ public class LocationDaoImple implements LocationDao{
                                         "order by dateVisit desc ,timeVisit desc",idNo);
         List<LocationVisit> llv = jdbcTemplate.query(sqlQuery,new LocationVisitMapper());
         return llv;
+    }
+
+
+    @Override
+    public List<Location> getAreasWithinCityWithCautionLevel(String province,String city){
+        String sqlQuey = String.format("select area,sum(cautionLevel) as cautionLevel from location " +
+                                        "where province='%s' and city = '%s' " +
+                                        "group by area " +
+                                        "having cautionLevel>150 "
+                                        ,province,city);
+        List<Location> ll = jdbcTemplate.query(sqlQuey,new AreaMapper());
+        return ll;
     }
 }

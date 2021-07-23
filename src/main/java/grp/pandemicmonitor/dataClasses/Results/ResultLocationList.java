@@ -18,7 +18,6 @@ public class ResultLocationList extends Result{
     public ResultLocationList(int code, List<Location> tableData) {
         super(code);
         this.tableData = tableData;
-        System.out.println("code is "+code);
     }
 
     public ResultLocationList(List<Location> tableData) {

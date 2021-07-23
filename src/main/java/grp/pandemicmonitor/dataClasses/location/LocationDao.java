@@ -25,7 +25,7 @@ public interface LocationDao  {
     //得到在origin地点半径radius以内的所有地点
     List<Location> getLocationWithin(Location origin,double radius) ;//x
 
-    List<Location> getAllLocationsWithCautionLevelAfter(Date untill);
+    List<Location> getAllLocationsWithCautionLevelAfter(Date after);
     List<Location> getAllLocationsWithCautionLevel();
     boolean updateLocationCautionLevel(Location l);
 
@@ -35,6 +35,7 @@ public interface LocationDao  {
     //得到在province省,city市内的所有地点
     List<Location> getLocationWithinCity(String province,String city);
     List<Location> getLocationWithinCityWithCautionLevel(String province,String city);
+    List<Location> getAreasWithinCityWithCautionLevel(String province,String city);
     //得到在province省,city市,area区内的所有地点
     List<Location> getLocationWithinArea(String province,String city,String area);
     List<Location> getLocationWithinAreaWithCautionLevel(String province,String city,String area);
