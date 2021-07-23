@@ -208,14 +208,8 @@
 </script>
 
 <style scoped>
-  /*根节点样式*/
-  .addresslist_container{
-    background-color: white;
-    height:100%;
-    width:100%;
-  }
+
   .address_search{
-    margin-top:20px;
     padding-top: 20px;
     padding-left: 30px;
   }

@@ -716,7 +716,7 @@
           province: curProvince,
           city: tab.$slots.label[0].elm.innerText
         }).then(successResponse=>{
-          if(successResponse.data.code==200){
+          if(successResponse.data.code === 200){
             this.collapseList2 = successResponse.data.secondaryData;
             this.collapseList = successResponse.data.primaryData;
           }else{

@@ -58,7 +58,6 @@
         menuList:[
           {
             id: 0,
-            path: '/admin',
             title: '管理员权限',
             icon: 'iconfont icon-guanliyuan ',
             sList:[
@@ -84,24 +83,17 @@
           },
           {
             id: 1,
-            path: '/admin',
             title: '调查人员平台',
             icon: 'iconfont icon-UI_icon_zhongdianrenbidui',
             sList: [
               {
                 id: 13,
-                title: '用户行动路径',
-                icon: 'iconfont icon-lujingfenxi',
-                path: '/3',
+                title: '与被调查人员路径相交用户',
+                icon: 'iconfont icon-xiangjiao',
+                path: '/userintersectionlist',
               },
               {
                 id: 14,
-                title: '与被调查人员路径相交用户',
-                icon: 'iconfont icon-xiangjiao',
-                path: '/4',
-              },
-              {
-                id: 15,
                 title: '查询重点地区',
                 path: '/adminkeyroad',
                 icon: 'iconfont icon-zhongdiandiqu',

@@ -13,6 +13,7 @@ import UserInputAddress from '../components/user/UserInputAddress'
 import Cam from '../components/user/Cam'
 import AddressList from "../components/admin/AddressList";
 import KeyRoad from "../components/KeyRoad"
+import UserIntersectionList from "../components/admin/UserIntersectionList"
 
 Vue.use(VueRouter)
 
@@ -56,6 +57,10 @@ Vue.use(VueRouter)
         {
           path: "/adminkeyroad",
           component: KeyRoad
+        },
+        {
+          path: "/userintersectionlist",
+          component: UserIntersectionList
         },
       ]
     },

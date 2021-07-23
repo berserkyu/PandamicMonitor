@@ -350,7 +350,7 @@ export default{
     //保存用户的危险水平
     save3(){
       this.$axios
-        .post('setusercautionlv', {
+        .post('/setusercautionlv', {
           cautionLevel: this.riskForm.risk,
           mail: usrMail
         })

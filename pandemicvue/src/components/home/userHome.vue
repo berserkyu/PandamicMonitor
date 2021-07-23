@@ -60,7 +60,6 @@
         menuList:[
           {
             id: 0,
-            path: '/user',
             title: '用户信息平台',
             icon: 'el-icon-user',
             sList:[
@@ -80,7 +79,6 @@
           },
           {
             id: 1,
-            path: '/user',
             title: '记录行动轨迹',
             icon: 'iconfont icon-jilu',
             sList:[
@@ -100,13 +98,12 @@
           },
           {
             id: 2,
-            path: '/user',
             title: '疫情数据',
             icon: 'iconfont icon-shuju',
             sList:[
               {
                 id: 14,
-                title: '查询重点地区',
+                title: '重点地区',
                 path: '/userkeyroad',
                 icon: 'iconfont icon-lujingguihua ',
               },
