@@ -44,5 +44,6 @@ public interface PersonDao {
     List<Person> getAllPersonVisitedBefore(Location loc, Time time, Date date);//x
     //得到在任何时候曾经到过loc地点的人员
     List<Person> getAllPersonVisited(Location loc);
+
 }
 

@@ -2,14 +2,12 @@ package grp.pandemicmonitor.controller;
 
 import grp.pandemicmonitor.InputFromFrontEnd.InputVisit;
 import grp.pandemicmonitor.InputFromFrontEnd.InputVisitElse;
-import grp.pandemicmonitor.dataClasses.Results.Result;
-import grp.pandemicmonitor.dataClasses.Results.ResultLocationList;
-import grp.pandemicmonitor.dataClasses.Results.ResultLocationVisitList;
-import grp.pandemicmonitor.dataClasses.Results.ResultVisitList;
+import grp.pandemicmonitor.dataClasses.Results.*;
 import grp.pandemicmonitor.dataClasses.location.LocationDaoImple;
 import grp.pandemicmonitor.dataClasses.location.LocationVisit;
 import grp.pandemicmonitor.dataClasses.person.Person;
 import grp.pandemicmonitor.dataClasses.person.PersonDaoImple;
+import grp.pandemicmonitor.dataClasses.visit.Insertection;
 import grp.pandemicmonitor.dataClasses.visit.Visit;
 import grp.pandemicmonitor.dataClasses.visit.VisitDaoImple;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +77,19 @@ public class VisitController {
         System.out.println("lls is not empty");
         return new ResultLocationVisitList(200, llv);
 
+    }
+
+    @RequestMapping(value = "visit/getintersections")
+    @CrossOrigin
+    @ResponseBody
+    public ResultIntersect getAllInsertsections(@RequestBody Person p){
+        List<Insertection> li = vis.getInterSections(p.getIdNo());
+        System.out.println("get insersections requested  "+p.getIdNo());
+        if(li.isEmpty()){
+            System.out.println("li is empty");
+            return new ResultIntersect(400,li);
+        }
+        System.out.println("size of li: "+li.size());
+        return new ResultIntersect(200,li);
     }
 }

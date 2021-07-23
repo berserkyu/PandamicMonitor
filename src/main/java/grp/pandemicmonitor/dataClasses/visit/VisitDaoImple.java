@@ -7,6 +7,7 @@ import grp.pandemicmonitor.dataClasses.location.LocationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.yaml.snakeyaml.events.StreamEndEvent;
 
 import java.util.List;
 import java.util.stream.StreamSupport;
@@ -62,5 +63,24 @@ public class VisitDaoImple implements VisitDao{
                 " WHERE idNo='%s'" +
                 " ORDER BY dateVisit",idNo);
         return jdbcTemplate.query(sqlQuery,new VisitMapper());
+    }
+
+    @Override
+    public  List<Insertection> getInterSections(String idNo){
+        String sqlQuery = String.format(" " +
+                "select v1.idNo as cautionId,p1.fullname as cautionName,p1.cautionLevel as cautionLevel, " +
+                " v2.idNo as idNo,p2.fullname as fullname, " +
+                "location.locId,locName,province,city,area,location.address, " +
+                "v1.dateVisit as dateVisit,v2.timeVisit as timeVisit " +
+                "from visit as v1 ,visit as v2 ,location,person as p1 ,person as p2 " +
+                "where v1.locId = v2.locId " +
+                "and v1.idNo = p1.idNo " +
+                "and v2.idNo = p2.idNo " +
+                "and v1.locId = location.locId " +
+                "and v1.idNo!=v2.idNo "  +
+                "and v1.idNo = '%s'  ",idNo);
+        System.out.println(sqlQuery);
+        List<Insertection> li = jdbcTemplate.query(sqlQuery,new IntersectionMapper());
+        return li;
     }
 }
