@@ -239,7 +239,8 @@ public class LocationDaoImple implements LocationDao{
         String sqlQuey = String.format("select area,sum(cautionLevel) as cautionLevel from location " +
                                         "where province='%s' and city = '%s' " +
                                         "group by area " +
-                                        "having cautionLevel>150 "
+                                        "having cautionLevel>150 " +
+                                        "order by cautionLevel desc "
                                         ,province,city);
         List<Location> ll = jdbcTemplate.query(sqlQuey,new AreaMapper());
         return ll;

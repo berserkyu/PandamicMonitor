@@ -83,7 +83,7 @@ public class PersonDaoImple implements PersonDao {
         //先添加人员信息，若失败返回
         if(!addPerson(p)) return  false;
         //若成功则添加登录信息
-        String sqlCmd = String.format("INSERT INTO logininfo(mail,pword) VALUES('%s','%s')",p.getMail(),pword);
+        String sqlCmd = String.format("INSERT INTO logininfo(mail,pword,accType) VALUES('%s','%s',1)",p.getMail(),pword);
         int result = jdbcTemplate.update(sqlCmd);
         return result==1;
     }
