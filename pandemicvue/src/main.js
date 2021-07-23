@@ -29,7 +29,7 @@ Vue.$cookies.set('hover-time','1s');
 
 const axios = require('axios')
 Vue.prototype.$axios = axios
-axios.defaults.baseURL = 'http://localhost:9000'
+axios.defaults.baseURL = 'https://localhost:9000'
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
