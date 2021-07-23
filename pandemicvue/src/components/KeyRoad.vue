@@ -1,27 +1,27 @@
 <template>
   <div class="keyroad_container">
     <!--省市侧边标签页-->
-    <el-tabs :tab-position="tabPosition" class="tabPosition">
-      <el-tab-pane v-for="city in options">
-        <span slot="label"><i class="el-icon-location-outline"></i>{{city.label}}</span>
-        <el-tabs :tab-position="tabPosition2" class="tabPosition2">
-          <el-tab-pane v-for="province in city.children">
+    <el-tabs :tab-position="tabPosition" @tab-click="handleClickProvince" >
+      <el-tab-pane v-for="city in options" class="city" >
+        <span slot="label" ref="cityLabel" ><i class="el-icon-location-outline"></i>{{city.label}}</span>
+        <el-tabs :tab-position="tabPosition2" class="tabPosition2" @tab-click="handleClickCity">
+          <el-tab-pane v-for="province in city.children" class="province">
             <span slot="label"><i class="el-icon-location-outline"></i>{{province.label}}</span>
             <!--折叠面板滚动块-->
             <el-scrollbar>
-              <el-collapse
+              <el-collapse accordion
                 v-model="activeNames"
                 @change="handleChange"
-                class="address_collapse"
-                v-for="(item, index) in collapseList"
-                :key="index"
-                :name="index">
+                class="address_collapse">
                 <el-collapse-item
-                  v-for="(item2, index2) in collapseList2"
-                  :key="index2"
-                  :name="index2">
-                  <span slot="title" class="keyArea">重点地区：{{ item.address }}</span>
-                  <div class="secondaryKeyArea">次要重点路径：{{ item2.address2 }}</div>
+                  v-for="(item, index) in collapseList"
+                  :key="index"
+                  :name="item">
+                  <span slot="title" class="keyArea">重点地区：{{ item }}</span>
+                  <div class="secondaryKeyArea"
+                       v-for="(item2, index2) in collapseList2[index]"
+                       :key="index2"
+                       :name="index2">重点地址：{{ item2 }}</div>
                 </el-collapse-item>
               </el-collapse>
             </el-scrollbar>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+  var curProvince = "";
   export default {
     name: "KeyRoad",
     data(){
@@ -682,7 +683,9 @@
         ],
         collapseList:[
           {
-            address:'福建省福州市晋安区'
+            address: 'xxxxxxxxxx'
+          },{
+           address: 'aaaaaaa'
           }
         ],
         collapseList2: [
@@ -693,8 +696,36 @@
       }
     },
     methods: {
+
       handleChange(val) {
         console.log(val);
+        console.log(this.activeNames);
+        console.log(val.name);
+        console.log(val.title);
+        console.log(val.value);
+      },
+      handleClick(val){
+        console.log("clicked "+val);
+        console.log(val);
+      },
+      handleClickProvince(tab,event){
+        curProvince =  tab.$slots.label[0].elm.innerText;
+      },
+      handleClickCity(tab,event){
+        this.$axios.post('/location/getwithincitywithc',{
+          province: curProvince,
+          city: tab.$slots.label[0].elm.innerText
+        }).then(successResponse=>{
+          if(successResponse.data.code==200){
+            this.collapseList2 = successResponse.data.secondaryData;
+            this.collapseList = successResponse.data.primaryData;
+          }else{
+            alert("获取失败")
+          }
+
+        }).catch(failResponse=>{
+          alert("操作失败！");
+        })
       }
     }
   }
