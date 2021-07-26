@@ -68,7 +68,7 @@
             //回传含有mail，password，type的类
             mail: this.loginForm.username,
             password: this.loginForm.password,
-            type: 1
+            type: 1,
           })
           .then(successResponse => {
             if(successResponse.data.code === 200){
@@ -104,7 +104,7 @@
             mail: this.loginForm.username,
             password: this.loginForm.password,
             type: 0
-        })
+        },)
           .then(successResponse => {
             if(successResponse.data.code === 200){
                 this.$router.replace({path:'/adminhome'});

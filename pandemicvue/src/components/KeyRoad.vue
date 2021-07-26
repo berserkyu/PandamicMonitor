@@ -21,7 +21,7 @@
                   <div class="secondaryKeyArea"
                        v-for="(item2, index2) in collapseList2[index]"
                        :key="index2"
-                       :name="index2">重点地址：{{ item2 }}</div>
+                       :name="index2">{{ item2 }}</div>
                 </el-collapse-item>
               </el-collapse>
             </el-scrollbar>
@@ -682,15 +682,11 @@
           }
         ],
         collapseList:[
-          {
-            address: 'xxxxxxxxxx'
-          },{
-           address: 'aaaaaaa'
-          }
+
         ],
         collapseList2: [
           {
-            address2:'福建省福州市晋安区'
+
           }
         ]
       }
@@ -698,15 +694,7 @@
     methods: {
 
       handleChange(val) {
-        console.log(val);
-        console.log(this.activeNames);
-        console.log(val.name);
-        console.log(val.title);
-        console.log(val.value);
-      },
-      handleClick(val){
-        console.log("clicked "+val);
-        console.log(val);
+
       },
       handleClickProvince(tab,event){
         curProvince =  tab.$slots.label[0].elm.innerText;
@@ -716,6 +704,7 @@
           province: curProvince,
           city: tab.$slots.label[0].elm.innerText
         }).then(successResponse=>{
+          console.log(successResponse.data.code)
           if(successResponse.data.code === 200){
             this.collapseList2 = successResponse.data.secondaryData;
             this.collapseList = successResponse.data.primaryData;

@@ -11,10 +11,6 @@ import VueQRCodeComponent from 'vue-qrcode-component'
 import VueQrcodeReader from "vue-qrcode-reader";
 import './assets/font/iconfont.css'
 
-
-
-
-
 Vue.use(VueCookies)
 Vue.$cookies.config('7d')
 Vue.$cookies.set('theme','default');
@@ -27,9 +23,10 @@ Vue.$cookies.config('7d')
 Vue.$cookies.set('theme','default');
 Vue.$cookies.set('hover-time','1s');
 
-const axios = require('axios')
-Vue.prototype.$axios = axios
-axios.defaults.baseURL = 'https://localhost:9000'
+const axios = require('axios');
+Vue.prototype.$axios = axios;
+axios.defaults.baseURL = 'https://pandemicmonitor.ga:9000';
+
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
