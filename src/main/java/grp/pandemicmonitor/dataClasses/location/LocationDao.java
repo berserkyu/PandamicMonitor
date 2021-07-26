@@ -35,7 +35,7 @@ public interface LocationDao  {
     //得到在province省,city市内的所有地点
     List<Location> getLocationWithinCity(String province,String city);
     List<Location> getLocationWithinCityWithCautionLevel(String province,String city);
-    List<Location> getAreasWithinCityWithCautionLevel(String province,String city);
+    List<Area> getAreasWithinCityWithCautionLevel(String province,String city);
     //得到在province省,city市,area区内的所有地点
     List<Location> getLocationWithinArea(String province,String city,String area);
     List<Location> getLocationWithinAreaWithCautionLevel(String province,String city,String area);

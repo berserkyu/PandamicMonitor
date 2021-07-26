@@ -2,6 +2,7 @@ package grp.pandemicmonitor.controller;
 
 import grp.pandemicmonitor.dataClasses.Address.Address;
 import grp.pandemicmonitor.dataClasses.Results.Result;
+import grp.pandemicmonitor.dataClasses.location.Area;
 import grp.pandemicmonitor.dataClasses.Results.ResultLocation;
 import grp.pandemicmonitor.dataClasses.Results.ResultLocationList;
 import grp.pandemicmonitor.dataClasses.Results.ResultTextList;
@@ -133,21 +134,30 @@ public class LocationController {
     @CrossOrigin
     @ResponseBody
     public ResultTextList getWithinCityWithClevel(@RequestBody Location l){
-        System.out.println("location/getwithincitywithc");
-        List<Location> ll = loc.getAreasWithinCityWithCautionLevel(l.getProvince(),l.getCity());
-        if(ll.isEmpty()) return new ResultTextList(400,null,null);
+        System.out.println("location/getwithincitywithc "+l.getProvince()+" "+l.getCity());
+        List<Area> ll = loc.getAreasWithinCityWithCautionLevel(l.getProvince(),l.getCity());
+        if(ll.isEmpty()){
+            return new ResultTextList(400,null,null);
+        }
         List<String> primaryData = new Vector<String>();
         List<List<String>> secondaryData = new Vector<List<String>>();
-        for(Location area:ll){
+        for(Area area:ll){
+            if(!area.getProvince().equals(l.getProvince()) || !area.getCity().equals(l.getCity())){
+                continue;
+            }
             primaryData.add(area.getArea()+" ("+area.getCautionLevel()+")");
-            List<Location> lll = loc.getLocationWithinAreaWithCautionLevel(l.getProvince(),l.getCity(),area.getArea());
+
+            List<Location> lll = loc.getLocationWithinAreaWithCautionLevel(area.getProvince(),area.getCity(),area.getArea());
+
             List<String> addresses = new Vector<String>();
             for(Location loca:lll){
                 addresses.add(loca.getAddress()+"("+loca.getCautionLevel()+")");
             }
             secondaryData.add(addresses);
         }
-        if(secondaryData.isEmpty()) return new ResultTextList(400,null,null);
+        if(secondaryData.isEmpty()){
+            return new ResultTextList(400,null,null);
+        }
         return new ResultTextList(200,primaryData,secondaryData);
     }
 

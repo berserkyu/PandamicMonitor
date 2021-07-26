@@ -25,7 +25,6 @@ public class VisitDaoImple implements VisitDao{
                         "FROM location " +
                         "WHERE location.locId=%d ",
                 s.getIdNo(),s.getDate().toString(),s.getTime().toString(),s.getLocId());
-        System.out.println(sqlCmd);
         int result = jdbcTemplate.update(sqlCmd);
         return result==1;
     }
@@ -79,7 +78,6 @@ public class VisitDaoImple implements VisitDao{
                 "and v1.locId = location.locId " +
                 "and v1.idNo!=v2.idNo "  +
                 "and v1.idNo = '%s'  ",idNo);
-        System.out.println(sqlQuery);
         List<Insertection> li = jdbcTemplate.query(sqlQuery,new IntersectionMapper());
         return li;
     }

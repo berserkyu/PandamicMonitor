@@ -5,12 +5,14 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AreaMapper implements RowMapper<Location> {
+public class AreaMapper implements RowMapper<Area> {
     @Override
-    public Location mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Location loc = new Location();
+    public Area mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Area loc = new Area();
         loc.setArea(rs.getString("area"));
         loc.setCautionLevel(rs.getInt("cautionLevel"));
+        loc.setProvince(rs.getString("province"));
+        loc.setCity(rs.getString("city"));
         return loc;
     }
 }

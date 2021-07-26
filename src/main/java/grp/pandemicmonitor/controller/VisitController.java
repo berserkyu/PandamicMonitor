@@ -70,11 +70,8 @@ public class VisitController {
         List<LocationVisit> llv = loc.getLocationVisited(p.getIdNo());
 
         if(llv.isEmpty()){
-            System.out.println("lls is empty");
             return new ResultLocationVisitList(400,llv);
         }
-        //for(Location l :ll) l.displayInfo();
-        System.out.println("lls is not empty");
         return new ResultLocationVisitList(200, llv);
 
     }
@@ -86,10 +83,8 @@ public class VisitController {
         List<Insertection> li = vis.getInterSections(p.getIdNo());
         System.out.println("get insersections requested  "+p.getIdNo());
         if(li.isEmpty()){
-            System.out.println("li is empty");
             return new ResultIntersect(400,li);
         }
-        System.out.println("size of li: "+li.size());
         return new ResultIntersect(200,li);
     }
 }

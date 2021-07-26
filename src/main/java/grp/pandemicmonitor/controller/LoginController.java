@@ -17,6 +17,7 @@ import javax.security.auth.login.CredentialException;
 import java.util.List;
 
 //登录相关行为的Controller
+
 @Controller
 public class LoginController {
     @Autowired
@@ -25,7 +26,7 @@ public class LoginController {
     GeneralDaoImple gen;
 
 
-    @RequestMapping( "/x")
+    @RequestMapping( "/")
     public String hello(){
         return "index";
     }

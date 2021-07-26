@@ -57,10 +57,8 @@ public class PersonDaoImple implements PersonDao {
         String sqlQuery = String.format("SELECT * FROM person WHERE fullname='%s'",name);
         List<Person> result = jdbcTemplate.query(sqlQuery,new PersonMapper());
         if(result.isEmpty()){
-            System.out.println("result is null");
             return null;
         }else{
-            System.out.println("result is not null");
             return result;
         }
     }
@@ -142,8 +140,6 @@ public class PersonDaoImple implements PersonDao {
                                     " WHERE mail='%s'",
                                    fullName,phoneNo,address, oldmail);
         int result = jdbcTemplate.update(sqlCmd);
-        if(result==1) System.out.println("changed personal info success");
-        else System.out.println("changed personal info fail   "+oldmail+"->"+newmail);
         return  result==1 && changePersonMail(oldmail,newmail);
     }
 
@@ -156,15 +152,11 @@ public class PersonDaoImple implements PersonDao {
                 newMail,oldMail);
         int result = jdbcTemplate.update(sqlCmd);
         if(result!=1) {
-            System.out.println("change logininfo mail fail");
             return  false;
         }
         sqlCmd = String.format("UPDATE person SET mail='%s' WHERE mail='%s'",
                 newMail,oldMail);
         result = jdbcTemplate.update(sqlCmd);
-        if(result!=1){
-            System.out.println("change person mail fail");
-        }
         return result==1;
     }
 
@@ -179,18 +171,13 @@ public class PersonDaoImple implements PersonDao {
         System.out.println(sqlCmd);
         int result = jdbcTemplate.update(sqlCmd);
         if(result!=1){
-            System.out.println("delete person SQL failed at logininfo");
             return false;
         }
         //若成功了再删除人员信息
         sqlCmd = String.format("DELETE FROM person WHERE idNo='%s'",idNo);
         System.out.println(sqlCmd);
         result = jdbcTemplate.update(sqlCmd);
-        if(result!=1){
-            System.out.println("delete person SQL failed at person");
-            return false;
-        }
-        return true;
+        return result==1;
     }
 
     @Override

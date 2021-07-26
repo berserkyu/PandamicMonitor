@@ -30,7 +30,7 @@ public class PanController {
 
     @RequestMapping(value ="/test")
     public @ResponseBody String say(){
-
+        System.out.println("test visited");
         return "test001";
     }
 

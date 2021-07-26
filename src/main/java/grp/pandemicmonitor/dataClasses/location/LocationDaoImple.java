@@ -59,7 +59,6 @@ public class LocationDaoImple implements LocationDao{
                                         l.getLocName(),l.getProvince(),l.getCity(),l.getArea(), l.getAddress());
         int result = jdbcTemplate.update(sqlCmd);
         if(result!=1){
-            System.out.println("add location result is not 1 : "+result);
             return -1;
         }
         sqlCmd = String.format("SELECT * FROM location WHERE locName='%s' " +
@@ -189,9 +188,9 @@ public class LocationDaoImple implements LocationDao{
     //得到在province省,city市,area区内的所有地点
     @Override
     public List<Location> getLocationWithinArea(String province,String city,String area){
-        String sqlQuery = String.format("SELECT * FROM location WHERE province='%s' " +
-                                        "AND city='%s' " +
-                                        "AND area='%s'",province,city,area);
+        String sqlQuery = String.format("SELECT * FROM location WHERE province=\"%s\" " +
+                                        "AND city=\"%s\" " +
+                                        "AND area=\"%s\"",province,city,area);
         return  jdbcTemplate.query(sqlQuery,new LocationMapper());
 
     }
@@ -203,10 +202,11 @@ public class LocationDaoImple implements LocationDao{
                 " where location.locId=visit.locId" +
                 " and visit.idno=person.idno" +
                 " and province='%s'" +
-                " and city='%s'" +
-                " and area='%s'" +
-                " group by location.locId" +
-                " order by cautionLevel desc",province,city,area);
+                        " and city='%s'" +
+                        " and area='%s'" +
+                        " group by location.locId" +
+                        " having cautionLevel>15"
+                ,province,city,area);
         List<Location> ll = jdbcTemplate.query(sqlQuery,new LocationMapper());
         return ll;
     }
@@ -235,14 +235,12 @@ public class LocationDaoImple implements LocationDao{
 
 
     @Override
-    public List<Location> getAreasWithinCityWithCautionLevel(String province,String city){
-        String sqlQuey = String.format("select area,sum(cautionLevel) as cautionLevel from location " +
-                                        "where province='%s' and city = '%s' " +
-                                        "group by area " +
-                                        "having cautionLevel>150 " +
-                                        "order by cautionLevel desc "
-                                        ,province,city);
-        List<Location> ll = jdbcTemplate.query(sqlQuey,new AreaMapper());
+    public List<Area> getAreasWithinCityWithCautionLevel(String province,String city){
+
+        String sqlQuey = String.format("select province,city,area,sum(cautionLevel) as cautionLevel " +
+                                        "from location \n" +
+                                        "group by province,city,area");
+        List<Area> ll = jdbcTemplate.query(sqlQuey,new AreaMapper());
         return ll;
     }
 }
