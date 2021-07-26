@@ -65,7 +65,7 @@
             idNo: this.userIntersectionListForm.userId
           })
           .then(successResponse => {
-            if(successResponse.data.code==200){
+            if(successResponse.data.code===200){
               console.log("success");
               this.tableData = successResponse.data.tableData;
             }else{

@@ -52,6 +52,12 @@
               <el-input v-model="addForm.idno" placeholder="请输入用户的证件号" clearable></el-input>
             </el-form-item>
           </el-form-item>
+          <!--日期选择器-->
+          <el-form-item label="出生日期：" prop="birth">
+            <el-date-picker
+              v-model="addForm.birth" type="date" placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
           <!--邮箱输入框-->
           <el-form-item label="电子邮箱：" prop="email">
             <el-input v-model="addForm.email" placeholder="请输入用户的电子邮箱" clearable></el-input>
@@ -97,7 +103,7 @@
       </el-dialog>
 
       <!--用户移动路径对话框-->
-      <el-dialog title="移动路径"center :visible.sync="pathFormVisible" width="60%">
+      <el-dialog title="移动路径" center :visible.sync="pathFormVisible" width="60%">
         <!--用户移动路径表单-->
         <el-form label-width="100px" :model="pathForm" ref="pathForm" class="path_Form">
           <!--用户姓名-->
@@ -168,7 +174,7 @@ export default{
     if(value === ''){
       callback(new Error('请输入身份证号'));
     }else{
-      if(this.addForm.idtype=="0"){
+      if(this.addForm.idtype==="0"){
         var reg =/(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}$)/;
         var factor = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 ];
         var parity = [ 1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2 ];
@@ -177,7 +183,7 @@ export default{
           for(var i=0;i<17;i++) {
             sum += val[i]*factor[i];
           }
-          if(parity[sum % 11] == code.toUpperCase()) {
+          if(parity[sum % 11] === code.toUpperCase()) {
             callback();
           }else{
             callback(new Error('请输入正确的身份证号'));
@@ -188,13 +194,34 @@ export default{
         }
       }else{
         callback();
+        }
+     }
+    };
+    var validateBirth = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入用户生日日期'));
       }
-    }
-  };
+      else{
+        // var reg = /(^(19[2-9][0-9])|(20[0-1][0-9])|(202[0-1]))-((0?[1-9])|(1[0-2]))-((0?[1-9])|([1-2][0-9])|30|31$)/;
+        //
+        // if (reg.test(value)) {
+        //   callback(new Error('成功'));
+        // } else {
+        //   callback(new Error('生日日期不符合规范'));
+        // }
+        var d = new Date();
+        if(Date.parse(value) > d.getTime()){
+          callback(new Error('生日日期不符合规范'));
+        }
+        else{
+          callback();
+        }
+      }
+    };
+
+
     return{
-      tableData:[{fullName: "nisndi", idNo:"34141", mail: "jbdcbau@uvsd.com"},
-        {fullName: "nisndi", idNo:"34141", mail: "jbdcbau@uvsd.com"}
-      ],
+      tableData:[],
       pathData:[],
 
       addFormVisible: false,
@@ -208,6 +235,7 @@ export default{
         name:'',
         idtype:'',
         idno:'',
+        birth:'',
         email:'',
         password:''
       },
@@ -232,6 +260,10 @@ export default{
         ],
         idtype:[
           {required:true, message:'请选择用户的证件类型', trigger:'change'}
+        ],
+        birth:[
+          {required:true, message:'请选择您的出生日期', trigger:'blur'},
+          {validator:validateBirth,trigger: 'blur'}
         ],
         idno:[
           {required:true, message:'请输入用户的证件号', trigger:'blur'},
@@ -325,6 +357,7 @@ export default{
             fullName: this.addForm.name,
             idtype: this.addForm.idtype,
             idNo: this.addForm.idno,
+            birthday: this.addForm.birth,
             mail: this.addForm.email,
             password: this.addForm.password
           })
@@ -441,6 +474,7 @@ export default{
           console.log("success");
           this.tableData = successResponse.data.tableData;
         }) .catch(failResponse =>{alert("跨域操作失败！")})
+
     },
     handleChange(data){
       console.log(data);

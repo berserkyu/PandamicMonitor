@@ -97,7 +97,7 @@ export default {
       if(value === ''){
         callback(new Error('请输入身份证号'));
       }else{
-        if(this.registerForm.certificatetype=="0"){
+        if(this.registerForm.certificatetype==="0"){
           var reg =/(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}$)/;
           var factor = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 ];
           var parity = [ 1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2 ];
@@ -106,7 +106,7 @@ export default {
             for(var i=0;i<17;i++) {
               sum += val[i]*factor[i];
             }
-            if(parity[sum % 11] == code.toUpperCase()) {
+            if(parity[sum % 11] === code.toUpperCase()) {
               callback();
             }else{
               callback(new Error('请输入正确的身份证号'));
@@ -116,6 +116,27 @@ export default {
             callback(new Error('请输入正确的身份证号'));
           }
         }else{
+          callback();
+        }
+      }
+    };
+    var validateBirth = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入用户生日日期'));
+      }
+      else{
+        // var reg = /(^(19[2-9][0-9])|(20[0-1][0-9])|(202[0-1]))-((0?[1-9])|(1[0-2]))-((0?[1-9])|([1-2][0-9])|30|31$)/;
+        //
+        // if (reg.test(value)) {
+        //   callback(new Error('成功'));
+        // } else {
+        //   callback(new Error('生日日期不符合规范'));
+        // }
+        var d = new Date();
+        if(Date.parse(value) > d.getTime()){
+          callback(new Error('生日日期不符合规范'));
+        }
+        else{
           callback();
         }
       }
@@ -142,7 +163,8 @@ export default {
           {required:true, message:'请选择您的性别', trigger:'blur'}
         ],
         birth:[
-          {required:true, message:'请选择您的出生日期', trigger:'change'}
+          {required:true, message:'请选择您的出生日期', trigger:'blur'},
+          {validator:validateBirth,trigger: 'blur'}
         ],
         certificatetype:[
           {required:true, message:'请选择您的证件类型', trigger:'change'}
